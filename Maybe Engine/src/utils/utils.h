@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Timer.h"
+#include "..\input\input.h"
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -18,6 +19,7 @@ namespace mb { namespace utils {
 	void Init()
 	{
 		glfwInit();
+		input::Init();
 	}
 
 	void Terminate()
@@ -35,7 +37,7 @@ namespace mb { namespace utils {
 		if (logFPS) logFPS = false;
 	}
 
-	void Update()
+	void Update(const graphics::Window& window)
 	{
 		deltaTime = (float)glfwGetTime() - oldTime;
 		oldTime = (float)glfwGetTime();
@@ -47,6 +49,8 @@ namespace mb { namespace utils {
 		{
 			timers[i]->Update(deltaTime);
 		}
+
+		input::Update(window);
 
 		if (fpsTimer >= 1.0f)
 		{

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <chrono>
+#include <thread>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -61,7 +63,7 @@ int main()
 
 	while (window.Open())
 	{
-		mb::utils::Update();
+		mb::utils::Update(window);
 
 		window.Clear(clearColor.x, clearColor.y, clearColor.z, 1.0f);
 
@@ -72,7 +74,7 @@ int main()
 			timer.ClearIntervalCount();
 		}
 
-		if (mb::input::IsKeyPressed(window, mb::input::Key::J))
+		if (mb::input::IsKeyReleased(mb::input::Key::J))
 			i(1);
 
 		color.z = abs(sin((float) glfwGetTime())) / 2.5;
