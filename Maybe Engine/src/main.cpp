@@ -31,7 +31,7 @@ int main()
 	srand(time(NULL));
 	mb::utils::Init();
 
-	mb::graphics::Window window(800, 600, "Maybe");
+	mb::graphics::Window window(800, 600, "Maybe This Will Work");
 	glfwSwapInterval(0);
 
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
@@ -44,7 +44,12 @@ int main()
 		0.5f, -0.5f
 	};
 
+	mb::graphics::BufferLayout layout;
+	layout.Push<float>(2);
+	layout.Push<unsigned char>(3);
+
 	mb::graphics::Buffer VBO(vertices, 3 * 2 * sizeof(float));
+	VBO.SetLayout(layout);
 
 	unsigned int VAO = 0;
 	glGenVertexArrays(1, &VAO);
@@ -64,7 +69,6 @@ int main()
 	while (window.Open())
 	{
 		mb::utils::Update(window);
-
 		window.Clear(clearColor.x, clearColor.y, clearColor.z, 1.0f);
 
 		if (timer.GetIntervalCount() == 3)

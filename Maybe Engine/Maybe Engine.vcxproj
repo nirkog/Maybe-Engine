@@ -82,6 +82,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)GLFW\lib-vc2015;$(SolutionDir)GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\Buffer.h" />
+    <ClInclude Include="src\graphics\BufferLayout.h" />
     <ClInclude Include="src\graphics\graphics.h" />
     <ClInclude Include="src\graphics\Shader.h" />
     <ClInclude Include="src\graphics\window.h" />

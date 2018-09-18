@@ -1,6 +1,5 @@
 #include "Buffer.h"
 
-#include <GL\glew.h>
 
 namespace mb { namespace graphics {
 
@@ -26,6 +25,11 @@ namespace mb { namespace graphics {
 	void Buffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void Buffer::SetLayout(BufferLayout& layout)
+	{
+		m_Layout = layout;
 	}
 
 } }

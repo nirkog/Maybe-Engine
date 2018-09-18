@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BufferLayout.h"
+
 namespace mb { namespace graphics {
 
 	class Buffer
@@ -11,10 +13,13 @@ namespace mb { namespace graphics {
 		void Bind() const;
 		void Unbind() const;
 
-		inline unsigned int GetID() const { return m_ID; }
+		void SetLayout(BufferLayout& layout);
 
+		inline unsigned int GetID() const { return m_ID; }
+		inline const BufferLayout& GetLayout() const { return m_Layout; }
 	private:
 		unsigned int m_ID;
+		BufferLayout m_Layout;
 	};
 
 } }
