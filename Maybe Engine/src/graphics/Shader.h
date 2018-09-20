@@ -19,6 +19,7 @@ namespace mb { namespace graphics {
 
 		void SetUniform3f(const std::string& name, float v0, float v1, float v2);
 		void SetUniformVec3(const std::string& name, const maths::Vec3& v);
+		void SetUniformMat4(const std::string& name, const maths::Mat4& mat);
 	private:
 		int GetUniformLocation(const std::string& name);
 	private:

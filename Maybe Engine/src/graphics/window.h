@@ -23,6 +23,7 @@ namespace mb { namespace graphics {
 		void SetTitle(const char* title);
 
 		inline const GLFWwindow* GetGLFWwindow() const { return m_Window; }
+		inline const maths::Vec2 GetSize() const { return m_Size; }
 
 		inline void Destroy() { glfwDestroyWindow(m_Window); }
 	private:

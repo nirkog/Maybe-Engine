@@ -34,12 +34,16 @@ namespace mb { namespace input {
 		V = GLFW_KEY_V,
 		B = GLFW_KEY_B,
 		N = GLFW_KEY_N,
-		M = GLFW_KEY_M
+		M = GLFW_KEY_M,
+		UP = GLFW_KEY_UP,
+		DOWN = GLFW_KEY_DOWN,
+		LEFT = GLFW_KEY_LEFT,
+		RIGHT = GLFW_KEY_RIGHT
 	};
 
 	Key keys[] = 
 	{
-		Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Z, X, C, V, B, N, M
+		Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Z, X, C, V, B, N, M, UP, DOWN, LEFT, RIGHT
 	};
 
 	unsigned int keyCount;

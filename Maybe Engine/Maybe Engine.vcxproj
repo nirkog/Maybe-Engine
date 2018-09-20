@@ -123,9 +123,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\graphics\Buffer.cpp" />
+    <ClCompile Include="src\graphics\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphics\Renderer2D.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
+    <ClCompile Include="src\graphics\Sprite2D.cpp" />
+    <ClCompile Include="src\graphics\VertexArray.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\maths\mat4.cpp" />
     <ClCompile Include="src\maths\vec2.cpp" />
     <ClCompile Include="src\maths\vec3.cpp" />
   </ItemGroup>
@@ -133,9 +138,14 @@
     <ClInclude Include="src\graphics\Buffer.h" />
     <ClInclude Include="src\graphics\BufferLayout.h" />
     <ClInclude Include="src\graphics\graphics.h" />
+    <ClInclude Include="src\graphics\IndexBuffer.h" />
+    <ClInclude Include="src\graphics\Renderer2D.h" />
     <ClInclude Include="src\graphics\Shader.h" />
+    <ClInclude Include="src\graphics\Sprite2D.h" />
+    <ClInclude Include="src\graphics\VertexArray.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\input\input.h" />
+    <ClInclude Include="src\maths\mat4.h" />
     <ClInclude Include="src\maths\maths.h" />
     <ClInclude Include="src\maths\vec2.h" />
     <ClInclude Include="src\maths\vec3.h" />

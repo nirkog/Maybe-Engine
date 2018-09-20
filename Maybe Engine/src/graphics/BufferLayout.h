@@ -74,6 +74,9 @@ namespace mb { namespace graphics {
 			m_Stride += count * GetTypeSize(GL_UNSIGNED_BYTE);
 		}
 
+		inline unsigned int GetStride() const { return m_Stride; }
+		inline const std::vector<BufferLayoutItem> GetItems() const { return m_Items; }
+
 #if DEBUG
 		inline void PrintLayout() const
 		{

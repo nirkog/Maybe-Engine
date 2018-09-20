@@ -2,11 +2,14 @@
 
 #include <iostream>
 
+#include "Vec2.h"
+
 namespace mb { namespace maths {
 	class Vec3
 	{
 	public:
 		Vec3(float x, float y, float z);
+		Vec3(const Vec2& vec, float z);
 		Vec3();
 
 		Vec3 Add(const Vec3& other) const;
@@ -36,6 +39,10 @@ namespace mb { namespace maths {
 		Vec3 operator/=(float scalar);
 
 		float Dot(const Vec3& other) const;
+
+		inline float Magnitude() const { return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
+		
+		Vec3 Normalize() const;
 
 		friend std::ostream& operator<<(std::ostream& stream, const Vec3& vec);
 

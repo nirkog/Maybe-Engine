@@ -12,7 +12,7 @@ namespace mb { namespace utils {
 	float oldTime = 0;
 	float deltaTime = 0;
 	float fpsTimer = 0;
-	float fps = 0;
+	unsigned int fps = 0;
 	unsigned int frames = 0;
 	std::vector<mb::utils::Timer*> timers;
 

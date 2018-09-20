@@ -121,4 +121,10 @@ namespace mb { namespace graphics {
 		glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
 	}
 
+	void Shader::SetUniformMat4(const std::string& name, const maths::Mat4& mat)
+	{
+		maths::Mat4 transposed = mat.Transpose();
+		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, transposed.GetData());
+	}
+
 } }

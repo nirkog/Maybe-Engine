@@ -9,6 +9,13 @@ namespace mb { namespace maths {
 		this->z = z;
 	}
 
+	Vec3::Vec3(const Vec2& vec, float z)
+	{
+		this->x = vec.x;
+		this->y = vec.y;
+		this->z = z;
+	}
+
 	Vec3::Vec3()
 		: x(0), y(0), z(0)
 	{
@@ -126,6 +133,16 @@ namespace mb { namespace maths {
 	float Vec3::Dot(const Vec3& other) const
 	{
 		return (x * other.x) + (y * other.y) + (z * other.z);
+	}
+
+	Vec3 Vec3::Normalize() const
+	{
+		Vec3 result(*this);
+		result.x /= Magnitude();
+		result.y /= Magnitude();
+		result.z /= Magnitude();
+
+		return result;
 	}
 
 	std::ostream& operator<<(std::ostream& stream, const Vec3& vec)
