@@ -18,7 +18,7 @@ namespace mb { namespace graphics {
 
 		m_IBO = new IndexBuffer(m_Indices, 3 * 2 * sizeof(unsigned short));
 
-		proj = maths::ortho(0, window.GetSize().x, 0, window.GetSize().y, -5, 5);
+		proj = maths::ortho(-window.GetSize().x / 2, window.GetSize().x / 2, -window.GetSize().y / 2, window.GetSize().y / 2, -5, 5);
 		//view = maths::translate(view, {0, 0, -2});
 
 		//std::cout << proj << std::endl;
@@ -33,9 +33,9 @@ namespace mb { namespace graphics {
 	void Renderer2D::Draw(const Sprite2D& sprite)
 	{
 		maths::Mat4 model;
-		model = maths::translate(model, { sprite.GetPosition(), 0 });
-		//model = maths::scale(model, {sin((float) glfwGetTime()), cos((float) glfwGetTime()), 1});
-		//model = maths::rotate(model, maths::radians((float) glfwGetTime()) * 50, {0, 0, 1.0f});
+		model = maths::translate(model, { sprite.transform.position, 0 });
+		model = maths::scale(model, {sprite.transform.scale, 1});
+		model = maths::rotate(model, sprite.transform.rotationAngle, sprite.transform.rotationAxis);
 
 		m_BasicShader.Bind();
 		m_BasicShader.SetUniformVec3("u_Color", sprite.GetColor());

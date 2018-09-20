@@ -28,6 +28,8 @@ namespace mb { namespace graphics {
 
 		if (glewInit() != GLEW_OK)
 			std::cout << "NOT OK"; 
+
+		glfwSwapInterval(0);
 	}
 
 	Window::~Window()

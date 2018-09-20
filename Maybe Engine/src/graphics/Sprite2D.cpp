@@ -3,13 +3,14 @@
 namespace mb { namespace graphics {
 
 	Sprite2D::Sprite2D(const maths::Vec2& position, const maths::Vec2& size)
-		: m_Position(position.x, position.y), m_Size(size.x, size.y), m_Color(1.0f, 1.0f, 1.0f), m_BufferLayout(), m_VAO()
+		: m_Size(size.x, size.y), m_Color(1.0f, 1.0f, 1.0f), m_BufferLayout(), m_VAO(),
+		transform(maths::Vec2(position.x, position.y), maths::Vec2(1, 1), maths::Vec3(1, 1, 1), 0.0f)
 	{
 		float vertices[] = {
-			-size.x, -size.y, 0,
-			-size.x,  size.y, 0,
-			 size.x,  size.y, 0,
-			 size.x, -size.y, 0
+			-size.x / 2, -size.y / 2, 0,
+			-size.x / 2,  size.y / 2, 0,
+			 size.x / 2,  size.y / 2, 0,
+			 size.x / 2, -size.y / 2, 0
 		};
 
 		m_Buffer = new Buffer(vertices, sizeof(float) * 3 * 4);

@@ -59,7 +59,7 @@ namespace mb { namespace graphics {
 		for (unsigned int i = 0; i < items.size(); i++)
 		{
 			BufferLayoutItem item = items[i];
-			std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
+			//std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
 
 			glEnableVertexAttribArray(item.index);
 			glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*)offset);
