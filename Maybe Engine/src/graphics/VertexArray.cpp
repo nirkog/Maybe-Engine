@@ -4,6 +4,8 @@
 
 namespace mb { namespace graphics {
 
+	unsigned int VertexArray::m_ActiveArray = 0;
+
 	VertexArray::VertexArray()
 		: m_ID(0)
 	{
@@ -17,12 +19,17 @@ namespace mb { namespace graphics {
 
 	void VertexArray::Bind() const
 	{
-		glBindVertexArray(m_ID);
+		if (m_ActiveArray != m_ID)
+		{
+			glBindVertexArray(m_ID);
+			m_ActiveArray = m_ID;
+		}
 	}
 
 	void VertexArray::Unbind() const
 	{
 		glBindVertexArray(0);
+		m_ActiveArray = 0;
 	}
 
 	void VertexArray::AddBuffer(const Buffer& buffer)

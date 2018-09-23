@@ -14,6 +14,7 @@ namespace mb { namespace graphics {
 		inline const unsigned int GetId() const { return m_ID; }
 	private:
 		unsigned int m_ID;
+		static unsigned int m_ActiveBuffer;
 	};
 
 } }

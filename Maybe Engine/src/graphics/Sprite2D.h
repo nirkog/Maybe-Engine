@@ -3,6 +3,7 @@
 #include "..\maths\maths.h"
 #include "Buffer.h"
 #include "VertexArray.h"
+#include "Texture.h"
 
 namespace mb { namespace graphics {
 
@@ -26,9 +27,12 @@ namespace mb { namespace graphics {
 		void SetScale(const maths::Vec2& scale);
 		void SetRotation(float angle, const maths::Vec3& axis);*/
 		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
+		void SetTexture(const char* path);
 
 		inline const maths::Vec2 GetSize() const { return m_Size; }
 		inline const maths::Vec3 GetColor() const { return m_Color; }
+
+		inline bool HasTexture() const { return m_Texture; }
 
 		inline const VertexArray GetVAO() const { return m_VAO; }
 
@@ -43,6 +47,8 @@ namespace mb { namespace graphics {
 		Buffer *m_Buffer;
 		BufferLayout m_BufferLayout;
 		VertexArray m_VAO;
+
+		Texture* m_Texture;
 	};
 
 } }

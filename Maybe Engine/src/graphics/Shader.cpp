@@ -7,6 +7,8 @@
 
 namespace mb { namespace graphics {
 
+	unsigned int Shader::m_ActiveShader = 0;
+
 	std::string ReadFile(const char* fileName)
 	{
 		std::stringstream stream;
@@ -89,12 +91,17 @@ namespace mb { namespace graphics {
 
 	void Shader::Bind() const
 	{
-		glUseProgram(m_ID);
+		if (m_ActiveShader != m_ID)
+		{
+			glUseProgram(m_ID);
+			m_ActiveShader = m_ID;
+		}
 	}
 
 	void Shader::Unbind() const
 	{
 		glUseProgram(0);
+		m_ActiveShader = 0;
 	}
 
 	int Shader::GetUniformLocation(const std::string& name)
@@ -109,6 +116,11 @@ namespace mb { namespace graphics {
 
 		m_UniformLocationsCache[name] = location;
 		return location;
+	}
+
+	void Shader::SetUniform1i(const std::string& name, int v)
+	{
+		glUniform1i(GetUniformLocation(name), v);
 	}
 
 	void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)

@@ -5,4 +5,6 @@
 #include "Buffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
+#include "Texture.h"
 #include "Renderer2D.h"
+#include "stb_image.h"

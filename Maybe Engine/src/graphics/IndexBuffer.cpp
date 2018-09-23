@@ -4,6 +4,8 @@
 
 namespace mb { namespace graphics {
 
+	unsigned int IndexBuffer::m_ActiveBuffer = 0;
+
 	IndexBuffer::IndexBuffer(const void* data, const unsigned int size)
 		: m_ID(0)
 	{
@@ -20,12 +22,20 @@ namespace mb { namespace graphics {
 
 	void IndexBuffer::Bind() const
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
+		if (m_ActiveBuffer != m_ID)
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
+			m_ActiveBuffer = m_ID;
+		}
 	}
 
 	void IndexBuffer::Unbind() const
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		if (m_ActiveBuffer != 0)
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			m_ActiveBuffer = 0;
+		}
 	}
 
 }}

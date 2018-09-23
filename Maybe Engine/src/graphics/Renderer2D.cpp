@@ -38,7 +38,9 @@ namespace mb { namespace graphics {
 		model = maths::rotate(model, sprite.transform.rotationAngle, sprite.transform.rotationAxis);
 
 		m_BasicShader.Bind();
-		m_BasicShader.SetUniformVec3("u_Color", sprite.GetColor());
+		m_BasicShader.SetUniform1i("textured", sprite.HasTexture());
+		if(!sprite.HasTexture())
+			m_BasicShader.SetUniformVec3("u_Color", sprite.GetColor());
 		m_BasicShader.SetUniformMat4("u_Model", model);
 		m_BasicShader.SetUniformMat4("u_View", view);
 		m_BasicShader.SetUniformMat4("u_Proj", proj);
@@ -48,8 +50,14 @@ namespace mb { namespace graphics {
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
+		/*GLenum err;
+		while ((err = glGetError()))
+		{
+			std::cout << err << std::endl;
+		}
+
 		m_IBO->Unbind();
 		sprite.Unbind();
-		m_BasicShader.Unbind();
+		m_BasicShader.Unbind();*/
 	}
 } }
