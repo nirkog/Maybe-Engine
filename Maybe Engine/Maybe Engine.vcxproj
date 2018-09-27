@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Buffer.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Renderer2D.cpp" />
@@ -135,8 +136,10 @@
     <ClCompile Include="src\maths\mat4.cpp" />
     <ClCompile Include="src\maths\vec2.cpp" />
     <ClCompile Include="src\maths\vec3.cpp" />
+    <ClCompile Include="src\maths\vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\BatchRenderer.h" />
     <ClInclude Include="src\graphics\Buffer.h" />
     <ClInclude Include="src\graphics\BufferLayout.h" />
     <ClInclude Include="src\graphics\graphics.h" />
@@ -153,12 +156,17 @@
     <ClInclude Include="src\maths\maths.h" />
     <ClInclude Include="src\maths\vec2.h" />
     <ClInclude Include="src\maths\vec3.h" />
+    <ClInclude Include="src\maths\vec4.h" />
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basic.frag" />
     <None Include="res\basic.vert" />
+    <None Include="res\batcher.frag" />
+    <None Include="res\batcher.vert" />
+    <None Include="res\instanced.frag" />
+    <None Include="res\instanced.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\smiley.png" />

@@ -7,7 +7,7 @@ namespace mb { namespace graphics {
 	class Buffer
 	{
 	public:
-		Buffer(const void* data, const unsigned int size);
+		Buffer(const void* data, const unsigned int size, GLenum usage=GL_STATIC_DRAW);
 		~Buffer();
 
 		void Bind() const;

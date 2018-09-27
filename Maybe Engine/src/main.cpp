@@ -23,15 +23,19 @@ int main()
 
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 
-	mb::utils::EnableFpsLog();
-
 	mb::graphics::Renderer2D renderer(window);
+	mb::graphics::BatchRenderer batch(window);
 
+	mb::utils::EnableFpsLog();
 	mb::graphics::Sprite2D sprite({ 0, 0 }, { 200, 200 });
-	sprite.SetColor({0.1f, 0.4f, 0.9f});
+	sprite.SetColor({0.0f, 0.2f, 0.9f});
 	sprite.SetTexture("./res/smiley.png");
 
+	//batch.Submit(sprite);
+
 	bool renderBoth = true;
+
+	float fr = 1.5f;
 
 	while (window.Open())
 	{
@@ -41,15 +45,25 @@ int main()
 		if (mb::input::IsKeyDown(mb::input::Key::Y))
 			renderBoth = !renderBoth;
 
-		sprite.transform.position.x = (float) sin(1.5f * (float)glfwGetTime()) * 300;
-		sprite.transform.rotationAngle += mb::maths::radians(270) * mb::utils::deltaTime;
+		if (mb::input::IsKeyPressed(mb::input::Key::UP))
+			fr += mb::utils::deltaTime;
+		else if (mb::input::IsKeyPressed(mb::input::Key::DOWN))
+			fr -= mb::utils::deltaTime;
 
-		renderer.Draw(sprite);
+		sprite.transform.position.x = (float) sin(fr * (float)glfwGetTime()) * 300;
+		sprite.transform.rotationAngle += mb::maths::radians(270) * mb::utils::deltaTime;
+		sprite.transform.scale.x = 1 + (float)sin(3 * (float)glfwGetTime()) * 0.1f;
+		sprite.transform.scale.y = 1 + (float)sin(3 * (float)glfwGetTime()) * 0.1f;
+
+		batch.Submit(sprite);
+		batch.Flush();
+
+		/*renderer.Draw(sprite);
 		
-		sprite.transform.position.x = (float) sin(1.5f * (float)glfwGetTime() + mb::maths::radians(180)) * 300;
+		sprite.transform.position.x = (float) sin(fr * (float)glfwGetTime() + mb::maths::radians(180)) * 300;
 
 		if(renderBoth)
-			renderer.Draw(sprite);
+			renderer.Draw(sprite);*/
 
 		window.Update();
 	}

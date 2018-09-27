@@ -41,9 +41,10 @@ namespace mb { namespace graphics {
 		m_BasicShader.SetUniform1i("textured", sprite.HasTexture());
 		if(!sprite.HasTexture())
 			m_BasicShader.SetUniformVec3("u_Color", sprite.GetColor());
-		m_BasicShader.SetUniformMat4("u_Model", model);
-		m_BasicShader.SetUniformMat4("u_View", view);
-		m_BasicShader.SetUniformMat4("u_Proj", proj);
+		//m_BasicShader.SetUniformMat4("u_Model", model);
+		//m_BasicShader.SetUniformMat4("u_View", view);
+		//m_BasicShader.SetUniformMat4("u_Proj", proj);
+		m_BasicShader.SetUniformMat4("u_MVP", proj * view * model);
 
 		sprite.Bind();
 		m_IBO->Bind();

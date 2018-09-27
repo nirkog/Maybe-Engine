@@ -5,6 +5,8 @@
 
 #include <GL\glew.h>
 
+#include "..\maths\maths.h"
+
 #define DEBUG 1
 
 namespace mb { namespace graphics {
@@ -26,6 +28,8 @@ namespace mb { namespace graphics {
 			return 4;
 		case GL_UNSIGNED_BYTE:
 			return 1;
+		case GL_FLOAT_MAT4:
+			return sizeof(float) * 4 * 4;
 		}
 
 		return 0;

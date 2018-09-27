@@ -3,12 +3,12 @@
 
 namespace mb { namespace graphics {
 
-	Buffer::Buffer(const void* data, const unsigned int size)
+	Buffer::Buffer(const void* data, const unsigned int size, GLenum usage)
 		: m_ID(0)
 	{
 		glGenBuffers(1, &m_ID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_ID);
-		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, data, usage);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
