@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "..\maths\vec2.h"
+#include "..\maths\maths.h"
 
 namespace mb { namespace graphics {
 	class Window
@@ -15,6 +15,7 @@ namespace mb { namespace graphics {
 		bool Open() const;
 		void Close() const;
 		void Clear(float r, float g, float b, float a) const;
+		void Clear(maths::Vec4 color) const;
 		void Update();
 
 		void QuitOnPress(unsigned int key);

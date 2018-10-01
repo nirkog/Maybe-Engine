@@ -10,7 +10,7 @@ namespace mb { namespace maths {
 	class Vec4
 	{
 	public:
-		Vec4(float x, float y, float z, float w);
+		inline Vec4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 		Vec4();
 
 		const Vec4 Add(const Vec4& other) const;

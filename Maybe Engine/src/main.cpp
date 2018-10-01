@@ -12,8 +12,6 @@
 #include "utils\utils.h"
 #include "input\input.h"
 
-mb::maths::Vec3 clearColor(0.8f, 0.45f, 0.3f);
-
 int main()
 {
 	srand((unsigned int) time(NULL));
@@ -23,49 +21,64 @@ int main()
 
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 
-	mb::graphics::Renderer2D renderer(window);
+	mb::utils::EnableFpsLog();
+
+	std::cout << glGetString(GL_RENDERER) << std::endl;
+
 	mb::graphics::BatchRenderer batch(window);
 
-	mb::utils::EnableFpsLog();
-	mb::graphics::Sprite2D sprite({ 0, 0 }, { 200, 200 });
-	sprite.SetColor({0.0f, 0.2f, 0.9f});
-	sprite.SetTexture("./res/smiley.png");
+	mb::maths::Vec2 spriteSize = {3.8f, 3.8f};
+	unsigned int spriteCount = 0;
 
-	//batch.Submit(sprite);
+	for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
+	{
+		for (float y = -window.GetSize().y / 2 + spriteSize.y / 2; y < window.GetSize().y / 2; y += spriteSize.y)
+		{
+			spriteCount++;
+		}
+	}
 
-	bool renderBoth = true;
+	mb::graphics::Sprite2D** sprites = (mb::graphics::Sprite2D**) malloc(sizeof(mb::graphics::Sprite2D) * spriteCount);
+	unsigned int index = 0;
 
-	float fr = 1.5f;
+	for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
+	{
+		for (float y = -window.GetSize().y / 2 + spriteSize.y / 2; y < window.GetSize().y / 2; y += spriteSize.y)
+		{
+			mb::graphics::Sprite2D* sprite = new mb::graphics::Sprite2D({ x, y }, spriteSize);
+			sprite->SetColor({0.2f, (float) rand() / RAND_MAX, 0.7f});
+			sprites[index] = sprite;
+			index++;
+		}
+	}
+
+	mb::maths::Vec4 clearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	
+	std::cout << "Drawing " << spriteCount << " sprites!" << std::endl;
 
 	while (window.Open())
 	{
 		mb::utils::Update(window);
-		window.Clear(clearColor.x, clearColor.y, clearColor.z, 1.0f);
+		window.Clear(clearColor);
 
-		if (mb::input::IsKeyDown(mb::input::Key::Y))
-			renderBoth = !renderBoth;
+		batch.Begin();
 
-		if (mb::input::IsKeyPressed(mb::input::Key::UP))
-			fr += mb::utils::deltaTime;
-		else if (mb::input::IsKeyPressed(mb::input::Key::DOWN))
-			fr -= mb::utils::deltaTime;
+		for (unsigned int i = 0; i < spriteCount; i++)
+		{
+			//std::cout << i << std::endl;
+			batch.Submit(sprites[i]);
+		}
 
-		sprite.transform.position.x = (float) sin(fr * (float)glfwGetTime()) * 300;
-		sprite.transform.rotationAngle += mb::maths::radians(270) * mb::utils::deltaTime;
-		sprite.transform.scale.x = 1 + (float)sin(3 * (float)glfwGetTime()) * 0.1f;
-		sprite.transform.scale.y = 1 + (float)sin(3 * (float)glfwGetTime()) * 0.1f;
-
-		batch.Submit(sprite);
-		batch.Flush();
-
-		/*renderer.Draw(sprite);
-		
-		sprite.transform.position.x = (float) sin(fr * (float)glfwGetTime() + mb::maths::radians(180)) * 300;
-
-		if(renderBoth)
-			renderer.Draw(sprite);*/
+		batch.End();
 
 		window.Update();
+	}
+
+	//free(sprites);
+	
+	for (unsigned int i = 0; i < spriteCount; i++)
+	{
+		delete sprites[i];
 	}
 
 	mb::utils::Terminate();

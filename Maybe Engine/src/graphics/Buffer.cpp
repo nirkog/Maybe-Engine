@@ -3,6 +3,8 @@
 
 namespace mb { namespace graphics {
 
+	unsigned int Buffer::m_ActiveBuffer = 0;
+
 	Buffer::Buffer(const void* data, const unsigned int size, GLenum usage)
 		: m_ID(0)
 	{
@@ -19,12 +21,20 @@ namespace mb { namespace graphics {
 
 	void Buffer::Bind() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_ID);
+		if (m_ActiveBuffer != m_ID)
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, m_ID);
+			m_ActiveBuffer = m_ID;
+		}
 	}
 
 	void Buffer::Unbind() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		if (m_ActiveBuffer != 0)
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			m_ActiveBuffer = 0;
+		}
 	}
 
 	void Buffer::SetLayout(BufferLayout& layout)

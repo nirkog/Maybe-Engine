@@ -95,6 +95,7 @@ namespace mb { namespace graphics {
 		{
 			glUseProgram(m_ID);
 			m_ActiveShader = m_ID;
+			//std::cout << "Binding shader" << std::endl;
 		}
 	}
 
@@ -126,6 +127,11 @@ namespace mb { namespace graphics {
 	void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)
 	{
 		glUniform3f(GetUniformLocation(name), v0, v1, v2);
+	}
+
+	void Shader::SetUniformVec2(const std::string& name, const maths::Vec2& v)
+	{
+		glUniform2f(GetUniformLocation(name), v.x, v.y);
 	}
 
 	void Shader::SetUniformVec3(const std::string& name, const maths::Vec3& v)

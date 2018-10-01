@@ -56,6 +56,12 @@ namespace mb { namespace graphics {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+	void Window::Clear(maths::Vec4 color) const
+	{
+		glClearColor(color.x, color.y, color.z, color.w);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
 	void Window::Update()
 	{
 		if (m_QuitOnPress)

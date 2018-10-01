@@ -20,6 +20,7 @@ namespace mb { namespace graphics {
 	private:
 		unsigned int m_ID;
 		BufferLayout m_Layout;
+		static unsigned int m_ActiveBuffer;
 	};
 
 } }

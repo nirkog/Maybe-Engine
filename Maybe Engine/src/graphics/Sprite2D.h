@@ -21,6 +21,7 @@ namespace mb { namespace graphics {
 	{
 	public:
 		Sprite2D(const maths::Vec2& position, const maths::Vec2& size);
+		Sprite2D();
 		~Sprite2D();
 
 		/*void SetPosition(const maths::Vec2& position);
@@ -29,12 +30,10 @@ namespace mb { namespace graphics {
 		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
 		void SetTexture(const char* path);
 
-		inline const maths::Vec2 GetSize() const { return m_Size; }
-		inline const maths::Vec3 GetColor() const { return m_Color; }
+		inline const maths::Vec2& GetSize() const { return m_Size; }
+		inline const maths::Vec3& GetColor() const { return m_Color; }
 
-		inline bool HasTexture() const { return m_Texture; }
-
-		inline const VertexArray GetVAO() const { return m_VAO; }
+		inline bool HasTexture() const { return m_Texture == NULL; }
 
 		void Bind() const;
 		void Unbind() const;
@@ -43,10 +42,6 @@ namespace mb { namespace graphics {
 	private:
 		maths::Vec2 m_Size;
 		maths::Vec3 m_Color;
-
-		Buffer *m_Buffer;
-		BufferLayout m_BufferLayout;
-		VertexArray m_VAO;
 
 		Texture* m_Texture;
 	};

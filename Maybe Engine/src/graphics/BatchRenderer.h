@@ -7,13 +7,15 @@
 #include "Shader.h"
 #include "Sprite2D.h"
 
+#include "..\utils\utils.h"
 #include "..\maths\maths.h"
 
 namespace mb { namespace graphics {
 
 	struct VertexData
 	{
-		maths::Vec4 position;
+		//maths::Vec3 position;
+		float positionX, positionY, positionZ;
 		maths::Vec3 color;
 	};
 
@@ -23,20 +25,24 @@ namespace mb { namespace graphics {
 		BatchRenderer(const Window& window);
 		~BatchRenderer();
 
-		void Submit(const Sprite2D& sprite);
+		void Begin();
+		void Submit(const Sprite2D* sprite);
+		void End();
+	private:
 		void Flush();
 	private:
-		Buffer* m_Buffer;
-		VertexArray* m_VertexArray;
-		IndexBuffer* m_IndexBuffer;
+		unsigned int m_VBO, m_VAO, m_IBO;
+		VertexData* m_Buffer;
+
 		Shader m_Shader;
 
-		VertexData* m_BufferPointer;
-
-		maths::Mat4 m_View;
-		maths::Mat4 m_Proj;
+		maths::Mat4 m_View, m_Proj;
 
 		unsigned int m_SpriteCount;
+
+		utils::Timer m_Timer;
+
+		const Window& window;
 	};
 
 } }
