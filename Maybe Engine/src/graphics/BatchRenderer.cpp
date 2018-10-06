@@ -1,7 +1,5 @@
 #include "BatchRenderer.h"
 
-#include "BufferLayout.h"
-
 #define MAX_SPRITES 60000
 #define VERTEX_SIZE sizeof(float) * 6
 #define BUFFER_SIZE VERTEX_SIZE * 4 * MAX_SPRITES
@@ -51,7 +49,7 @@ namespace mb { namespace graphics {
 
 		delete indices;
 
-		m_Proj = maths::ortho(-window.GetSize().x / 2, window.GetSize().x / 2, -window.GetSize().y / 2, window.GetSize().y / 2, -5, 5);
+		m_Proj = maths::Mat4::ortho(-window.GetSize().x / 2, window.GetSize().x / 2, -window.GetSize().y / 2, window.GetSize().y / 2, -5, 5);
 
 		m_Shader.Bind();
 		m_Shader.SetUniformMat4("u_View", m_View);

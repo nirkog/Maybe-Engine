@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "Vec3.h"
+
 namespace mb { namespace maths {
 
 	class Mat4
@@ -34,6 +36,11 @@ namespace mb { namespace maths {
 		inline float* GetData() const { return (float*) m_Data; }
 
 		const Mat4 Transpose() const;
+
+		static const Mat4 translate(const Mat4& mat, const Vec3& translateVec);
+		static const Mat4 scale(const Mat4& mat, const Vec3& scaleVec);
+		static const Mat4 rotate(const Mat4& mat, float theta, const Vec3& axis);
+		static const Mat4 ortho(float left, float right, float bottom, float top, float near, float far);
 	private:
 		float m_Data[4][4];
 	};

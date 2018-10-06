@@ -8,7 +8,6 @@
 #include "Sprite2D.h"
 
 #include "..\utils\utils.h"
-#include "..\maths\maths.h"
 
 namespace mb { namespace graphics {
 

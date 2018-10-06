@@ -1,7 +1,7 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 v_Color;
+layout(location = 1) in vec4 v_Color;
 
 uniform mat4 u_View;// = mat4(1);
 uniform mat4 u_Proj;// = mat4(1);
@@ -15,7 +15,7 @@ out vec2 FragPos;
 void main()
 {
 	gl_Position = u_Proj * u_View * vec4(position, 1);
-	Color = vec4(v_Color, 1);
+	Color = v_Color;
 	LightCenter = u_LightCenter;
 	FragPos = vec2(gl_Position.xy);
 }

@@ -21,13 +21,13 @@ int main()
 
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 
-	mb::utils::EnableFpsLog();
+	mb::utils::Time::EnableFpsLog();
 
 	std::cout << glGetString(GL_RENDERER) << std::endl;
 
 	mb::graphics::BatchRenderer batch(window);
 
-	mb::maths::Vec2 spriteSize = {3.8f, 3.8f};
+	mb::maths::Vec2 spriteSize = {3.75f, 3.75f};
 	unsigned int spriteCount = 0;
 
 	for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
