@@ -17,7 +17,7 @@ int main()
 	srand((unsigned int) time(NULL));
 	mb::utils::Init();
 
-	mb::graphics::Window window(800 * 1.5f, 450 * 1.5f, "Maybe This Will Work");
+	mb::graphics::Window window(1200, 675, "Maybe This Will Work");
 
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 
@@ -27,7 +27,7 @@ int main()
 
 	mb::graphics::BatchRenderer batch(window);
 
-	mb::maths::Vec2 spriteSize = {3.75f, 3.75f};
+	mb::maths::Vec2 spriteSize = {250.0f, 250.0f};
 	unsigned int spriteCount = 0;
 
 	for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
@@ -46,7 +46,8 @@ int main()
 		for (float y = -window.GetSize().y / 2 + spriteSize.y / 2; y < window.GetSize().y / 2; y += spriteSize.y)
 		{
 			mb::graphics::Sprite2D* sprite = new mb::graphics::Sprite2D({ x, y }, spriteSize);
-			sprite->SetColor({0.2f, (float) rand() / RAND_MAX, 0.7f});
+			//sprite->SetColor({0.9f, (float) rand() / RAND_MAX, 0.9f});
+			sprite->SetTexture(index % 2 == 0 ? "./res/smiley.png" : "./res/sadface.png");
 			sprites[index] = sprite;
 			index++;
 		}

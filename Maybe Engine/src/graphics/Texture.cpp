@@ -30,6 +30,12 @@ namespace mb { namespace graphics {
 			std::cout << "Error" << std::endl;
 	}
 
+	Texture::Texture()
+		: m_ID(0), m_Width(0), m_Height(0), m_BPP(0), m_Data(nullptr)
+	{
+
+	}
+
 	Texture::~Texture()
 	{
 		glDeleteTextures(1, &m_ID);
@@ -39,6 +45,8 @@ namespace mb { namespace graphics {
 	{
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
+
+		//std::cout << m_ID << std::endl;
 	}
 
 	void Texture::Unbind() const

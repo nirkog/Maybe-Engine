@@ -147,5 +147,8 @@
     <Image Include="res\smiley.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\sadface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

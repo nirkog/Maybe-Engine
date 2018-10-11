@@ -66,6 +66,21 @@ namespace mb { namespace graphics {
 
 		glLinkProgram(id);
 
+		int success = 0;
+		glGetProgramiv(id, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			int length;
+			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+
+			char* log = (char*)malloc(length * sizeof(char));
+			glGetProgramInfoLog(id, length, &length, log);
+
+			std::cout << "ERROR LINKING SHADERS " << log << "!" << std::endl;
+		
+			free(log);
+		}
+
 		glDeleteShader(vertexID);
 		glDeleteShader(fragmentID);
 

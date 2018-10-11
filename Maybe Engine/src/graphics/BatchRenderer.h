@@ -6,8 +6,11 @@
 #include "IndexBuffer.h"
 #include "Shader.h"
 #include "Sprite2D.h"
+#include "Texture.h"
 
 #include "..\utils\utils.h"
+
+#define MAX_TEXTURES 32
 
 namespace mb { namespace graphics {
 
@@ -15,6 +18,8 @@ namespace mb { namespace graphics {
 	{
 		//maths::Vec3 position;
 		float positionX, positionY, positionZ;
+		maths::Vec2 uv;
+		float tid;
 		maths::Vec3 color;
 	};
 
@@ -32,7 +37,6 @@ namespace mb { namespace graphics {
 	private:
 		unsigned int m_VBO, m_VAO, m_IBO;
 		VertexData* m_Buffer;
-
 		Shader m_Shader;
 
 		maths::Mat4 m_View, m_Proj;
@@ -40,8 +44,12 @@ namespace mb { namespace graphics {
 		unsigned int m_SpriteCount;
 
 		utils::Timer m_Timer;
-
 		const Window& window;
+
+		maths::Vec2 defaultUV[4];
+
+		Texture m_BoundTextures[MAX_TEXTURES];
+		unsigned int m_TextureCount;
 	};
 
 } }

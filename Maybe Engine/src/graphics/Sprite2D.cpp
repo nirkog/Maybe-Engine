@@ -33,6 +33,7 @@ namespace mb { namespace graphics {
 	void Sprite2D::SetTexture(const char* path)
 	{
 		m_Texture = new Texture(path);
+		m_TexturePath = (char*) path;
 	}
 
 } }

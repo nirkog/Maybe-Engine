@@ -28,10 +28,7 @@ namespace mb { namespace graphics {
 		//~BufferLayout();
 
 		template<typename T>
-		void Push(unsigned int count)
-		{
-
-		}
+		void Push(unsigned int count);
 
 		inline unsigned int GetStride() const { return m_Stride; }
 		inline const std::vector<BufferLayoutItem> GetItems() const { return m_Items; }

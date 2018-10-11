@@ -33,7 +33,11 @@ namespace mb { namespace graphics {
 		inline const maths::Vec2& GetSize() const { return m_Size; }
 		inline const maths::Vec3& GetColor() const { return m_Color; }
 
+		inline const char* GetTexturePath() const { return m_TexturePath; }
+
 		inline bool HasTexture() const { return m_Texture == NULL; }
+
+		inline const Texture* GetTexture() const { return m_Texture; }
 
 		void Bind() const;
 		void Unbind() const;
@@ -44,6 +48,8 @@ namespace mb { namespace graphics {
 		maths::Vec3 m_Color;
 
 		Texture* m_Texture;
+
+		char* m_TexturePath;
 	};
 
 } }

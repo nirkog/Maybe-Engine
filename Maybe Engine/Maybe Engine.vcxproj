@@ -179,6 +179,7 @@
     <None Include="res\instanced.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\sadface.png" />
     <Image Include="res\smiley.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
