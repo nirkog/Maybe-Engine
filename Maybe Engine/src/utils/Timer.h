@@ -85,7 +85,7 @@ namespace mb { namespace utils {
 	private:
 		float m_Time, m_Interval;
 		unsigned int m_TimeModifier, m_IntervalCount, m_ID;
-		void (*m_IntervalFunc)(float inteval);
+		void (*m_IntervalFunc)(float);
 		bool m_ClearOnInterval, m_HasInterval;
 	};
 

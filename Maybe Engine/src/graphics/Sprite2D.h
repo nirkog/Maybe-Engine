@@ -35,7 +35,7 @@ namespace mb { namespace graphics {
 
 		inline const char* GetTexturePath() const { return m_TexturePath; }
 
-		inline bool HasTexture() const { return m_Texture == NULL; }
+		inline bool HasTexture() const { return m_Texture != nullptr; }
 
 		inline const Texture* GetTexture() const { return m_Texture; }
 

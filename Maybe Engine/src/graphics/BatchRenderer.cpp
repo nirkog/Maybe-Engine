@@ -84,34 +84,44 @@ namespace mb { namespace graphics {
 		const maths::Vec2& size = sprite->GetSize();
 		const maths::Vec3& color = sprite->GetColor();
 		const maths::Vec2& position = sprite->transform.position;
-		unsigned int tid = 0;
+		int tid = 0;
 		bool existingTexture = false;
 
-		for (unsigned int i = 0; i < m_TextureCount; i++)
+		if (sprite->HasTexture())
 		{
-			if (sprite->GetTexturePath() == m_BoundTextures[i].GetSource())
+			for (int i = 0; i < m_TextureCount; i++)
 			{
-				tid = i;
-				existingTexture = true;
+				if (sprite->GetTexturePath() == m_BoundTextures[i].GetSource())
+				{
+					tid = i;
+					existingTexture = true;
+					break;
+				}
+			}
+
+			if (!existingTexture)
+			{
+				if (m_TextureCount >= 32)
+				{
+					End();
+					Begin();
+				}
+
+				m_BoundTextures[m_TextureCount] = *sprite->GetTexture();
+				tid = m_TextureCount;
+				m_TextureCount++;
 			}
 		}
-
-		if (!existingTexture)
+		else
 		{
-			m_BoundTextures[m_TextureCount] = *sprite->GetTexture();
-			tid = m_TextureCount;
-			m_TextureCount++;
-
-			//std::cout << sprite->GetTexture()->GetSource() << " " << (float)tid / 32.0f;
-			//std::cout << std::endl;
+			tid = -1;
 		}
 
 		const float realTID = (float)tid / 32.0f;
-		
 
 		//m_Buffer->position = { -size.x / 2 + position.x, -size.y / 2 + position.y , 0 };
 		m_Buffer->positionX = -size.x / 2 + position.x;
-		m_Buffer->positionY = -size.x / 2 + position.y;
+		m_Buffer->positionY = -size.y / 2 + position.y;
 		m_Buffer->color = color;
 		m_Buffer->uv = defaultUV[0];
 		m_Buffer->tid = realTID;
@@ -156,11 +166,11 @@ namespace mb { namespace graphics {
 		/*VertexData data;
 		glGetBufferSubData(GL_ARRAY_BUFFER, sizeof(VertexData) * 3, sizeof(VertexData), &data);*/
 
-		double xpos, ypos;
-		glfwGetCursorPos((GLFWwindow*) window.GetGLFWwindow(), &xpos, &ypos);
+		//double xpos, ypos;
+		//glfwGetCursorPos((GLFWwindow*) window.GetGLFWwindow(), &xpos, &ypos);
 
 		m_Shader.Bind();
-		m_Shader.SetUniformVec2("u_LightCenter", {(float) (xpos / window.GetSize().x) * 2 - 1, (float) (abs(ypos - window.GetSize().y) / window.GetSize().y) * 2 - 1 });
+		//m_Shader.SetUniformVec2("u_LightCenter", {(float) (xpos / window.GetSize().x) * 2 - 1, (float) (abs(ypos - window.GetSize().y) / window.GetSize().y) * 2 - 1 });
 
 		for (unsigned int i = 0; i < m_TextureCount; i++)
 		{
@@ -173,21 +183,16 @@ namespace mb { namespace graphics {
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-		GLenum err;
-		while (err = glGetError())
-		{
-			std::cout << err;
-		}
-
 		glDrawElements(GL_TRIANGLES, 6 * m_SpriteCount, GL_UNSIGNED_INT, NULL);
 
 		m_SpriteCount = 0;
 		m_TextureCount = 0;
 
+		/*GLenum err;
 		while (err = glGetError())
 		{
 			std::cout << err;
-		}
+		}*/
 	}
 
 	BatchRenderer::~BatchRenderer()

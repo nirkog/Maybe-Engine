@@ -179,8 +179,11 @@
     <None Include="res\instanced.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\OpenGL 2.0\OpenGL 2.0\spaceship.png" />
+    <Image Include="res\alien.png" />
     <Image Include="res\sadface.png" />
     <Image Include="res\smiley.png" />
+    <Image Include="res\spaceship.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

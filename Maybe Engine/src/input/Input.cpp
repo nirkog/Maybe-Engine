@@ -2,7 +2,7 @@
 
 namespace mb { namespace input {
 
-	Key Input::keys[] = { Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Z, X, C, V, B, N, M, UP, DOWN, LEFT, RIGHT };
+	Key Input::keys[] = { Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Z, X, C, V, B, N, M, UP, DOWN, LEFT, RIGHT, SPACE };
 	std::vector<Key> Input::upKeys, Input::downKeys, Input::pressedKeys, Input::releasedKeys;
 	unsigned int keyCount = 0;
 
