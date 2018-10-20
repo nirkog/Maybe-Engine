@@ -8,22 +8,22 @@ namespace mb { namespace graphics {
 	Buffer::Buffer(const void* data, const unsigned int size, GLenum usage)
 		: m_ID(0)
 	{
-		glGenBuffers(1, &m_ID);
-		glBindBuffer(GL_ARRAY_BUFFER, m_ID);
-		glBufferData(GL_ARRAY_BUFFER, size, data, usage);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLCall(glGenBuffers(1, &m_ID));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_ID));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, usage));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 
 	Buffer::~Buffer()
 	{
-		glDeleteBuffers(1, &m_ID);
+		GLCall(glDeleteBuffers(1, &m_ID));
 	}
 
 	void Buffer::Bind() const
 	{
 		if (m_ActiveBuffer != m_ID)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, m_ID);
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_ID));
 			m_ActiveBuffer = m_ID;
 		}
 	}
@@ -32,7 +32,7 @@ namespace mb { namespace graphics {
 	{
 		if (m_ActiveBuffer != 0)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 			m_ActiveBuffer = 0;
 		}
 	}

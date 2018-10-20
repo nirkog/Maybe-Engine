@@ -9,12 +9,12 @@ namespace mb { namespace graphics {
 	VertexArray::VertexArray()
 		: m_ID(0)
 	{
-		glGenVertexArrays(1, &m_ID);
+		GLCall(glGenVertexArrays(1, &m_ID));
 	}
 	
 	VertexArray::~VertexArray()
 	{
-		glDeleteVertexArrays(1, &m_ID);
+		GLCall(glDeleteVertexArrays(1, &m_ID));
 	}
 
 	void VertexArray::Bind() const
@@ -22,14 +22,14 @@ namespace mb { namespace graphics {
 		if (m_ActiveArray != m_ID)
 		{
 			//std::cout << "Binding " << m_ID << std::endl;
-			glBindVertexArray(m_ID);
+			GLCall(glBindVertexArray(m_ID));
 			m_ActiveArray = m_ID;
 		}
 	}
 
 	void VertexArray::Unbind() const
 	{
-		glBindVertexArray(0);
+		GLCall(glBindVertexArray(0));
 		m_ActiveArray = 0;
 	}
 
@@ -46,8 +46,8 @@ namespace mb { namespace graphics {
 			BufferLayoutItem item = items[i];
 			//std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
 
-			glEnableVertexAttribArray(item.index);
-			glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*) offset);
+			GLCall(glEnableVertexAttribArray(item.index));
+			GLCall(glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*) offset));
 			offset += item.count * GetTypeSize(item.type);
 		}
 
@@ -69,8 +69,8 @@ namespace mb { namespace graphics {
 			BufferLayoutItem item = items[i];
 			//std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
 
-			glEnableVertexAttribArray(item.index);
-			glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*)offset);
+			GLCall(glEnableVertexAttribArray(item.index));
+			GLCall(glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*)offset));
 			offset += item.count * GetTypeSize(item.type);
 		}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL\glew.h>
+//#include <GL\glew.h>
 
 #include "Time.h"
 #include "..\input\input.h"

@@ -2,13 +2,15 @@
 
 namespace mb { namespace graphics { 
 
+	unsigned int Window::m_OpenWindows = 0;
+
 	void OnResize(GLFWwindow* window, int width, int height)
 	{
-		glViewport(0, 0, width, height);
+		GLCall(glViewport(0, 0, width, height));
 	}
 
 	Window::Window(unsigned int width, unsigned int height, const char* title)
-		: m_Size(width, height), m_Title((char*) title), m_QuitOnPress(false), m_QuitKey(0)
+		: m_Size((float) width, (float) height), m_Title((char*) title), m_QuitOnPress(false), m_QuitKey(0)
 	{
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -31,13 +33,18 @@ namespace mb { namespace graphics {
 
 		glfwSwapInterval(0);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	}
 
 	Window::~Window()
 	{
-		Destroy();
+		m_OpenWindows--;
+		if (m_OpenWindows == 0)
+		{
+			Destroy();
+			glfwTerminate();
+		}
 	}
 
 	bool Window::Open() const 
@@ -52,14 +59,14 @@ namespace mb { namespace graphics {
 	
 	void Window::Clear(float r, float g, float b, float a) const
 	{
-		glClearColor(r, g, b, a);
-		glClear(GL_COLOR_BUFFER_BIT);
+		GLCall(glClearColor(r, g, b, a));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
 	void Window::Clear(maths::Vec4 color) const
 	{
-		glClearColor(color.x, color.y, color.z, color.w);
-		glClear(GL_COLOR_BUFFER_BIT);
+		GLCall(glClearColor(color.x, color.y, color.z, color.w));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
 	void Window::Update()

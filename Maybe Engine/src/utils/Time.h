@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <GLFW\glfw3.h>
 
+#include "../graphics/GL.h"
 #include "Timer.h"
 
 namespace mb { namespace utils {

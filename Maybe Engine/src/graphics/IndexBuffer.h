@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GL.h"
+
 namespace mb { namespace graphics {
 
 	class IndexBuffer

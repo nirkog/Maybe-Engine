@@ -1,10 +1,5 @@
 #include "Shader.h"
 
-#include <fstream>
-#include <sstream>
-
-#include <GL\glew.h>
-
 namespace mb { namespace graphics {
 
 	unsigned int Shader::m_ActiveShader = 0;
@@ -31,20 +26,20 @@ namespace mb { namespace graphics {
 	{
 		const char* shaderSource = source.c_str();
 		unsigned int id;
-		id = glCreateShader(type);
-		glShaderSource(id, 1, &shaderSource, 0);
-		glCompileShader(id);
+		GLCall(id = glCreateShader(type));
+		GLCall(glShaderSource(id, 1, &shaderSource, 0));
+		GLCall(glCompileShader(id));
 
 		int success = 0;
-		glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+		GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &success));
 
 		if (!success)
 		{
 			int length;
-			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+			GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 
 			char* log = (char*)malloc(length * sizeof(char));
-			glGetShaderInfoLog(id, length, &length, log);
+			GLCall(glGetShaderInfoLog(id, length, &length, log));
 
 			const char* typeString = (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT";
 			std::cout << "ERROR SHADER:" << typeString << "!" << std::endl;
@@ -59,30 +54,30 @@ namespace mb { namespace graphics {
 	unsigned int CreateProgram(unsigned int vertexID, unsigned int fragmentID)
 	{
 		unsigned int id;
-		id = glCreateProgram();
+		GLCall(id = glCreateProgram());
 
-		glAttachShader(id, vertexID);
-		glAttachShader(id, fragmentID);
+		GLCall(glAttachShader(id, vertexID));
+		GLCall(glAttachShader(id, fragmentID));
 
-		glLinkProgram(id);
+		GLCall(glLinkProgram(id));
 
 		int success = 0;
-		glGetProgramiv(id, GL_LINK_STATUS, &success);
+		GLCall(glGetProgramiv(id, GL_LINK_STATUS, &success));
 		if (!success)
 		{
 			int length;
-			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+			GLCall(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length));
 
 			char* log = (char*)malloc(length * sizeof(char));
-			glGetProgramInfoLog(id, length, &length, log);
+			GLCall(glGetProgramInfoLog(id, length, &length, log));
 
 			std::cout << "ERROR LINKING SHADERS " << log << "!" << std::endl;
 		
 			free(log);
 		}
 
-		glDeleteShader(vertexID);
-		glDeleteShader(fragmentID);
+		GLCall(glDeleteShader(vertexID));
+		GLCall(glDeleteShader(fragmentID));
 
 		return id;
 	}
@@ -101,14 +96,14 @@ namespace mb { namespace graphics {
 
 	Shader::~Shader()
 	{
-		glDeleteProgram(m_ID);
+		//GLCall(glDeleteProgram(m_ID));
 	}
 
 	void Shader::Bind() const
 	{
 		if (m_ActiveShader != m_ID)
 		{
-			glUseProgram(m_ID);
+			GLCall(glUseProgram(m_ID));
 			m_ActiveShader = m_ID;
 			//std::cout << "Binding shader" << std::endl;
 		}
@@ -116,7 +111,7 @@ namespace mb { namespace graphics {
 
 	void Shader::Unbind() const
 	{
-		glUseProgram(0);
+		GLCall(glUseProgram(0));
 		m_ActiveShader = 0;
 	}
 
@@ -125,7 +120,7 @@ namespace mb { namespace graphics {
 		if (m_UniformLocationsCache.find(name) != m_UniformLocationsCache.end())
 			return m_UniformLocationsCache[name];
 	
-		int location = glGetUniformLocation(m_ID, name.c_str());
+		GLCall(int location = glGetUniformLocation(m_ID, name.c_str()));
 		
 		if (location == -1)
 			std::cout << "Warning: uniform " << name << " doesn't exist!" << std::endl;
@@ -136,28 +131,28 @@ namespace mb { namespace graphics {
 
 	void Shader::SetUniform1i(const std::string& name, int v)
 	{
-		glUniform1i(GetUniformLocation(name), v);
+		GLCall(glUniform1i(GetUniformLocation(name), v));
 	}
 
 	void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)
 	{
-		glUniform3f(GetUniformLocation(name), v0, v1, v2);
+		GLCall(glUniform3f(GetUniformLocation(name), v0, v1, v2));
 	}
 
 	void Shader::SetUniformVec2(const std::string& name, const maths::Vec2& v)
 	{
-		glUniform2f(GetUniformLocation(name), v.x, v.y);
+		GLCall(glUniform2f(GetUniformLocation(name), v.x, v.y));
 	}
 
 	void Shader::SetUniformVec3(const std::string& name, const maths::Vec3& v)
 	{
-		glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
+		GLCall(glUniform3f(GetUniformLocation(name), v.x, v.y, v.z));
 	}
 
 	void Shader::SetUniformMat4(const std::string& name, const maths::Mat4& mat)
 	{
 		maths::Mat4 transposed = mat.Transpose();
-		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, transposed.GetData());
+		GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, transposed.GetData()));
 	}
 
 } }

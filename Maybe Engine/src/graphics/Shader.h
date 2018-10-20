@@ -2,7 +2,10 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <fstream>
+#include <sstream>
 
+#include "GL.h"
 #include "../maths/maths.h"
 
 namespace mb { namespace graphics {

@@ -4,9 +4,6 @@
 #include <chrono>
 #include <thread>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "maths\maths.h"
 #include "graphics\graphics.h"
 #include "utils\utils.h"
@@ -222,8 +219,6 @@ int main()
 	{
 		delete aliens[i];
 	}
-
-	mb::utils::Terminate();
 
 	//std::cin.get();
 

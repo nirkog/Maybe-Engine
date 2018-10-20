@@ -152,6 +152,7 @@
     <ClInclude Include="src\graphics\BatchRenderer.h" />
     <ClInclude Include="src\graphics\Buffer.h" />
     <ClInclude Include="src\graphics\BufferLayout.h" />
+    <ClInclude Include="src\graphics\GL.h" />
     <ClInclude Include="src\graphics\graphics.h" />
     <ClInclude Include="src\graphics\IndexBuffer.h" />
     <ClInclude Include="src\graphics\Shader.h" />
@@ -179,7 +180,6 @@
     <None Include="res\instanced.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\OpenGL 2.0\OpenGL 2.0\spaceship.png" />
     <Image Include="res\alien.png" />
     <Image Include="res\sadface.png" />
     <Image Include="res\smiley.png" />

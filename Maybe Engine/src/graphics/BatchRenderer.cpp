@@ -13,25 +13,25 @@ namespace mb { namespace graphics {
 	BatchRenderer::BatchRenderer(const Window& window)
 		: m_VBO(0), m_VAO(0), m_IBO(0), m_Shader("./res/batcher.vert", "./res/batcher.frag"), m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1), window(window)
 	{
-		glGenVertexArrays(1, &m_VAO);
-		glGenBuffers(1, &m_VBO);
+		GLCall(glGenVertexArrays(1, &m_VAO));
+		GLCall(glGenBuffers(1, &m_VBO));
 
-		glBindVertexArray(m_VAO);
+		GLCall(glBindVertexArray(m_VAO));
 
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (3 * sizeof(float)));
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (5 * sizeof(float)));
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (6 * sizeof(float)));
+		GLCall(glEnableVertexAttribArray(0));
+		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) 0));
+		GLCall(glEnableVertexAttribArray(1));
+		GLCall(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (3 * sizeof(float))));
+		GLCall(glEnableVertexAttribArray(2));
+		GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (5 * sizeof(float))));
+		GLCall(glEnableVertexAttribArray(3));
+		GLCall(glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (6 * sizeof(float))));
 
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLCall(glBindVertexArray(0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
 		unsigned int* indices = new unsigned int[INDICES_SIZE];
 		unsigned int offset = 0;
@@ -48,10 +48,10 @@ namespace mb { namespace graphics {
 			offset += 4;
 		}
 
-		glGenBuffers(1, &m_IBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDEX_BUFFER_SIZE, indices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		GLCall(glGenBuffers(1, &m_IBO));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDEX_BUFFER_SIZE, indices, GL_STATIC_DRAW));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
 		delete indices;
 
@@ -61,12 +61,6 @@ namespace mb { namespace graphics {
 		m_Shader.SetUniformMat4("u_View", m_View);
 		m_Shader.SetUniformMat4("u_Proj", m_Proj);
 
-		GLenum err;
-		while (err = glGetError())
-		{
-			std::cout << err;
-		}
-
 		defaultUV[0] = {0, 0};
 		defaultUV[1] = {0, 1};
 		defaultUV[2] = {1, 1};
@@ -75,8 +69,8 @@ namespace mb { namespace graphics {
 
 	void BatchRenderer::Begin()
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		m_Buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+		GLCall(m_Buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	}
 
 	void BatchRenderer::Submit(const Sprite2D* sprite)
@@ -89,7 +83,7 @@ namespace mb { namespace graphics {
 
 		if (sprite->HasTexture())
 		{
-			for (int i = 0; i < m_TextureCount; i++)
+			for (unsigned int i = 0; i < m_TextureCount; i++)
 			{
 				if (sprite->GetTexturePath() == m_BoundTextures[i].GetSource())
 				{
@@ -157,20 +151,13 @@ namespace mb { namespace graphics {
 	void BatchRenderer::End()
 	{
 		//glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glUnmapBuffer(GL_ARRAY_BUFFER);
+		GLCall(glUnmapBuffer(GL_ARRAY_BUFFER));
 		Flush();
 	}
 
 	void BatchRenderer::Flush()
 	{
-		/*VertexData data;
-		glGetBufferSubData(GL_ARRAY_BUFFER, sizeof(VertexData) * 3, sizeof(VertexData), &data);*/
-
-		//double xpos, ypos;
-		//glfwGetCursorPos((GLFWwindow*) window.GetGLFWwindow(), &xpos, &ypos);
-
 		m_Shader.Bind();
-		//m_Shader.SetUniformVec2("u_LightCenter", {(float) (xpos / window.GetSize().x) * 2 - 1, (float) (abs(ypos - window.GetSize().y) / window.GetSize().y) * 2 - 1 });
 
 		for (unsigned int i = 0; i < m_TextureCount; i++)
 		{
@@ -180,26 +167,20 @@ namespace mb { namespace graphics {
 			m_Shader.SetUniform1i(ss.str(), i);
 		}
 
-		glBindVertexArray(m_VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+		GLCall(glBindVertexArray(m_VAO));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
 
-		glDrawElements(GL_TRIANGLES, 6 * m_SpriteCount, GL_UNSIGNED_INT, NULL);
+		GLCall(glDrawElements(GL_TRIANGLES, 6 * m_SpriteCount, GL_UNSIGNED_INT, NULL));
 
 		m_SpriteCount = 0;
 		m_TextureCount = 0;
-
-		/*GLenum err;
-		while (err = glGetError())
-		{
-			std::cout << err;
-		}*/
 	}
 
 	BatchRenderer::~BatchRenderer()
 	{
-		glDeleteBuffers(1, &m_VBO);
-		glDeleteBuffers(1, &m_IBO);
-		glDeleteVertexArrays(1, &m_VAO);
+		GLCall(glDeleteBuffers(1, &m_VBO));
+		GLCall(glDeleteBuffers(1, &m_IBO));
+		GLCall(glDeleteVertexArrays(1, &m_VAO));
 	}
 
 } }

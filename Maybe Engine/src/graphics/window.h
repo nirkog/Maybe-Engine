@@ -1,7 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GL.h"
 
 #include "..\maths\maths.h"
 
@@ -26,7 +25,7 @@ namespace mb { namespace graphics {
 		inline const GLFWwindow* GetGLFWwindow() const { return m_Window; }
 		inline const maths::Vec2 GetSize() const { return m_Size; }
 
-		inline void Destroy() { glfwDestroyWindow(m_Window); }
+		inline void Destroy() { glfwDestroyWindow(m_Window);}
 	private:
 		//void OnResize(GLFWwindow* window, int width, int height);
 	private:
@@ -36,5 +35,7 @@ namespace mb { namespace graphics {
 
 		bool m_QuitOnPress;
 		unsigned int m_QuitKey;
+
+		static unsigned int m_OpenWindows;
 	};
 } }
