@@ -28,7 +28,7 @@ namespace mb { namespace graphics {
 		void SetScale(const maths::Vec2& scale);
 		void SetRotation(float angle, const maths::Vec3& axis);*/
 		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
-		void SetTexture(const char* path);
+		void SetTexture(const Texture* texture);
 
 		inline const maths::Vec2& GetSize() const { return m_Size; }
 		inline const maths::Vec3& GetColor() const { return m_Color; }
@@ -37,7 +37,7 @@ namespace mb { namespace graphics {
 
 		inline bool HasTexture() const { return m_Texture != nullptr; }
 
-		inline const Texture* GetTexture() const { return m_Texture; }
+		inline Texture* GetTexture() const { return m_Texture; }
 
 		void Bind() const;
 		void Unbind() const;

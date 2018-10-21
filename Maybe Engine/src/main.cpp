@@ -28,37 +28,12 @@ int main()
 
 	mb::graphics::BatchRenderer renderer(window);
 
-	//mb::maths::Vec2 spriteSize = {50.0f, 50.0f};
-	//unsigned int spriteCount = 0;
-
-	//for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
-	//{
-	//	for (float y = -window.GetSize().y / 2 + spriteSize.y / 2; y < window.GetSize().y / 2; y += spriteSize.y)
-	//	{
-	//		spriteCount++;
-	//	}
-	//}
-
-	//mb::graphics::Sprite2D** sprites = (mb::graphics::Sprite2D**) malloc(sizeof(mb::graphics::Sprite2D) * spriteCount);
-	//unsigned int index = 0;
-
-	//for (float x = -window.GetSize().x / 2 + spriteSize.x / 2; x < window.GetSize().x / 2; x += spriteSize.x)
-	//{
-	//	for (float y = -window.GetSize().y / 2 + spriteSize.y / 2; y < window.GetSize().y / 2; y += spriteSize.y)
-	//	{
-	//		mb::graphics::Sprite2D* sprite = new mb::graphics::Sprite2D({ x, y }, spriteSize);
-	//		//sprite->SetColor({0.9f, (float) rand() / RAND_MAX, 0.9f});
-	//		sprite->SetTexture(index % 2 == 0 ? "./res/smiley.png" : "./res/sadface.png");
-	//		sprites[index] = sprite;
-	//		index++;
-	//	}
-	//}
-
-	//std::cout << "Drawing " << spriteCount << " sprites!" << std::endl;
+	mb::graphics::Texture spaceshipTexture("./res/spaceship.png");
+	mb::graphics::Texture alienTexture("./res/alien.png");
 
 	const float speed = 200;
 	mb::graphics::Sprite2D spaceship({ 0, -HEIGHT / 2 + 40 }, { 100, 100 });
-	spaceship.SetTexture("./res/spaceship.png");
+	spaceship.SetTexture(&spaceshipTexture);
 
 	const float bulletSpeed = 350;
 	std::vector<mb::graphics::Sprite2D> bullets;
@@ -80,7 +55,7 @@ int main()
 				{ (float) x * (alienSize.x + padding.x) - WIDTH / 2 + (start + alienSize.x / 2), (float) y * (alienSize.y + padding.y) + HEIGHT / 4 },
 				alienSize
 			);
-			alien->SetTexture("./res/alien.png");
+			alien->SetTexture(&alienTexture);
 			aliens.push_back(alien);
 		}
 	}
@@ -112,7 +87,7 @@ int main()
 		{
 			mb::graphics::Sprite2D* parent = aliens[(float) rand() / RAND_MAX * (aliens.size() - 1)];
 			mb::graphics::Sprite2D* bullet = new mb::graphics::Sprite2D(parent->transform.position, { 5, 15 });
-			bullet->SetTexture("./res/alien.png");
+			bullet->SetTexture(&alienTexture);
 			alienBullets.push_back(bullet);
 			alienShootingTimer.Clear();
 		}
@@ -161,6 +136,13 @@ int main()
 		{
 			alienBullets[i]->transform.position.y -= bulletSpeed * mb::utils::Time::GetDeltaTime();
 
+			if (alienBullets[i]->transform.position.y - 5 < -HEIGHT / 2)
+			{
+				alienBullets.erase(alienBullets.begin() + i);
+				i--;
+				continue;
+			}
+
 			if (intersects(*alienBullets[i], spaceship))
 			{
 				for (unsigned int j = 0; j < aliens.size(); j++)
@@ -175,10 +157,12 @@ int main()
 							{ (float)x * (alienSize.x + padding.x) - WIDTH / 2 + (start + alienSize.x / 2), (float)y * (alienSize.y + padding.y) + HEIGHT / 4 },
 							alienSize
 						);
-						alien->SetTexture("./res/alien.png");
+						alien->SetTexture(&alienTexture);
 						aliens.push_back(alien);
 					}
 				}
+
+				std::cout << alienBullets.size();
 
 				bullets.clear();
 				alienBullets.clear();

@@ -48,7 +48,7 @@ namespace mb { namespace graphics {
 
 		maths::Vec2 defaultUV[4];
 
-		Texture m_BoundTextures[MAX_TEXTURES];
+		Texture* m_BoundTextures[MAX_TEXTURES];
 		unsigned int m_TextureCount;
 	};
 

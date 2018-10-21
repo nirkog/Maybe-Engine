@@ -65,6 +65,13 @@ namespace mb { namespace graphics {
 		defaultUV[1] = {0, 1};
 		defaultUV[2] = {1, 1};
 		defaultUV[3] = {1, 0};
+
+		for (unsigned int i = 0; i < 32; i++)
+		{
+			std::stringstream ss;
+			ss << "u_Textures[" << i << "]";
+			m_Shader.SetUniform1i(ss.str(), i);
+		}
 	}
 
 	void BatchRenderer::Begin()
@@ -85,7 +92,7 @@ namespace mb { namespace graphics {
 		{
 			for (unsigned int i = 0; i < m_TextureCount; i++)
 			{
-				if (sprite->GetTexturePath() == m_BoundTextures[i].GetSource())
+				if (sprite->GetTexture() == m_BoundTextures[i])
 				{
 					tid = i;
 					existingTexture = true;
@@ -101,7 +108,7 @@ namespace mb { namespace graphics {
 					Begin();
 				}
 
-				m_BoundTextures[m_TextureCount] = *sprite->GetTexture();
+				m_BoundTextures[m_TextureCount] = sprite->GetTexture();
 				tid = m_TextureCount;
 				m_TextureCount++;
 			}
@@ -160,12 +167,7 @@ namespace mb { namespace graphics {
 		m_Shader.Bind();
 
 		for (unsigned int i = 0; i < m_TextureCount; i++)
-		{
-			std::stringstream ss;
-			ss << "u_Textures[" << i << "]";
-			m_BoundTextures[i].Bind(i);
-			m_Shader.SetUniform1i(ss.str(), i);
-		}
+			m_BoundTextures[i]->Bind(i);
 
 		GLCall(glBindVertexArray(m_VAO));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
