@@ -11,15 +11,24 @@
 namespace mb { namespace graphics {
 
 	BatchRenderer::BatchRenderer(const Window& window)
-		: m_VBO(0), m_VAO(0), m_IBO(0), m_Shader("./res/batcher.vert", "./res/batcher.frag"), m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1), window(window)
+		: m_VBOLayout(), m_VAO(), m_Shader("./res/batcher.vert", "./res/batcher.frag"), m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1), window(window)
 	{
-		GLCall(glGenVertexArrays(1, &m_VAO));
-		GLCall(glGenBuffers(1, &m_VBO));
 
-		GLCall(glBindVertexArray(m_VAO));
+		//GLCall(glGenBuffers(1, &m_VBO));
+		//GLCall(glGenVertexArrays(1, &m_VAO));
+
+		m_VBOLayout.Push<float>(3);
+		m_VBOLayout.Push<float>(2);
+		m_VBOLayout.Push<float>(1);
+		m_VBOLayout.Push<float>(3);
+
+		m_VBO = new Buffer(NULL, BUFFER_SIZE, GL_DYNAMIC_DRAW);
+		m_VBO->SetLayout(m_VBOLayout);
+
+		/*GLCall(glBindVertexArray(m_VAO));
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
-		GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
 
 		GLCall(glEnableVertexAttribArray(0));
 		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) 0));
@@ -31,7 +40,7 @@ namespace mb { namespace graphics {
 		GLCall(glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (6 * sizeof(float))));
 
 		GLCall(glBindVertexArray(0));
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));*/
 
 		unsigned int* indices = new unsigned int[INDICES_SIZE];
 		unsigned int offset = 0;
@@ -48,10 +57,14 @@ namespace mb { namespace graphics {
 			offset += 4;
 		}
 
-		GLCall(glGenBuffers(1, &m_IBO));
+		/*GLCall(glGenBuffers(1, &m_IBO));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDEX_BUFFER_SIZE, indices, GL_STATIC_DRAW));
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));*/
+
+		m_IBO = new IndexBuffer(indices, INDEX_BUFFER_SIZE);
+
+		m_VAO.AddBuffer(m_VBO);
 
 		delete indices;
 
@@ -76,7 +89,8 @@ namespace mb { namespace graphics {
 
 	void BatchRenderer::Begin()
 	{
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+		//GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+		//m_VBO->Bind();
 		GLCall(m_Buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	}
 
@@ -169,8 +183,10 @@ namespace mb { namespace graphics {
 		for (unsigned int i = 0; i < m_TextureCount; i++)
 			m_BoundTextures[i]->Bind(i);
 
-		GLCall(glBindVertexArray(m_VAO));
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
+		//GLCall(glBindVertexArray(m_VAO));
+		m_VAO.Bind();
+		//GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
+		m_IBO->Bind();
 
 		GLCall(glDrawElements(GL_TRIANGLES, 6 * m_SpriteCount, GL_UNSIGNED_INT, NULL));
 
@@ -180,9 +196,11 @@ namespace mb { namespace graphics {
 
 	BatchRenderer::~BatchRenderer()
 	{
-		GLCall(glDeleteBuffers(1, &m_VBO));
-		GLCall(glDeleteBuffers(1, &m_IBO));
-		GLCall(glDeleteVertexArrays(1, &m_VAO));
+		//GLCall(glDeleteBuffers(1, &m_VBO));
+		//GLCall(glDeleteBuffers(1, &m_IBO));
+		delete m_VBO;
+		delete m_IBO;
+		//GLCall(glDeleteVertexArrays(1, &m_VAO));
 	}
 
 } }

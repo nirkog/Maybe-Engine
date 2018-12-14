@@ -35,7 +35,14 @@ namespace mb { namespace graphics {
 	private:
 		void Flush();
 	private:
-		unsigned int m_VBO, m_VAO, m_IBO;
+		//unsigned int m_VAO;// , m_IBO;
+		VertexArray m_VAO;
+		BufferLayout m_VBOLayout;
+		Buffer* m_VBO;
+
+		//unsigned int m_VAO, m_VBO;
+
+		IndexBuffer* m_IBO;
 		VertexData* m_Buffer;
 		Shader m_Shader;
 

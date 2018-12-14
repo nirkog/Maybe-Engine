@@ -8,11 +8,17 @@
 #include "graphics\graphics.h"
 #include "utils\utils.h"
 #include "input\input.h"
+#include "platform\platform.h"
 
 #define WIDTH 1200
 #define HEIGHT 800
 
 bool intersects(mb::graphics::Sprite2D& first, mb::graphics::Sprite2D& second);
+
+struct a
+{
+	int x, y, z;
+};
 
 int main()
 {
@@ -23,6 +29,23 @@ int main()
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 	mb::utils::Time::EnableFpsLog();
 	std::cout << glGetString(GL_RENDERER) << std::endl;
+
+	mb::platform::Entity e;
+	mb::platform::Entity e1;
+
+	mb::platform::TransformComponent* transform = e.AddComponent<mb::platform::TransformComponent>();
+	transform->x = 1;
+	transform->y = 2;
+	transform->z = 3;
+
+	std::cout << "Will it work?" << std::endl;
+	std::cout << "X -> " << e.GetComponent<mb::platform::TransformComponent>()->x << std::endl;
+	std::cout << "Y -> " << e.GetComponent<mb::platform::TransformComponent>()->y << std::endl;
+	std::cout << "Z -> " << e.GetComponent<mb::platform::TransformComponent>()->z << std::endl;
+
+
+	mb::platform::ComponentManager::Destroy();
+
 
 	mb::maths::Vec4 clearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -85,7 +108,7 @@ int main()
 
 		if (alienShootingTimer.Time() >= alienShootingRate)
 		{
-			mb::graphics::Sprite2D* parent = aliens[(float) rand() / RAND_MAX * (aliens.size() - 1)];
+			mb::graphics::Sprite2D* parent = aliens[(const unsigned int) ((float) (rand() / RAND_MAX) * (aliens.size() - 1))];
 			mb::graphics::Sprite2D* bullet = new mb::graphics::Sprite2D(parent->transform.position, { 5, 15 });
 			bullet->SetTexture(&alienTexture);
 			alienBullets.push_back(bullet);
