@@ -147,6 +147,7 @@
     <ClCompile Include="src\maths\vec4.cpp" />
     <ClCompile Include="src\platform\ComponentManager.cpp" />
     <ClCompile Include="src\platform\Entity.cpp" />
+    <ClCompile Include="src\platform\SystemManager.cpp" />
     <ClCompile Include="src\utils\Time.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
     <ClCompile Include="src\platform\System.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="src\platform\ComponentManager.h" />
     <ClInclude Include="src\platform\Entity.h" />
     <ClInclude Include="src\platform\platform.h" />
+    <ClInclude Include="src\platform\SystemManager.h" />
     <ClInclude Include="src\utils\Time.h" />
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\utils.h" />

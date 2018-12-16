@@ -9,6 +9,7 @@
 #include "Texture.h"
 
 #include "..\utils\utils.h"
+#include "..\platform\Component.h"
 
 #define MAX_TEXTURES 32
 
@@ -31,6 +32,7 @@ namespace mb { namespace graphics {
 
 		void Begin();
 		void Submit(const Sprite2D* sprite);
+		void Submit(const platform::RenderComponent* render, const platform::TransformComponent* transform);
 		void End();
 	private:
 		void Flush();

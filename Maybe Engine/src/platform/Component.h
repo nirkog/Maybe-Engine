@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+#include "../maths/vec3.h"
+#include "../graphics/Sprite2D.h"
+
 namespace mb { namespace platform {
 
 	static unsigned int lastID = 0;
@@ -21,12 +24,14 @@ namespace mb { namespace platform {
 
 	struct TransformComponent : public Component<TransformComponent>
 	{
-		unsigned int x = 0, y = 0, z = 0;
+		maths::Vec2 position, scale, rotationAxis;
+		maths::Vec2 velocity, accleration;
+		float rotationAngle;
 	};
 
-	struct HealthComponent : public Component<HealthComponent>
+	struct RenderComponent : public Component<RenderComponent>
 	{
-		float hp = 0;
+		graphics::Sprite2D sprite;
 	};
 
 }}

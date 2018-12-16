@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <memory>
 
 #include "ComponentManager.h"
 
@@ -18,7 +17,8 @@ namespace mb { namespace platform {
 		template<typename T>
 		T* AddComponent()
 		{
-			return ComponentManager::AddComponent<T>(m_ID);
+			m_ComponentIds.push_back(T::ID);
+			return ComponentManager::AddComponent<T>(m_ID, m_ComponentIds);
 		}
 
 		template <typename T>
@@ -28,8 +28,10 @@ namespace mb { namespace platform {
 		}
 	public:
 		static unsigned int lastID;
+		static std::vector<unsigned int> freeIDs;
 	private:
 		unsigned int m_ID;
+		std::vector<unsigned int> m_ComponentIds;
 	};
 
 }}

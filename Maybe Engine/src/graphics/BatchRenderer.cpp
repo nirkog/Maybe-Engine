@@ -169,6 +169,81 @@ namespace mb { namespace graphics {
 		m_SpriteCount++;
 	}
 
+	void BatchRenderer::Submit(const platform::RenderComponent* render, const platform::TransformComponent* transform)
+	{
+		const maths::Vec2& size = render->sprite.GetSize();
+		const maths::Vec3& color = render->sprite.GetColor();
+		const maths::Vec2& position = transform->position;
+		int tid = 0;
+		bool existingTexture = false;
+
+		if (render->sprite.HasTexture())
+		{
+			for (unsigned int i = 0; i < m_TextureCount; i++)
+			{
+				if (render->sprite.GetTexture() == m_BoundTextures[i])
+				{
+					tid = i;
+					existingTexture = true;
+					break;
+				}
+			}
+
+			if (!existingTexture)
+			{
+				if (m_TextureCount >= 32)
+				{
+					End();
+					Begin();
+				}
+
+				m_BoundTextures[m_TextureCount] = render->sprite.GetTexture();
+				tid = m_TextureCount;
+				m_TextureCount++;
+			}
+		}
+		else
+		{
+			tid = -1;
+		}
+
+		const float realTID = (float)tid / 32.0f;
+
+		//m_Buffer->position = { -size.x / 2 + position.x, -size.y / 2 + position.y , 0 };
+		m_Buffer->positionX = -size.x / 2 + position.x;
+		m_Buffer->positionY = -size.y / 2 + position.y;
+		m_Buffer->color = color;
+		m_Buffer->uv = defaultUV[0];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		//m_Buffer->position = { -size.x / 2 + position.x, size.y / 2 + position.y, 0 };
+		m_Buffer->positionX = -size.x / 2 + position.x;
+		m_Buffer->positionY = size.y / 2 + position.y;
+		m_Buffer->color = color;
+		m_Buffer->uv = defaultUV[1];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		//m_Buffer->position = { size.x / 2 + position.x, size.y / 2 + position.y, 0 };
+		m_Buffer->positionX = size.x / 2 + position.x;
+		m_Buffer->positionY = size.y / 2 + position.y;
+		m_Buffer->color = color;
+		m_Buffer->uv = defaultUV[2];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		//m_Buffer->position = { size.x / 2 + position.x, -size.y / 2 + position.y, 0 };
+		m_Buffer->positionX = size.x / 2 + position.x;
+		m_Buffer->positionY = -size.y / 2 + position.y;
+		m_Buffer->color = color;
+		m_Buffer->uv = defaultUV[3];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		m_SpriteCount++;
+	}
+
 	void BatchRenderer::End()
 	{
 		//glBindBuffer(GL_ARRAY_BUFFER, m_VBO);

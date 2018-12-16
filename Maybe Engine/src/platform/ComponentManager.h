@@ -12,12 +12,12 @@ namespace mb { namespace platform {
 	{
 	public:
 		template<typename T>
-		static T* AddComponent(const unsigned int entityID)
+		static T* AddComponent(const unsigned int entityID, std::vector<unsigned int> componentIds)
 		{
 			unsigned int id = T::ID;
 			if (data.find(id) == data.end())
 			{ 
-				std::cout << "New Map! (component id is " << id << ")" << std::endl;
+				//std::cout << "New Map! (component id is " << id << ")" << std::endl;
 
 				std::map<unsigned int, BaseComponent*> newComponentMap;
 				T* comp = new T();
@@ -31,11 +31,13 @@ namespace mb { namespace platform {
 
 				componentCount++;
 
+				SystemManager::AddEntity(componentIds, entityID);
+
 				return comp;
 			}
 			else
 			{
-				std::cout << "Existing Map! (component id is " << id << ")" << std::endl;
+				//std::cout << "Existing Map! (component id is " << id << ")" << std::endl;
 
 				std::map<unsigned int, BaseComponent*> &componentMap = data.find(id)->second;
 
@@ -52,6 +54,8 @@ namespace mb { namespace platform {
 				pair.second = comp;
 
 				componentMap.insert(pair);
+
+				SystemManager::AddEntity(componentIds, entityID);
 
 				return comp;
 			}
@@ -90,6 +94,8 @@ namespace mb { namespace platform {
 
 			return nullptr;
 		}
+
+		static void DestroyEntityData(unsigned int id);
 
 		static void Destroy()
 		{
