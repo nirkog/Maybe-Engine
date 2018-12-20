@@ -29,6 +29,14 @@ namespace mb { namespace platform {
 				newComponentMap.insert(pair);
 				data.insert({id, newComponentMap});
 
+				std::pair<unsigned int, unsigned int> sizePair;
+				sizePair.first = id;
+				sizePair.second = sizeof(T);
+
+				//std::cout << "Adding component with size " << sizePair.second << std::endl;
+
+				componentSizes.insert(sizePair);
+
 				componentCount++;
 
 				SystemManager::AddEntity(componentIds, entityID);
@@ -43,7 +51,7 @@ namespace mb { namespace platform {
 
 				if (componentMap.find(entityID) != componentMap.end())
 				{
-					std::cout << "Warning: Trying to add an existing component to an entity!" << std::endl;
+					std::cout << "Warning: Trying to add an existing component to an entity! eid " << entityID << std::endl;
 					return (T*) componentMap.find(entityID)->second;
 				}
 
@@ -72,6 +80,8 @@ namespace mb { namespace platform {
 				for (auto& comp : componentMap)
 				{
 					std::cout << "Entity id " << comp.first << std::endl;
+					if (comp.second == nullptr)
+						std::cout << "Component is null!" << std::endl;
 				}
 			}
 		}
@@ -97,6 +107,8 @@ namespace mb { namespace platform {
 
 		static void DestroyEntityData(unsigned int id);
 
+		static void DuplicateEntity(unsigned int originalID, unsigned int duplicateID, std::vector<unsigned int> componentIds);
+
 		static void Destroy()
 		{
 			for (std::pair<unsigned int, std::map<unsigned int, BaseComponent*>> compMap : data)
@@ -109,6 +121,7 @@ namespace mb { namespace platform {
 		}
 	private:
 		static std::map<unsigned int, std::map<unsigned int, BaseComponent*>> data;
+		static std::map<unsigned int, unsigned int> componentSizes;
 		static unsigned int componentCount;
 	};
 

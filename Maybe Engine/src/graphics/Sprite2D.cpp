@@ -18,7 +18,6 @@ namespace mb { namespace graphics {
 
 	Sprite2D::~Sprite2D()
 	{
-		std::cout << "Destorying" << std::endl;
 	}
 
 	void Sprite2D::Bind() const

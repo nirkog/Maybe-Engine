@@ -9,6 +9,8 @@
 #include "utils\utils.h"
 #include "input\input.h"
 #include "platform\platform.h"
+#include "physics\physics.h"
+#include "Systems.h"
 
 #define WIDTH 1200
 #define HEIGHT 800
@@ -28,45 +30,61 @@ int main()
 	window.QuitOnPress(GLFW_KEY_ESCAPE);
 
 	Time::EnableFpsLog();
-	std::cout << glGetString(GL_RENDERER) << std::endl;
+	LogOpenGLDetails();
 
-	Vec4 clearColor(0.2f, 0.6f, 0.75f, 1.0f);
+	Vec4 clearColor(0.05f, 0.05f, 0.05f, 1.0f);
+
+	Log::Debug("Message number 1");
+	Log::Debug("Message number 2");
+
+	Log::Test("The number is {}", 1);
 
 	BatchRenderer renderer(window);
 
-	Texture spaceshipTexture("./res/spaceship.png");
-	Texture alienTexture("./res/alien.png");
+	SystemManager::AddSystem(new InputSystem());
+	SystemManager::AddSystem(new MovementSystem(window));
 
-	SystemManager::AddSystem(new MovementSystem());
+	std::cout << InputComponent::ID << ", " << RenderComponent::ID << ", " << TransformComponent::ID << std::endl;
 
-	float gravity = 275.0f;
+	Entity paddle1("PADDLE1");
+	auto* renderComp = paddle1.AddComponent<RenderComponent>();
+	renderComp->sprite = { { 0, 0 }, { 15, 125 } };
+	renderComp->sprite.SetColor({ 0.95f, 0.95f, 0.95f });
+	auto* transformComp = paddle1.AddComponent<TransformComponent>();
+	transformComp->position = { -window.GetSize().x / 2 + 20, 0 };
+	auto* inputComp = paddle1.AddComponent<InputComponent>();
+	inputComp->upKey = UP_KEY;
+	inputComp->downKey = DOWN_KEY;
+	auto* scoreComp = paddle1.AddComponent<ScoreComponent>();
+	scoreComp->score = 0;
 
-	Sprite2D playerSprite({ 0, -300 }, {100, 100}); 
-	playerSprite.SetTexture(&alienTexture);
+	Entity paddle2("PADDLE2");
+	paddle1.Duplicate(&paddle2);
+	paddle2.GetComponent<TransformComponent>()->position.x = window.GetSize().x / 2 - 20;
+	auto* inputComp2 = paddle2.GetComponent<InputComponent>();
+	inputComp2->upKey = W_KEY;
+	inputComp2->downKey = S_KEY;
 
-	Entity player;
-	auto* playerTransform = player.AddComponent<TransformComponent>();
-	playerTransform->position = {0, -200};
-	auto* playerRender = player.AddComponent<RenderComponent>();
-	playerRender->sprite = playerSprite;
-
-	SystemManager::Init();
+	Entity ball("BALL");
+	auto* ballRenderComp = ball.AddComponent<RenderComponent>();
+	ballRenderComp->sprite = { { 0, 0 }, { 30, 30 } };
+	ballRenderComp->sprite.SetColor({ 0.9f, 0.9f, 0.9f });
+	auto* ballTransformComp = ball.AddComponent<TransformComponent>();
+	ballTransformComp->position = { 0, 0 };
+	ballTransformComp->velocity = { 100, 350 };
 
 	while (window.Open())
 	{
 		Update(window);
 		window.Clear(clearColor);
 
-		if (Input::IsKeyDown(SPACE_KEY) && playerTransform->velocity.y == 0)
-		{
-			playerTransform->velocity = { 0, 300 };
-		}
-
 		SystemManager::Update();
 
 		renderer.Begin();
 
-		renderer.Submit(playerRender, playerTransform);
+		renderer.Submit(paddle1);
+		renderer.Submit(paddle2);
+		renderer.Submit(ball);
 
 		renderer.End();
 

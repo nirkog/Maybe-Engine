@@ -6,23 +6,15 @@ namespace mb { namespace platform {
 
 	void SystemManager::AddSystem(System* system)
 	{
-		system->OnInit();
 		systems.push_back(system);
 	}
 
-	void SystemManager::Init()
-	{
-		for (unsigned int i = 0; i < systems.size(); i++)
-		{
-			systems[i]->OnInit();
-		}
-	}
 
 	void SystemManager::Update()
 	{
 		for (unsigned int i = 0; i < systems.size(); i++)
 		{
-			systems[i]->OnUpdate();
+			systems[i]->OnUpdate(utils::Time::GetDeltaTime());
 		}
 	}
 

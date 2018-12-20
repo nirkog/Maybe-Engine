@@ -23,8 +23,6 @@ static bool GLLogCall(const char* function, const char* file, int line)
 	return true;
 }
 
-#define DEBUG 1
-
 #ifndef ASSERT
 #define ASSERT(x) if (!(x)) __debugbreak;
 #endif

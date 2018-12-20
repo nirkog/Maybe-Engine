@@ -169,8 +169,11 @@ namespace mb { namespace graphics {
 		m_SpriteCount++;
 	}
 
-	void BatchRenderer::Submit(const platform::RenderComponent* render, const platform::TransformComponent* transform)
+	void BatchRenderer::Submit(platform::Entity& entity)
 	{
+		const auto* render = entity.GetComponent<platform::RenderComponent>();
+		const auto* transform = entity.GetComponent<platform::TransformComponent>();
+
 		const maths::Vec2& size = render->sprite.GetSize();
 		const maths::Vec3& color = render->sprite.GetColor();
 		const maths::Vec2& position = transform->position;

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ComponentManager.h"
+#include "EntityManager.h"
 
 namespace mb { namespace platform {
 
@@ -10,6 +11,7 @@ namespace mb { namespace platform {
 	{
 	public:
 		Entity();
+		Entity(const char* tag);
 		~Entity();
 
 		inline unsigned int GetID() const { return m_ID; }
@@ -26,12 +28,24 @@ namespace mb { namespace platform {
 		{
 			return ComponentManager::GetComponent<T>(m_ID);
 		}
+
+		void ClearComponentIds() { m_ComponentIds.clear(); };
+		void AddComponentId(unsigned int id) { m_ComponentIds.push_back(id); }
+
+		void Duplicate(Entity* duplicate);
+
+		void SetTag(const char* tag)
+		{
+			EntityManager::SetTag(m_ID, tag);
+			m_Tag = tag;
+		}
 	public:
 		static unsigned int lastID;
 		static std::vector<unsigned int> freeIDs;
 	private:
 		unsigned int m_ID;
 		std::vector<unsigned int> m_ComponentIds;
+		const char* m_Tag;
 	};
 
 }}

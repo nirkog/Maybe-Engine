@@ -11,7 +11,6 @@ namespace mb { namespace platform {
 	public:
 		static void AddSystem(System* system);
 		static void AddEntity(std::vector<unsigned int> ids, unsigned int entityID);
-		static void Init();
 		static void Update();
 		static void Destroy();
 	private:

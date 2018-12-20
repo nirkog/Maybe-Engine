@@ -6,6 +6,7 @@ namespace mb { namespace utils {
 	{
 		glfwInit();
 		input::Input::Init();
+		Log::Init();
 	}
 
 	void Terminate()
@@ -17,5 +18,11 @@ namespace mb { namespace utils {
 	{
 		Time::Update();
 		input::Input::Update(window);
+	}
+
+	void LogOpenGLDetails()
+	{
+		GLCall(std::cout << "Using OpenGL version " << glGetString(GL_VERSION) << std::endl);
+		GLCall(std::cout << "Running on a " << glGetString(GL_RENDERER) << std::endl);
 	}
 } }

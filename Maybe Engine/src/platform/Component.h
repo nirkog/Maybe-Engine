@@ -4,13 +4,13 @@
 
 #include "../maths/vec3.h"
 #include "../graphics/Sprite2D.h"
+#include "../input/input.h"
 
 namespace mb { namespace platform {
 
-	static unsigned int lastID = 0;
-
 	struct BaseComponent
 	{
+		static unsigned int lastID;
 	};
 
 	template<typename T>
@@ -32,6 +32,16 @@ namespace mb { namespace platform {
 	struct RenderComponent : public Component<RenderComponent>
 	{
 		graphics::Sprite2D sprite;
+	};
+
+	struct InputComponent : public Component<InputComponent>
+	{
+		unsigned int upKey, downKey;
+	};
+
+	struct ScoreComponent : public Component<ScoreComponent>
+	{
+		unsigned int score;
 	};
 
 }}
