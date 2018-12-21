@@ -71,12 +71,17 @@ public:
 					if (transform->position.x > 0) ComponentManager::GetComponent<ScoreComponent>(paddle1ID)->score++;
 					else ComponentManager::GetComponent<ScoreComponent>(paddle2ID)->score++;
 
+					const unsigned int paddle1Score = ComponentManager::GetComponent<ScoreComponent>(paddle1ID)->score;
+					const unsigned int paddle2Score = ComponentManager::GetComponent<ScoreComponent>(paddle2ID)->score;
+
 					std::stringstream stream;
-					stream << ComponentManager::GetComponent<ScoreComponent>(paddle1ID)->score << " - " << ComponentManager::GetComponent<ScoreComponent>(paddle2ID)->score;
+					stream << paddle1Score << " - " << paddle2Score;
 					m_Window->SetTitle(stream.str().c_str());
 
+					mb::utils::Log::Error("You suck! the score is {} - {}!", paddle1Score, paddle2Score);
+
 					transform->position = mb::maths::Vec2(0, 0);
-					std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+					std::this_thread::sleep_for(std::chrono::milliseconds(750));
 				}
 				else if (mb::physics::CollisionDetection::Intersect(id, paddle1ID) || mb::physics::CollisionDetection::Intersect(id, paddle2ID))
 				{

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <ctime>
 #include <cstdarg>
+#include <sstream>
 #include <regex>
 
 #include "rang.hpp"
@@ -30,11 +32,45 @@ namespace mb { namespace utils {
 	
 		static TimeFormat GetTime();
 
-		static void Debug(const char* message);
-		static void Error(const char* message);
+		template<typename ...Param>
+		static void Debug(const char* message, const Param& ...params)
+		{
+#ifdef _DEBUG
+			LogMessageWithTime(GetFullMessage(message, params...).c_str(), debugColors);
+#endif
+		}
 
 		template<typename ...Param>
-		static void Test(const char* message, const Param& ...params)
+		static void Error(const char* message, const Param& ...params)
+		{
+			LogMessageWithTime(GetFullMessage(message, params...).c_str(), errorColors);
+		}
+
+		static void SetColor(int mode, ConsoleColor color);
+	private:
+		template<typename First, typename ...Param>
+		static std::string FillIn(std::vector<std::string> parts, std::string& str, const First& first)
+		{
+			//std::cout << first << std::endl;
+			std::stringstream stream;
+			str.append(parts[0]);
+			stream << str << first;
+			parts.erase(parts.begin());
+			stream << parts[0];
+			return stream.str();
+		}
+
+		template<typename First, typename ...Param>
+		static std::string FillIn(std::vector<std::string> parts, std::string& str, const First& first, const Param& ...params)
+		{
+			str.append(parts[0]);
+			str.append(std::to_string(first));
+			parts.erase(parts.begin());
+
+			return FillIn(parts, str, params...);
+		}
+
+		static std::vector<std::string> GetParts(const char* message)
 		{
 			std::string str(message);
 			std::regex regex("(\\{\\})");
@@ -47,10 +83,22 @@ namespace mb { namespace utils {
 				parts.push_back(str.substr(0, matches.position()));
 				str = matches.suffix().str();
 			}
+
+			parts.push_back(str);
+
+			return parts;
 		}
 
-		static void SetColor(int mode, ConsoleColor color);
-	private:
+		template<typename First, typename ...Param>
+		static std::string GetFullMessage(const char* message, const First& first, const Param& ...params)
+		{
+			std::string str;
+			std::vector<std::string> parts = GetParts(message);
+			std::string fullMessage = FillIn(parts, str, first, params...);
+
+			return fullMessage;
+		}
+
 		static void LogMessageWithTime(const char* message, ConsoleColor colors);
 	private:
 		static ConsoleColor reset;

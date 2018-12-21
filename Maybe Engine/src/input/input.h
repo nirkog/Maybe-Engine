@@ -39,7 +39,8 @@ namespace mb { namespace input {
 		DOWN_KEY = GLFW_KEY_DOWN,
 		LEFT_KEY = GLFW_KEY_LEFT,
 		RIGHT_KEY = GLFW_KEY_RIGHT,
-		SPACE_KEY = GLFW_KEY_SPACE
+		SPACE_KEY = GLFW_KEY_SPACE,
+		ESCAPE_KEY = GLFW_KEY_ESCAPE
 	};
 
 	class Input 

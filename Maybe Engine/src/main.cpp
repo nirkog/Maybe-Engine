@@ -27,24 +27,17 @@ int main()
 	Init();
 
 	Window window(WIDTH, HEIGHT, "Maybe This Will Work");
-	window.QuitOnPress(GLFW_KEY_ESCAPE);
+	window.QuitOnPress(ESCAPE_KEY);
 
 	Time::EnableFpsLog();
 	LogOpenGLDetails();
 
 	Vec4 clearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
-	Log::Debug("Message number 1");
-	Log::Debug("Message number 2");
-
-	Log::Test("The number is {}", 1);
-
 	BatchRenderer renderer(window);
 
 	SystemManager::AddSystem(new InputSystem());
 	SystemManager::AddSystem(new MovementSystem(window));
-
-	std::cout << InputComponent::ID << ", " << RenderComponent::ID << ", " << TransformComponent::ID << std::endl;
 
 	Entity paddle1("PADDLE1");
 	auto* renderComp = paddle1.AddComponent<RenderComponent>();

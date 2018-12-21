@@ -1,5 +1,7 @@
 #include "utils.h"
 
+#include "Log.h"
+
 namespace mb { namespace utils {
 
 	void Init()
@@ -22,7 +24,7 @@ namespace mb { namespace utils {
 
 	void LogOpenGLDetails()
 	{
-		GLCall(std::cout << "Using OpenGL version " << glGetString(GL_VERSION) << std::endl);
-		GLCall(std::cout << "Running on a " << glGetString(GL_RENDERER) << std::endl);
+		GLCall(Log::Debug("Using OpenGL version {}", glGetString(GL_VERSION)));
+		GLCall(Log::Debug("Running on a {}", glGetString(GL_RENDERER)));
 	}
 } }

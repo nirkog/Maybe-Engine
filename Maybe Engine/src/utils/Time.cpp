@@ -1,6 +1,7 @@
 #include "Time.h"
 
 #include <iostream>
+#include "Log.h"
 
 namespace mb { namespace utils {
 
@@ -24,7 +25,7 @@ namespace mb { namespace utils {
 
 		if (fpsTimer >= 1.0f)
 		{
-			if (logFPS) std::cout << "fps: " << frames << std::endl;
+			if (logFPS) Log::Debug("FPS: {}", frames);
 			currentFPS = frames;
 			fpsTimer = 0;
 			frames = 0;

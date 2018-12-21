@@ -40,22 +40,18 @@ namespace mb { namespace utils {
 	{
 		TimeFormat time = GetTime();
 
+		const char* zeros[3];
+		if (time.hour < 10) zeros[0] = "0"; else zeros[0] = "";
+		if (time.minute < 10) zeros[1] = "0"; else zeros[1] = "";
+		if (time.second < 10) zeros[2] = "0"; else zeros[2] = "";
+
 		std::cout << colors.bg << colors.fg;
-		std::cout << "[" << time.hour << ":" << time.minute << ":" << time.second << "] " << message << std::endl;
+		std::cout << "[" << 
+			zeros[0] << time.hour << ":" <<
+			zeros[1] << time.minute << ":" <<
+			zeros[2] << time.second << "] " <<
+			message << std::endl;
 		std::cout << reset.bg << reset.fg;
-	}
-
-	void Log::Debug(const char* message)
-	{
-	#ifdef _DEBUG
-		LogMessageWithTime(message, debugColors);
-	#endif
-	}
-
-	void Log::Error(const char* message)
-	{
-		std::cout << rang::style::bold;
-		LogMessageWithTime(message, errorColors);
 	}
 
 } }
