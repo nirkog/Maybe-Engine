@@ -12,6 +12,9 @@
 #define DEBUG_LOG 0
 #define ERROR_LOG 1
 
+#define REGULAR_COLOR_MODE 0
+#define BRIGHT_COLOR_MODE 1
+
 namespace mb { namespace utils {
 
 	struct TimeFormat
@@ -21,8 +24,49 @@ namespace mb { namespace utils {
 
 	struct ConsoleColor
 	{
-		rang::bg bg;
+		rang::bg bg = rang::bg::black;
 		rang::fg fg;
+		rang::fgB fgB;
+		rang::bgB bgB;
+		unsigned int fgMode = REGULAR_COLOR_MODE;
+		unsigned int bgMode = REGULAR_COLOR_MODE;
+
+		void SetForegroundColor(rang::fg color)
+		{
+			fgMode = REGULAR_COLOR_MODE;
+			fg = color;
+		}
+
+		void SetBrightForegroundColor(rang::fgB color)
+		{
+			fgMode = BRIGHT_COLOR_MODE;
+			fgB = color;
+		}
+
+		void SetBackgroundColor(rang::bg color)
+		{
+			bgMode = REGULAR_COLOR_MODE;
+			bg = color;
+		}
+
+		void SetBrightBackgroundColor(rang::bgB color)
+		{
+			bgMode = BRIGHT_COLOR_MODE;
+			bgB = color;
+		}
+
+		void SetOutputColors()
+		{
+			if (bgMode == REGULAR_COLOR_MODE)
+				std::cout << bg;
+			else if (bgMode == BRIGHT_COLOR_MODE)
+				std::cout << bgB;
+
+			if (fgMode == REGULAR_COLOR_MODE)
+				std::cout << fg;
+			else if (fgMode == BRIGHT_COLOR_MODE)
+				std::cout << fgB;
+		}
 	};
 
 	class Log
@@ -38,6 +82,12 @@ namespace mb { namespace utils {
 #ifdef _DEBUG
 			LogMessageWithTime(GetFullMessage(message, params...).c_str(), debugColors);
 #endif
+		}
+
+		template<typename ...Param>
+		static void Warn(const char* message, const Param& ...params)
+		{
+			LogMessageWithTime(GetFullMessage(message, params...).c_str(), warningColors);
 		}
 
 		template<typename ...Param>
@@ -99,10 +149,16 @@ namespace mb { namespace utils {
 			return fullMessage;
 		}
 
+		static std::string GetFullMessage(const char* message)
+		{
+			return std::string(message);
+		}
+
 		static void LogMessageWithTime(const char* message, ConsoleColor colors);
 	private:
 		static ConsoleColor reset;
 		static ConsoleColor debugColors;
+		static ConsoleColor warningColors;
 		static ConsoleColor errorColors;
 	};
 

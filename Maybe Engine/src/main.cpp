@@ -1,8 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
-#include <chrono>
-#include <thread>
 
 #include "maths\maths.h"
 #include "graphics\graphics.h"
@@ -23,25 +19,22 @@ using namespace mb::input;
 
 int main()
 {
-	srand((unsigned int) time(NULL));
 	Init();
 
 	Window window(WIDTH, HEIGHT, "Maybe This Will Work");
 	window.QuitOnPress(ESCAPE_KEY);
+	window.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	Time::EnableFpsLog();
 	LogOpenGLDetails();
 
-	Vec4 clearColor(0.05f, 0.05f, 0.05f, 1.0f);
-
-	BatchRenderer renderer(window);
-
 	SystemManager::AddSystem(new InputSystem());
 	SystemManager::AddSystem(new MovementSystem(window));
+	SystemManager::AddSystem(new coreSystems::RenderingSystem(window));
 
 	Entity paddle1("PADDLE1");
 	auto* renderComp = paddle1.AddComponent<RenderComponent>();
-	renderComp->sprite = { { 0, 0 }, { 15, 125 } };
+	renderComp->sprite = { { 15, 125 } };
 	renderComp->sprite.SetColor({ 0.95f, 0.95f, 0.95f });
 	auto* transformComp = paddle1.AddComponent<TransformComponent>();
 	transformComp->position = { -window.GetSize().x / 2 + 20, 0 };
@@ -60,7 +53,7 @@ int main()
 
 	Entity ball("BALL");
 	auto* ballRenderComp = ball.AddComponent<RenderComponent>();
-	ballRenderComp->sprite = { { 0, 0 }, { 30, 30 } };
+	ballRenderComp->sprite = { { 30, 30 } };
 	ballRenderComp->sprite.SetColor({ 0.9f, 0.9f, 0.9f });
 	auto* ballTransformComp = ball.AddComponent<TransformComponent>();
 	ballTransformComp->position = { 0, 0 };
@@ -69,17 +62,9 @@ int main()
 	while (window.Open())
 	{
 		Update(window);
-		window.Clear(clearColor);
+		window.Clear();
 
 		SystemManager::Update();
-
-		renderer.Begin();
-
-		renderer.Submit(paddle1);
-		renderer.Submit(paddle2);
-		renderer.Submit(ball);
-
-		renderer.End();
 
 		window.Update();
 	}

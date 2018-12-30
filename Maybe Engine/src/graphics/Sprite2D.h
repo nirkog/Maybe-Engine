@@ -1,8 +1,7 @@
 #pragma once
 
 #include "..\maths\maths.h"
-#include "Buffer.h"
-#include "VertexArray.h"
+#include "..\utils\Log.h"
 #include "Texture.h"
 
 namespace mb { namespace graphics {
@@ -12,21 +11,16 @@ namespace mb { namespace graphics {
 		maths::Vec2 position, scale;
 		maths::Vec3 rotationAxis;
 		float rotationAngle;
-
-		Transform(maths::Vec2 position, maths::Vec2 scale, maths::Vec3 rotationAxis, float angle)
-			: position(position.x, position.y), scale(scale.x, scale.y), rotationAxis(rotationAxis.x, rotationAxis.y, rotationAxis.z), rotationAngle(angle) {}
 	};
 
 	class Sprite2D
 	{
 	public:
 		Sprite2D(const maths::Vec2& position, const maths::Vec2& size);
+		Sprite2D(const maths::Vec2& size);
 		Sprite2D();
 		~Sprite2D();
 
-		/*void SetPosition(const maths::Vec2& position);
-		void SetScale(const maths::Vec2& scale);
-		void SetRotation(float angle, const maths::Vec3& axis);*/
 		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
 		void SetTexture(const Texture* texture);
 
@@ -41,6 +35,8 @@ namespace mb { namespace graphics {
 
 		void Bind() const;
 		void Unbind() const;
+	private:
+		void InitializeTransform(const maths::Vec2& position);
 	public:
 		Transform transform;
 	private:

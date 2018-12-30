@@ -42,8 +42,9 @@ namespace mb { namespace graphics {
 			GLCall(glGetShaderInfoLog(id, length, &length, log));
 
 			const char* typeString = (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT";
-			std::cout << "ERROR SHADER:" << typeString << "!" << std::endl;
-			std::cout << log << std::endl;
+
+			utils::Log::Error("ERROR COMPILING SHADER: {}!", typeString);
+			utils::Log::Error("{}", log);
 
 			free(log);
 		}
@@ -71,7 +72,7 @@ namespace mb { namespace graphics {
 			char* log = (char*)malloc(length * sizeof(char));
 			GLCall(glGetProgramInfoLog(id, length, &length, log));
 
-			std::cout << "ERROR LINKING SHADERS " << log << "!" << std::endl;
+			utils::Log::Error("ERROR LINKING SHADER {}!", log);
 		
 			free(log);
 		}
@@ -123,7 +124,7 @@ namespace mb { namespace graphics {
 		GLCall(int location = glGetUniformLocation(m_ID, name.c_str()));
 		
 		if (location == -1)
-			std::cout << "Warning: uniform " << name << " doesn't exist!" << std::endl;
+			utils::Log::Warn("Warning: uniform {} doesn't exist!", name);
 
 		m_UniformLocationsCache[name] = location;
 		return location;

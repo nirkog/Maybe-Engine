@@ -69,6 +69,12 @@ namespace mb { namespace graphics {
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
+	void Window::Clear() const
+	{
+		GLCall(glClearColor(m_ClearColor.x, m_ClearColor.y, m_ClearColor.z, m_ClearColor.w));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+	}
+
 	void Window::Update()
 	{
 		if (m_QuitOnPress)

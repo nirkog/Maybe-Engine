@@ -24,9 +24,10 @@ namespace mb { namespace platform {
 
 	struct TransformComponent : public Component<TransformComponent>
 	{
-		maths::Vec2 position, scale, rotationAxis;
-		maths::Vec2 velocity, accleration;
-		float rotationAngle;
+		maths::Vec2 position = maths::Vec2(0, 0), scale = maths::Vec2(1, 1);
+		maths::Vec3 rotationAxis = maths::Vec3(0, 0, 1);
+		maths::Vec2 velocity = maths::Vec2(0, 0), accleration = maths::Vec2(0, 0);
+		float rotationAngle = 0;
 	};
 
 	struct RenderComponent : public Component<RenderComponent>

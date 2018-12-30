@@ -96,6 +96,18 @@ namespace mb { namespace maths {
 		return *this;
 	}
 
+	const Vec4 Vec4::operator*=(const Mat4& mat)
+	{
+		const maths::Vec4 newVec = *this * mat;
+
+		this->x = newVec.x;
+		this->y = newVec.y;
+		this->z = newVec.z;
+		this->w = newVec.w;
+
+		return *this;
+	}
+
 	const Vec4 Vec4::operator/=(const Vec4& other)
 	{
 		x /= other.x;

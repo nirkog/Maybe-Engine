@@ -34,6 +34,7 @@ namespace mb { namespace maths {
 		const Vec4 operator*(const Mat4& mat) const;
 		const Vec4 operator*=(const Vec4& other);
 		const Vec4 operator*=(float scalar);
+		const Vec4 operator*=(const Mat4& mat);
 
 		inline Vec4 operator/(const Vec4& other) const { return Mul(Vec4(1 / other.x, 1 / other.y, 1 / other.z, 1 / other.w)); }
 		inline Vec4 operator/(float scalar) const { return Mul(1 / scalar); }

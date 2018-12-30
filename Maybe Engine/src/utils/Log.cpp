@@ -6,13 +6,17 @@ namespace mb { namespace utils {
 
 	ConsoleColor Log::reset;
 	ConsoleColor Log::debugColors;
+	ConsoleColor Log::warningColors;
 	ConsoleColor Log::errorColors;
 
 	void Log::Init()
 	{
-		reset = { rang::bg::reset, rang::fg::reset };
-		debugColors = { rang::bg::black, rang::fg::green };
-		errorColors = { rang::bg::gray, rang::fg::red};
+		reset.SetBackgroundColor(rang::bg::reset);
+		reset.SetForegroundColor(rang::fg::reset);
+		debugColors.SetForegroundColor(rang::fg::green);
+		warningColors.SetBrightForegroundColor(rang::fgB::yellow);
+		errorColors.SetBackgroundColor(rang::bg::gray);
+		errorColors.SetForegroundColor(rang::fg::red);
 	}
 
 	TimeFormat Log::GetTime()
@@ -45,7 +49,7 @@ namespace mb { namespace utils {
 		if (time.minute < 10) zeros[1] = "0"; else zeros[1] = "";
 		if (time.second < 10) zeros[2] = "0"; else zeros[2] = "";
 
-		std::cout << colors.bg << colors.fg;
+		colors.SetOutputColors();
 		std::cout << "[" << 
 			zeros[0] << time.hour << ":" <<
 			zeros[1] << time.minute << ":" <<

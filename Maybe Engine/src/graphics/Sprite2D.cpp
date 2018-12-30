@@ -2,18 +2,30 @@
 
 namespace mb { namespace graphics {
 
-	Sprite2D::Sprite2D(const maths::Vec2& position, const maths::Vec2& size)
-		: m_Size(size.x, size.y), m_Color(1.0f, 1.0f, 1.0f),
-		transform(maths::Vec2(position.x, position.y), maths::Vec2(1, 1), maths::Vec3(0, 0, 1), 0.0f),
-		m_Texture(nullptr)
+	void Sprite2D::InitializeTransform(const maths::Vec2& position)
 	{
+		transform.position = maths::Vec2(position.x, position.y);
+		transform.scale = maths::Vec2(1, 1);
+		transform.rotationAxis = maths::Vec3(0, 0, 1);
+		transform.rotationAngle = 0;
+	}
+
+	Sprite2D::Sprite2D(const maths::Vec2& position, const maths::Vec2& size)
+		: m_Size(size.x, size.y), m_Color(1.0f, 1.0f, 1.0f), m_Texture(nullptr)
+	{
+		InitializeTransform(position);
+	}
+
+	Sprite2D::Sprite2D(const maths::Vec2& size)
+		: m_Size(size.x, size.y), m_Color(1.0f, 1.0f, 1.0f), m_Texture(nullptr)
+	{
+		InitializeTransform(maths::Vec2(0, 0));
 	}
 
 	Sprite2D::Sprite2D()
-		: m_Size(0, 0), m_Color(1.0f, 1.0f, 1.0f),
-		transform(maths::Vec2(0, 0), maths::Vec2(1, 1), maths::Vec3(0, 0, 1), 0.0f),
-		m_Texture(nullptr)
+		: m_Size(0, 0), m_Color(1.0f, 1.0f, 1.0f), m_Texture(nullptr)
 	{
+		InitializeTransform(maths::Vec2(0, 0));
 	}
 
 	Sprite2D::~Sprite2D()

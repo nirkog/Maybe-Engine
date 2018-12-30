@@ -6,6 +6,7 @@ namespace mb { namespace utils {
 
 	void Init()
 	{
+		srand((unsigned int)time(NULL));
 		glfwInit();
 		input::Input::Init();
 		Log::Init();

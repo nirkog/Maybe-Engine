@@ -12,5 +12,9 @@
 namespace mb { namespace maths {
 
 	extern float radians(float degrees);
+	extern float sin(float theta);
+	extern float cos(float theta);
+	extern float tan(float theta);
+	extern float abs(float num);
 
 } }

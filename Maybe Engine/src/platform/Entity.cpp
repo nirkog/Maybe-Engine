@@ -1,4 +1,6 @@
 #include "Entity.h"
+#include <iostream>
+
 
 namespace mb { namespace platform {
 

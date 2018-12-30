@@ -6,7 +6,7 @@
 namespace mb { namespace utils {
 
 	std::vector<Timer*> Time::timers;
-	float Time::deltaTime = 0, Time::oldTime = 0, Time::fpsTimer = 0;
+	float Time::deltaTime = 0, Time::oldTime = 0, Time::fpsTimer = 0, Time::elapsedTime = 0;
 	unsigned int Time::currentFPS = 0, Time::frames = 0;
 	bool Time::logFPS = false;
 
@@ -22,6 +22,8 @@ namespace mb { namespace utils {
 
 		fpsTimer += deltaTime;
 		frames++;
+
+		elapsedTime += deltaTime;
 
 		if (fpsTimer >= 1.0f)
 		{

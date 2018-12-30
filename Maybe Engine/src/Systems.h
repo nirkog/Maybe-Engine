@@ -53,6 +53,10 @@ public:
 
 			if (EntityManager::GetTag(id) == "BALL")
 			{
+				transform->rotationAngle += 125 * deltaTime;
+				transform->scale.x = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) + 1;
+				transform->scale.y = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) + 1;
+
 				const Sprite2D sprite = ComponentManager::GetComponent<RenderComponent>(id)->sprite;
 				const mb::maths::Vec2 size = sprite.GetSize();
 
@@ -83,9 +87,15 @@ public:
 					transform->position = mb::maths::Vec2(0, 0);
 					std::this_thread::sleep_for(std::chrono::milliseconds(750));
 				}
-				else if (mb::physics::CollisionDetection::Intersect(id, paddle1ID) || mb::physics::CollisionDetection::Intersect(id, paddle2ID))
+				else if (transform->velocity.x > 0)
 				{
-					transform->velocity.x *= -1;
+					if (mb::physics::CollisionDetection::Intersect(id, paddle2ID))
+						transform->velocity.x *= -1;
+				}
+				else if (transform->velocity.x < 0)
+				{
+					if (mb::physics::CollisionDetection::Intersect(id, paddle1ID))
+						transform->velocity.x *= -1;
 				}
 			}
 

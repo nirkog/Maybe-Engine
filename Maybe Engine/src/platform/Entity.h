@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "..\utils\Log.h"
 #include "ComponentManager.h"
 #include "EntityManager.h"
 
@@ -24,7 +25,7 @@ namespace mb { namespace platform {
 		}
 
 		template <typename T>
-		T* GetComponent()
+		T* GetComponent() const
 		{
 			return ComponentManager::GetComponent<T>(m_ID);
 		}

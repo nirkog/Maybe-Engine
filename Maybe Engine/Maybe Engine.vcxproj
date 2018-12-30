@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\Light.cpp" />
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Buffer.cpp" />
     <ClCompile Include="src\graphics\BufferLayout.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="src\physics\CollisionDetection.cpp" />
     <ClCompile Include="src\platform\Component.cpp" />
     <ClCompile Include="src\platform\ComponentManager.cpp" />
+    <ClCompile Include="src\platform\CoreSystems.cpp" />
     <ClCompile Include="src\platform\Entity.cpp" />
     <ClCompile Include="src\platform\EntityManager.cpp" />
     <ClCompile Include="src\platform\SystemManager.cpp" />
@@ -157,6 +159,7 @@
     <ClCompile Include="src\platform\System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\physics\CollisionDetection.h" />
     <ClInclude Include="src\physics\physics.h" />
     <ClInclude Include="src\platform\Component.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="src\maths\vec3.h" />
     <ClInclude Include="src\maths\vec4.h" />
     <ClInclude Include="src\platform\ComponentManager.h" />
+    <ClInclude Include="src\platform\CoreSystems.h" />
     <ClInclude Include="src\platform\Entity.h" />
     <ClInclude Include="src\platform\EntityManager.h" />
     <ClInclude Include="src\platform\platform.h" />

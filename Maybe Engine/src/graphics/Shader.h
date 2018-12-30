@@ -7,6 +7,7 @@
 
 #include "GL.h"
 #include "../maths/maths.h"
+#include "../utils/Log.h"
 
 namespace mb { namespace graphics {
 	class Shader 

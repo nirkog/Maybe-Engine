@@ -14,6 +14,7 @@ namespace mb { namespace utils {
 
 		inline static float GetDeltaTime() { return deltaTime; }
 		inline static unsigned int GetFps() { return currentFPS; }
+		inline static float GetElapsedTime() { return elapsedTime; }
 
 		static unsigned int AddTimer(Timer* timer);
 		static void RemoveTimer(Timer* timer);
@@ -23,6 +24,7 @@ namespace mb { namespace utils {
 	private:
 		static std::vector<mb::utils::Timer*> timers;
 		static float deltaTime, oldTime, fpsTimer;
+		static float elapsedTime;
 		static unsigned int frames, currentFPS;
 		static bool logFPS;
 	};
