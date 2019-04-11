@@ -109,5 +109,10 @@ namespace mb { namespace graphics {
 		m_Title = (char*) title;
 		glfwSetWindowTitle(m_Window, title);
 	}
+	
+	void Window::SetVsync(const bool state)
+	{
+		glfwSwapInterval(state);
+	}
 
 } }

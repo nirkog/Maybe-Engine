@@ -24,6 +24,7 @@ int main()
 	Window window(WIDTH, HEIGHT, "Maybe This Will Work");
 	window.QuitOnPress(ESCAPE_KEY);
 	window.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	window.SetVsync(false);
 
 	Time::EnableFpsLog();
 	LogOpenGLDetails();

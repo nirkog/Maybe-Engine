@@ -22,6 +22,7 @@ namespace mb { namespace graphics {
 		void DisableQuitOnPress();
 
 		void SetTitle(const char* title);
+		void SetVsync(const bool state);
 
 		void SetClearColor(const maths::Vec4& color) { m_ClearColor = color; }
 		void SetClearColor(const float& r, const float& g, const float& b, const float& a) { m_ClearColor = { r, g, b, a }; }
