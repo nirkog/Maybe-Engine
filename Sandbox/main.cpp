@@ -29,7 +29,6 @@ int main()
 	Time::EnableFpsLog();
 	LogOpenGLDetails();
 
-
 	SystemManager::AddSystem(new InputSystem());
 	SystemManager::AddSystem(new MovementSystem(window));
 	SystemManager::AddSystem(new coreSystems::RenderingSystem(window));
