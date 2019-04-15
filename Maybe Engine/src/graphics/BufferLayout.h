@@ -29,28 +29,28 @@ namespace mb { namespace graphics {
 		template<>
 		inline void Push<float>(unsigned int count)
 		{
-			m_Items.push_back({ m_Items.size(), count, GL_FLOAT, GL_FALSE });
+			m_Items.push_back({ (unsigned int) m_Items.size(), count, GL_FLOAT, GL_FALSE });
 			m_Stride += count * GetTypeSize(GL_FLOAT);
 		}
 
 		template<>
 		inline void Push<unsigned int>(unsigned int count)
 		{
-			m_Items.push_back({ m_Items.size(), count, GL_UNSIGNED_INT, GL_FALSE });
+			m_Items.push_back({ (unsigned int) m_Items.size(), count, GL_UNSIGNED_INT, GL_FALSE });
 			m_Stride += count * GetTypeSize(GL_UNSIGNED_INT);
 		}
 
 		template<>
 		inline void Push<int>(unsigned int count)
 		{
-			m_Items.push_back({ m_Items.size(), count, GL_INT, GL_FALSE });
+			m_Items.push_back({ (unsigned int) m_Items.size(), count, GL_INT, GL_FALSE });
 			m_Stride += count * GetTypeSize(GL_INT);
 		}
 
 		template<>
 		inline void Push<unsigned char>(unsigned int count)
 		{
-			m_Items.push_back({ m_Items.size(), count, GL_UNSIGNED_BYTE, GL_FALSE });
+			m_Items.push_back({ (unsigned int) m_Items.size(), count, GL_UNSIGNED_BYTE, GL_FALSE });
 			m_Stride += count * GetTypeSize(GL_UNSIGNED_BYTE);
 		}
 
