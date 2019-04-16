@@ -17,18 +17,58 @@ using namespace mb::platform;
 using namespace mb::maths;
 using namespace mb::input;
 
+#define TEST 0
+
 int main()
 {
 	Init();
 
 	Window window(WIDTH, HEIGHT, "Maybe This Will Work");
 	window.QuitOnPress(ESCAPE_KEY);
-	window.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	window.SetClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	window.SetVsync(false);
 
 	Time::EnableFpsLog();
 	LogOpenGLDetails();
 
+#if TEST
+	SystemManager::AddSystem(new coreSystems::RenderingSystem(window));
+
+	Entity ball("BALL");
+	auto* renderComp = ball.AddComponent<RenderComponent>();
+	renderComp->sprite = { { 100, 100 } };
+	renderComp->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
+	renderComp->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
+	renderComp->sprite.SetShape(Shape::CIRCLE);
+	renderComp->sprite.SetRadius(100);
+	renderComp->sprite.SetCirclePrecision(3);
+	auto* transformComp = ball.AddComponent<TransformComponent>();
+	transformComp->position = { 125, 0 };
+	transformComp->scale = { 1.5f, 1.5f};
+
+	Entity ball2("BALL2");
+	auto* renderComp2 = ball2.AddComponent<RenderComponent>();
+	renderComp2->sprite = { { 20, 20 } };
+	renderComp2->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
+	renderComp2->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
+	renderComp2->sprite.SetShape(Shape::CIRCLE);
+	renderComp2->sprite.SetRadius(100);
+	renderComp2->sprite.SetCirclePrecision(250);
+	auto* transformComp2 = ball2.AddComponent<TransformComponent>();
+	transformComp2->position = { -300, 0 };
+	transformComp2->scale = { 1.5f, 1.5f };
+
+	while (window.Open())
+	{
+		Update(window);
+		window.Clear();
+
+		SystemManager::Update();
+
+		window.Update();
+	}
+
+#else
 	SystemManager::AddSystem(new InputSystem());
 	SystemManager::AddSystem(new MovementSystem(window));
 	SystemManager::AddSystem(new coreSystems::RenderingSystem(window));
@@ -45,13 +85,6 @@ int main()
 	auto* scoreComp = paddle1.AddComponent<ScoreComponent>();
 	scoreComp->score = 0;
 
-	Entity paddle2("PADDLE2");
-	paddle1.Duplicate(&paddle2);
-	paddle2.GetComponent<TransformComponent>()->position.x = window.GetSize().x / 2 - 20;
-	auto* inputComp2 = paddle2.GetComponent<InputComponent>();
-	inputComp2->upKey = W_KEY;
-	inputComp2->downKey = S_KEY;
-
 	Entity ball("BALL");
 	auto* ballRenderComp = ball.AddComponent<RenderComponent>();
 	ballRenderComp->sprite = { { 30, 30 } };
@@ -59,6 +92,13 @@ int main()
 	auto* ballTransformComp = ball.AddComponent<TransformComponent>();
 	ballTransformComp->position = { 0, 0 };
 	ballTransformComp->velocity = { 100, 350 };
+
+	Entity paddle2("PADDLE2");
+	paddle1.Duplicate(&paddle2);
+	paddle2.GetComponent<TransformComponent>()->position.x = window.GetSize().x / 2 - 20;
+	auto* inputComp2 = paddle2.GetComponent<InputComponent>();
+	inputComp2->upKey = W_KEY;
+	inputComp2->downKey = S_KEY;
 
 	while (window.Open())
 	{
@@ -69,6 +109,8 @@ int main()
 
 		window.Update();
 	}
+
+#endif
 
 	SystemManager::Destroy();
 

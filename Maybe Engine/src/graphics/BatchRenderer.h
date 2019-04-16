@@ -45,6 +45,7 @@ namespace mb { namespace graphics {
 	private:
 		void Flush();
 		void Submit(const Sprite2D* sprite, const maths::Vec2& position, const maths::Vec2& scale, const RotationData& rotation);
+		void SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec3& color, const maths::Vec2& position);
 	private:
 		VertexArray m_VAO;
 		BufferLayout m_VBOLayout;
