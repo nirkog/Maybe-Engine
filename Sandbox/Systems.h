@@ -53,9 +53,9 @@ public:
 
 			if (EntityManager::GetTag(id) == "BALL")
 			{
-				transform->rotationAngle += 125 * deltaTime;
-				transform->scale.x = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) + 1;
-				transform->scale.y = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) + 1;
+				//transform->rotationAngle += 125 * deltaTime;
+				transform->scale.x = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
+				transform->scale.y = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
 
 				const Sprite2D sprite = ComponentManager::GetComponent<RenderComponent>(id)->sprite;
 				const mb::maths::Vec2 size = sprite.GetSize();

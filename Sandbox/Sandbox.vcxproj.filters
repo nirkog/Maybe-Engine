@@ -18,5 +18,7 @@
   <ItemGroup>
     <None Include="res\batcher.frag" />
     <None Include="res\batcher.vert" />
+    <None Include="res\basic.frag" />
+    <None Include="res\basic.vert" />
   </ItemGroup>
 </Project>
