@@ -34,7 +34,7 @@ namespace mb { namespace graphics {
 		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
 		inline void SetDrawingMode(DrawingMode mode) { m_DrawingMode = mode; };
 		inline void SetShape(Shape shape) { m_Shape = shape; }
-		void SetCirclePrecision(float p);
+		void SetCirclePrecision(unsigned int p);
 		void SetRadius(float radius);
 		void SetTexture(const Texture* texture);
 
@@ -71,7 +71,7 @@ namespace mb { namespace graphics {
 
 		std::vector<maths::Vec4> m_Vertices;
 		float m_Radius;
-		float m_CirclePrecision;
+		unsigned int m_CirclePrecision;
 	};
 
 } }

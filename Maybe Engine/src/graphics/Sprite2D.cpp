@@ -1,5 +1,7 @@
 #include "Sprite2D.h"
 
+#define PI 3.14159
+
 namespace mb { namespace graphics {
 
 	void Sprite2D::InitializeTransform(const maths::Vec2& position)
@@ -12,7 +14,7 @@ namespace mb { namespace graphics {
 		m_DrawingMode = DrawingMode::TEXTURED;
 		m_Shape = Shape::RECTANGLE;
 		m_Radius = m_Size.x / 2;
-		m_CirclePrecision = 35.0f;
+		m_CirclePrecision = 25;
 	}
 
 	Sprite2D::Sprite2D(const maths::Vec2& position, const maths::Vec2& size)
@@ -60,7 +62,7 @@ namespace mb { namespace graphics {
 		GenerateVertices();
 	}
 
-	void Sprite2D::SetCirclePrecision(float precision)
+	void Sprite2D::SetCirclePrecision(unsigned int precision)
 	{
 		m_CirclePrecision = precision;
 		GenerateVertices();
@@ -71,7 +73,24 @@ namespace mb { namespace graphics {
 		m_Vertices.clear();
 
 		std::vector<maths::Vec2> points;
-		float rSquared = pow(m_Radius, 2);
+		float theta = 0;
+		float x = 0, y = 0;
+		float dTheta = PI / m_CirclePrecision;
+
+		while (theta < 2 * PI)
+		{
+			x = m_Radius * maths::cos(theta);
+			y = m_Radius * maths::sin(theta);
+			points.push_back({ x, y });
+			theta += dTheta;
+		}
+
+		x = m_Radius * maths::cos(theta);
+		y = m_Radius * maths::sin(theta);
+		points.push_back({ x, y });
+
+
+		/*float rSquared = pow(m_Radius, 2);
 		float x = -m_Radius, y = 0;
 		float dx = m_Radius / m_CirclePrecision;
 
@@ -100,7 +119,7 @@ namespace mb { namespace graphics {
 
 		x = -m_Radius;
 		y = sqrt(rSquared - pow(x, 2));
-		points.push_back({ x, y });
+		points.push_back({ x, y });*/
 
 		for (unsigned int i = 0; i < points.size(); i++)
 		{

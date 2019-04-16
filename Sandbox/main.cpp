@@ -17,7 +17,7 @@ using namespace mb::platform;
 using namespace mb::maths;
 using namespace mb::input;
 
-#define TEST 0
+#define TEST 1
 
 int main()
 {
@@ -36,27 +36,27 @@ int main()
 
 	Entity ball("BALL");
 	auto* renderComp = ball.AddComponent<RenderComponent>();
-	renderComp->sprite = { { 20, 20 } };
+	renderComp->sprite = { { 100, 100 } };
 	renderComp->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
 	renderComp->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
-	renderComp->sprite.SetShape(Shape::CIRCLE);
-	renderComp->sprite.SetRadius(100);
-	renderComp->sprite.SetCirclePrecision(35.0f);
+	renderComp->sprite.SetShape(Shape::TRIANGLE);
+	//renderComp->sprite.SetRadius(100);
+	//renderComp->sprite.SetCirclePrecision(2);
 	auto* transformComp = ball.AddComponent<TransformComponent>();
 	transformComp->position = { 125, 0 };
 	transformComp->scale = { 1.5f, 1.5f};
 
-	Entity ball2("BALL2");
+	/*Entity ball2("BALL2");
 	auto* renderComp2 = ball2.AddComponent<RenderComponent>();
 	renderComp2->sprite = { { 20, 20 } };
 	renderComp2->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
 	renderComp2->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
 	renderComp2->sprite.SetShape(Shape::CIRCLE);
 	renderComp2->sprite.SetRadius(100);
-	renderComp2->sprite.SetCirclePrecision(100.0f);
+	renderComp2->sprite.SetCirclePrecision(250);
 	auto* transformComp2 = ball2.AddComponent<TransformComponent>();
 	transformComp2->position = { -300, 0 };
-	transformComp2->scale = { 1.5f, 1.5f };
+	transformComp2->scale = { 1.5f, 1.5f };*/
 
 	while (window.Open())
 	{
