@@ -17,7 +17,7 @@ using namespace mb::platform;
 using namespace mb::maths;
 using namespace mb::input;
 
-#define TEST 1
+#define TEST 0
 
 int main()
 {
@@ -39,14 +39,14 @@ int main()
 	renderComp->sprite = { { 100, 100 } };
 	renderComp->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
 	renderComp->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
-	renderComp->sprite.SetShape(Shape::TRIANGLE);
-	//renderComp->sprite.SetRadius(100);
-	//renderComp->sprite.SetCirclePrecision(2);
+	renderComp->sprite.SetShape(Shape::CIRCLE);
+	renderComp->sprite.SetRadius(100);
+	renderComp->sprite.SetCirclePrecision(3);
 	auto* transformComp = ball.AddComponent<TransformComponent>();
 	transformComp->position = { 125, 0 };
 	transformComp->scale = { 1.5f, 1.5f};
 
-	/*Entity ball2("BALL2");
+	Entity ball2("BALL2");
 	auto* renderComp2 = ball2.AddComponent<RenderComponent>();
 	renderComp2->sprite = { { 20, 20 } };
 	renderComp2->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
@@ -56,7 +56,7 @@ int main()
 	renderComp2->sprite.SetCirclePrecision(250);
 	auto* transformComp2 = ball2.AddComponent<TransformComponent>();
 	transformComp2->position = { -300, 0 };
-	transformComp2->scale = { 1.5f, 1.5f };*/
+	transformComp2->scale = { 1.5f, 1.5f };
 
 	while (window.Open())
 	{
@@ -89,9 +89,6 @@ int main()
 	auto* ballRenderComp = ball.AddComponent<RenderComponent>();
 	ballRenderComp->sprite = { { 30, 30 } };
 	ballRenderComp->sprite.SetColor({ 0.9f, 0.9f, 0.9f });
-	ballRenderComp->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
-	ballRenderComp->sprite.SetShape(Shape::CIRCLE);
-	ballRenderComp->sprite.SetRadius(15);
 	auto* ballTransformComp = ball.AddComponent<TransformComponent>();
 	ballTransformComp->position = { 0, 0 };
 	ballTransformComp->velocity = { 100, 350 };
