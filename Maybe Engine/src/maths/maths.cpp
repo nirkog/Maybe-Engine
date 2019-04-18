@@ -19,7 +19,7 @@ namespace mb { namespace maths {
 
 	float radians(float degrees)
 	{
-		return degrees / 180 * M_PI;
+		return degrees / 180 * (float) M_PI;
 	}
 
 	float sin(float theta)

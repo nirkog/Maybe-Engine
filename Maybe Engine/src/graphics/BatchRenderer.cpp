@@ -12,10 +12,6 @@ namespace mb { namespace graphics {
 		: m_VBOLayout(), m_VAO(), m_Shader("./res/batcher.vert", "./res/batcher.frag"),
 		m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1), window(window)
 	{
-
-		//GLCall(glGenBuffers(1, &m_VBO));
-		//GLCall(glGenVertexArrays(1, &m_VAO));
-
 		m_VBOLayout.Push<float>(3);
 		m_VBOLayout.Push<float>(2);
 		m_VBOLayout.Push<float>(1);
@@ -23,23 +19,6 @@ namespace mb { namespace graphics {
 
 		m_VBO = new Buffer(NULL, BUFFER_SIZE, GL_DYNAMIC_DRAW);
 		m_VBO->SetLayout(m_VBOLayout);
-
-		/*GLCall(glBindVertexArray(m_VAO));
-
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
-		GLCall(glBufferData(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
-
-		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) 0));
-		GLCall(glEnableVertexAttribArray(1));
-		GLCall(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (3 * sizeof(float))));
-		GLCall(glEnableVertexAttribArray(2));
-		GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (5 * sizeof(float))));
-		GLCall(glEnableVertexAttribArray(3));
-		GLCall(glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*) (6 * sizeof(float))));
-
-		GLCall(glBindVertexArray(0));
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));*/
 
 		unsigned int* indices = new unsigned int[INDICES_SIZE];
 		unsigned int offset = 0;
@@ -68,9 +47,6 @@ namespace mb { namespace graphics {
 		m_Shader.SetUniformMat4("u_View", m_View);
 		m_Shader.SetUniformMat4("u_Proj", m_Proj);
 
-		maths::Vec3 lightColor(0, 0, 0);
-		maths::Vec3 lightPosition(0, 0, 0.025);
-
 		defaultUV[0] = {0, 0};
 		defaultUV[1] = {0, 1};
 		defaultUV[2] = {1, 1};
@@ -97,8 +73,6 @@ namespace mb { namespace graphics {
 			transformedVertices.push_back(vertices[i] * model);
 
 		maths::Vec4 origin = {position.x, position.y, 0, 1};
-
-		//utils::Log::Warn("{}", vertices.size());
 
 		for (unsigned int i = 0; i < vertices.size() - 1; i++)
 		{
@@ -250,14 +224,6 @@ namespace mb { namespace graphics {
 	{
 		Submit(&render->sprite, transform->position, transform->scale, { transform->rotationAxis, transform->rotationAngle });
 	}
-	
-	//void BatchRenderer::Submit(const Light& light)
-	//{
-	//	m_Shader.SetUniformVec3("u_LightPos", light.GetPosition());
-	//	m_Shader.SetUniformVec3("u_LightColor", light.GetColor());
-
-	//	//utils::Log::Debug("Submitting Light with position {}, {}, {}", light.GetPosition().x, light.GetPosition().y, light.GetPosition().z);
-	//}
 
 	void BatchRenderer::End()
 	{
@@ -277,8 +243,6 @@ namespace mb { namespace graphics {
 
 		GLCall(glDrawElements(GL_TRIANGLES, 6 * m_SpriteCount, GL_UNSIGNED_INT, NULL));
 
-		//utils::Log::Debug("Drawing {} sprites!", m_SpriteCount);
-
 		m_SpriteCount = 0;
 		m_TextureCount = 0;
 	}
@@ -290,14 +254,3 @@ namespace mb { namespace graphics {
 	}
 
 } }
-
-/*
-
-
-GLCall(glGenBuffers(1, &m_IBO));
-GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO));
-GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDEX_BUFFER_SIZE, indices, GL_STATIC_DRAW));
-GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-
-
-*/

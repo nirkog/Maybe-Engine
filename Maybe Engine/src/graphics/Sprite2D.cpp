@@ -1,7 +1,5 @@
 #include "Sprite2D.h"
 
-#define PI 3.14159
-
 namespace mb { namespace graphics {
 
 	void Sprite2D::InitializeTransform(const maths::Vec2& position)
@@ -75,9 +73,9 @@ namespace mb { namespace graphics {
 		std::vector<maths::Vec2> points;
 		float theta = 0;
 		float x = 0, y = 0;
-		float dTheta = PI / m_CirclePrecision;
+		float dTheta = (float) M_PI / m_CirclePrecision;
 
-		while (theta < 2 * PI)
+		while (theta < 2 * M_PI)
 		{
 			x = m_Radius * maths::cos(theta);
 			y = m_Radius * maths::sin(theta);
@@ -88,38 +86,6 @@ namespace mb { namespace graphics {
 		x = m_Radius * maths::cos(theta);
 		y = m_Radius * maths::sin(theta);
 		points.push_back({ x, y });
-
-
-		/*float rSquared = pow(m_Radius, 2);
-		float x = -m_Radius, y = 0;
-		float dx = m_Radius / m_CirclePrecision;
-
-		while (x < m_Radius)
-		{
-			y = sqrt(rSquared - pow(x, 2));
-			points.push_back({ x, y });
-
-			x += dx;
-		}
-
-		x = m_Radius;
-		y = sqrt(rSquared - pow(x, 2));
-		points.push_back({ x, y });
-
-		utils::Log::Debug("{}", points.size());
-
-		while (x > -m_Radius)
-		{
-
-			y = -sqrt(rSquared - pow(x, 2));
-			points.push_back({ x, y });
-
-			x -= dx;
-		}
-
-		x = -m_Radius;
-		y = sqrt(rSquared - pow(x, 2));
-		points.push_back({ x, y });*/
 
 		for (unsigned int i = 0; i < points.size(); i++)
 		{
