@@ -17,7 +17,7 @@ using namespace mb::platform;
 using namespace mb::maths;
 using namespace mb::input;
 
-#define TEST 0
+#define TEST 1
 
 int main()
 {
@@ -31,32 +31,29 @@ int main()
 	Time::EnableFpsLog();
 	LogOpenGLDetails();
 
+	ResourceManager rm;
+
 #if TEST
 	SystemManager::AddSystem(new coreSystems::RenderingSystem(window));
 
-	Entity ball("BALL");
-	auto* renderComp = ball.AddComponent<RenderComponent>();
-	renderComp->sprite = { { 100, 100 } };
-	renderComp->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
-	renderComp->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
-	renderComp->sprite.SetShape(Shape::CIRCLE);
-	renderComp->sprite.SetRadius(100);
-	renderComp->sprite.SetCirclePrecision(3);
-	auto* transformComp = ball.AddComponent<TransformComponent>();
-	transformComp->position = { 125, 0 };
-	transformComp->scale = { 1.5f, 1.5f};
+	rm.AddTexture("./res/alien.png", "alien");
+	rm.AddTexture("./res/smiley.png", "smiley");
+	rm.AddTexture("./res/spaceship.png", "spaceship");
+	rm.DeleteTexture("smiley");
 
-	Entity ball2("BALL2");
-	auto* renderComp2 = ball2.AddComponent<RenderComponent>();
-	renderComp2->sprite = { { 20, 20 } };
-	renderComp2->sprite.SetColor({ 0.95f, 0.25f, 0.12f });
-	renderComp2->sprite.SetDrawingMode(DrawingMode::PRIMITIVE);
-	renderComp2->sprite.SetShape(Shape::CIRCLE);
-	renderComp2->sprite.SetRadius(100);
-	renderComp2->sprite.SetCirclePrecision(250);
-	auto* transformComp2 = ball2.AddComponent<TransformComponent>();
-	transformComp2->position = { -300, 0 };
-	transformComp2->scale = { 1.5f, 1.5f };
+	Entity alien;
+	auto* renderComp = alien.AddComponent<RenderComponent>();
+	renderComp->sprite = { { 100, 100 } };
+	renderComp->sprite.SetTexture(rm.GetTexture("alien"));
+	auto* transformComp = alien.AddComponent<TransformComponent>();
+	transformComp->position = { 200, 0 };
+
+	Entity spaceship;
+	auto* spaceRender = spaceship.AddComponent<RenderComponent>();
+	spaceRender->sprite = { { 100, 100 } };
+	spaceRender->sprite.SetTexture(rm.GetTexture("spaceship"));
+	auto* spaceTransform = spaceship.AddComponent<TransformComponent>();
+	spaceTransform->position = { -200, 0 };
 
 	while (window.Open())
 	{

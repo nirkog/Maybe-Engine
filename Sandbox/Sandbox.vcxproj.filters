@@ -19,4 +19,9 @@
     <None Include="res\batcher.frag" />
     <None Include="res\batcher.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\alien.png" />
+    <Image Include="res\spaceship.png" />
+    <Image Include="res\smiley.png" />
+  </ItemGroup>
 </Project>

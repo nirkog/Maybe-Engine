@@ -178,6 +178,7 @@
     <ClCompile Include="src\platform\CoreSystems.cpp" />
     <ClCompile Include="src\platform\Entity.cpp" />
     <ClCompile Include="src\platform\EntityManager.cpp" />
+    <ClCompile Include="src\platform\ResourceManager.cpp" />
     <ClCompile Include="src\platform\SystemManager.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="src\utils\Time.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="src\platform\Entity.h" />
     <ClInclude Include="src\platform\EntityManager.h" />
     <ClInclude Include="src\platform\platform.h" />
+    <ClInclude Include="src\platform\ResourceManager.h" />
     <ClInclude Include="src\platform\SystemManager.h" />
     <ClInclude Include="src\utils\Log.h" />
     <ClInclude Include="src\utils\rang.hpp" />
