@@ -164,6 +164,7 @@
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Buffer.cpp" />
     <ClCompile Include="src\graphics\BufferLayout.cpp" />
+    <ClCompile Include="src\graphics\Color.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Sprite2D.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="src\platform\System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\Color.h" />
     <ClInclude Include="src\physics\CollisionDetection.h" />
     <ClInclude Include="src\physics\physics.h" />
     <ClInclude Include="src\platform\Component.h" />

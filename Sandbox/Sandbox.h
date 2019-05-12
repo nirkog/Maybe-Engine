@@ -17,6 +17,5 @@ public:
 	~Sandbox();
 private:
 	Entity paddle1, paddle2, ball;
-	//Entity alien;
 	ResourceManager rm;
 };

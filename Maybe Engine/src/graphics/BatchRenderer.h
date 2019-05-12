@@ -21,7 +21,7 @@ namespace mb { namespace graphics {
 		float positionX, positionY, positionZ;
 		maths::Vec2 uv;
 		float tid;
-		maths::Vec3 color;
+		maths::Vec4 color;
 	};
 
 	struct RotationData
@@ -45,7 +45,7 @@ namespace mb { namespace graphics {
 	private:
 		void Flush();
 		void Submit(const Sprite2D* sprite, const maths::Vec2& position, const maths::Vec2& scale, const RotationData& rotation);
-		void SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec3& color, const maths::Vec2& position);
+		void SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec4& color, const maths::Vec2& position);
 	private:
 		VertexArray m_VAO;
 		BufferLayout m_VBOLayout;

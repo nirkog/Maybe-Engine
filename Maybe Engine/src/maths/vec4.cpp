@@ -163,9 +163,31 @@ namespace mb { namespace maths {
 		return result;
 	}
 
+	void Vec4::SetAt(unsigned int i, const float& val)
+	{
+		switch (i)
+		{
+		case 0:
+			this->x = val;
+			break;
+		case 1:
+			this->y = val;
+			break;
+		case 2:
+			this->z = val;
+			break;
+		case 3:
+			this->w = val;
+			break;
+		default:
+			std::cout << "Error: Out Of Range At SetAt()!" << std::endl;
+			break;
+		}
+	}
+
 	std::ostream& operator<<(std::ostream& stream, const Vec4& vec)
 	{
-		stream << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << std::endl;
+		stream << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w;
 		return stream;
  	}
 

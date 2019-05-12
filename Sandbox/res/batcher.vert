@@ -3,7 +3,7 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec2 uv;
 layout(location = 2) in float v_Tid;
-layout(location = 3) in vec3 v_Color;
+layout(location = 3) in vec4 v_Color;
 
 uniform mat4 u_View;// = mat4(1);
 uniform mat4 u_Proj;// = mat4(1);
@@ -18,7 +18,7 @@ flat out int tid;
 void main()
 {
 	gl_Position = u_Proj * u_View * vec4(position, 1);
-	Color = vec4(v_Color.xyz, 1);
+	Color = v_Color;
 	FragPos = position;//vec3(gl_Position.xyz);
 	uvCoords = uv;
 	tid = int(v_Tid * 32);

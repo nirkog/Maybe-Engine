@@ -1,7 +1,7 @@
 #include "BatchRenderer.h"
 
 #define MAX_SPRITES 60000
-#define VERTEX_SIZE sizeof(float) * 9
+#define VERTEX_SIZE sizeof(float) * 10
 #define BUFFER_SIZE VERTEX_SIZE * 4 * MAX_SPRITES
 #define INDICES_SIZE MAX_SPRITES * 6
 #define INDEX_BUFFER_SIZE INDICES_SIZE * sizeof(unsigned int)
@@ -15,7 +15,7 @@ namespace mb { namespace graphics {
 		m_VBOLayout.Push<float>(3);
 		m_VBOLayout.Push<float>(2);
 		m_VBOLayout.Push<float>(1);
-		m_VBOLayout.Push<float>(3);
+		m_VBOLayout.Push<float>(4);
 
 		m_VBO = new Buffer(NULL, BUFFER_SIZE, GL_DYNAMIC_DRAW);
 		m_VBO->SetLayout(m_VBOLayout);
@@ -65,7 +65,7 @@ namespace mb { namespace graphics {
 		GLCall(m_Buffer = (VertexData*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	}
 
-	void BatchRenderer::SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec3& color, const maths::Vec2& position)
+	void BatchRenderer::SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec4& color, const maths::Vec2& position)
 	{
 		std::vector<maths::Vec4> transformedVertices;
 
@@ -111,7 +111,7 @@ namespace mb { namespace graphics {
 	void BatchRenderer::Submit(const Sprite2D* sprite, const maths::Vec2& position, const maths::Vec2& scale, const RotationData& rotation)
 	{
 		const maths::Vec2& size = sprite->GetSize();
-		const maths::Vec3& color = sprite->GetColor();
+		const maths::Vec4& color = sprite->GetColor().ToVec4();
 
 		int tid = 0;
 		bool existingTexture = false;

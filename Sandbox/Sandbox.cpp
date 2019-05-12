@@ -5,10 +5,12 @@ Sandbox::Sandbox()
 {
 	m_Window = new Window(1200, 800, "Hi");
 	m_Window->QuitOnPress(Key::ESCAPE_KEY);
-	m_Window->SetClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	m_Window->SetClearColor("#111111");
 	m_Window->SetVsync(false);
 
 	Time::EnableFpsLog();
+
+	rm.AddTexture("./res/alien.png", 0);
 
 	SystemManager::AddSystem(new InputSystem());
 	SystemManager::AddSystem(new MovementSystem(*m_Window));
@@ -16,7 +18,7 @@ Sandbox::Sandbox()
 
 	auto* renderComp = paddle1.AddComponent<RenderComponent>();
 	renderComp->sprite = { { 15, 125 } };
-	renderComp->sprite.SetColor({ 0.95f, 0.95f, 0.95f });
+	renderComp->sprite.SetColor("#fefefe");
 	auto* transformComp = paddle1.AddComponent<TransformComponent>();
 	transformComp->position = { -m_Window->GetSize().x / 2 + 20, 0 };
 	auto* inputComp = paddle1.AddComponent<InputComponent>();
@@ -26,8 +28,8 @@ Sandbox::Sandbox()
 	scoreComp->score = 0;
 
 	auto* ballRenderComp = ball.AddComponent<RenderComponent>();
-	ballRenderComp->sprite = { { 30, 30 } };
-	ballRenderComp->sprite.SetColor({ 0.9f, 0.9f, 0.9f });
+	ballRenderComp->sprite = { { 45, 45 } };
+	ballRenderComp->sprite.SetTexture(rm.GetTexture(0));
 	auto* ballTransformComp = ball.AddComponent<TransformComponent>();
 	ballTransformComp->position = { 0, 0 };
 	ballTransformComp->velocity = { 100, 350 };

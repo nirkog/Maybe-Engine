@@ -62,15 +62,15 @@ namespace mb { namespace graphics {
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
-	void Window::Clear(maths::Vec4 color) const
+	void Window::Clear(Color color) const
 	{
-		GLCall(glClearColor(color.x, color.y, color.z, color.w));
+		GLCall(glClearColor(color.r, color.g, color.b, color.a));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
 	void Window::Clear() const
 	{
-		GLCall(glClearColor(m_ClearColor.x, m_ClearColor.y, m_ClearColor.z, m_ClearColor.w));
+		GLCall(glClearColor(m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 

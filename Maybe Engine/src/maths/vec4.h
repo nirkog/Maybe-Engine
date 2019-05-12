@@ -43,6 +43,8 @@ namespace mb { namespace maths {
 
 		inline float Magnitude() const { return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2) + pow(w, 2)); }
 
+		void SetAt(unsigned int i, const float& val);
+
 		const Vec4 Normalize() const;
 
 		friend std::ostream& operator<<(std::ostream& stream, const Vec4& vec);

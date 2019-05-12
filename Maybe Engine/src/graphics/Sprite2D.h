@@ -3,6 +3,7 @@
 #include "..\maths\maths.h"
 #include "..\utils\Log.h"
 #include "Texture.h"
+#include "Color.h"
 
 namespace mb { namespace graphics {
 
@@ -31,7 +32,9 @@ namespace mb { namespace graphics {
 		Sprite2D();
 		~Sprite2D();
 
-		inline void SetColor(const maths::Vec3 color) { m_Color = color; }
+		inline void SetColor(const Color color) { m_Color = color; }
+		inline void SetColor(const char* hex) { m_Color = { hex }; }
+		inline void SetColor(const float r, const float g, const float b, const float a) { m_Color = { r, g, b, a }; }
 		inline void SetDrawingMode(DrawingMode mode) { m_DrawingMode = mode; };
 		inline void SetShape(Shape shape) { m_Shape = shape; }
 		void SetCirclePrecision(unsigned int p);
@@ -39,7 +42,7 @@ namespace mb { namespace graphics {
 		void SetTexture(const Texture* texture);
 
 		inline const maths::Vec2& GetSize() const { return m_Size; }
-		inline const maths::Vec3& GetColor() const { return m_Color; }
+		inline const Color& GetColor() const { return m_Color; }
 		inline const DrawingMode GetDrawingMode() const { return m_DrawingMode; }
 		inline const Shape GetShape() const { return m_Shape; }
 		inline const float GetRadius() const { return m_Radius; }
@@ -60,7 +63,7 @@ namespace mb { namespace graphics {
 		Transform transform;
 	private:
 		maths::Vec2 m_Size;
-		maths::Vec3 m_Color;
+		Color m_Color;
 
 		Texture* m_Texture;
 
