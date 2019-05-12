@@ -16,7 +16,7 @@ namespace mb { namespace input {
 		}
 	}
 
-	void Input::Update(const graphics::Window& window)
+	void Input::Update(const graphics::Window* window)
 	{
 		for (unsigned int i = 0; i < releasedKeys.size(); i++)
 		{
@@ -28,7 +28,7 @@ namespace mb { namespace input {
 
 		for (unsigned int i = 0; i < upKeys.size(); i++)
 		{
-			if (glfwGetKey((GLFWwindow*)window.GetGLFWwindow(), upKeys[i]) == GLFW_PRESS)
+			if (glfwGetKey((GLFWwindow*)window->GetGLFWwindow(), upKeys[i]) == GLFW_PRESS)
 			{
 				downKeys.push_back(upKeys[i]);
 				newKeys.push_back(upKeys[i]);
@@ -38,11 +38,9 @@ namespace mb { namespace input {
 			}
 		}
 
-		//std::cout << "Updated up, ";
-
 		for (unsigned int i = 0; i < downKeys.size(); i++)
 		{
-			if (glfwGetKey((GLFWwindow*)window.GetGLFWwindow(), downKeys[i]) == GLFW_PRESS)
+			if (glfwGetKey((GLFWwindow*) window->GetGLFWwindow(), downKeys[i]) == GLFW_PRESS)
 			{
 				bool newKey = false;
 				for (unsigned int j = 0; j < newKeys.size(); j++)
@@ -56,22 +54,15 @@ namespace mb { namespace input {
 			}
 		}
 
-		//std::cout << "updated down, ";
-
 		for (unsigned int i = 0; i < pressedKeys.size(); i++)
 		{
-			if (glfwGetKey((GLFWwindow*)window.GetGLFWwindow(), pressedKeys[i]) != GLFW_PRESS)
+			if (glfwGetKey((GLFWwindow*) window->GetGLFWwindow(), pressedKeys[i]) != GLFW_PRESS)
 			{
 				releasedKeys.push_back(pressedKeys[i]);
 				pressedKeys.erase(pressedKeys.begin() + i);
 				i--;
 			}
 		}
-
-		//std::cout << "updated pressed." << std::endl;
-
-		//std::cout << "Pressed Keys: " << pressedKeys.size() << ", Down Keys: " << downKeys.size() << ", Up Keys: " << upKeys.size() << std::endl;
-		//std::cout << "Pressed key is " << pressedKeys[0] << std::endl;
 	}
 
 	bool Input::IsKeyPressed(Key key)

@@ -8,9 +8,9 @@
 
 namespace mb { namespace graphics {
 
-	BatchRenderer::BatchRenderer(const Window& window)
+	BatchRenderer::BatchRenderer(const maths::Vec2& windowSize)
 		: m_VBOLayout(), m_VAO(), m_Shader("./res/batcher.vert", "./res/batcher.frag"),
-		m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1), window(window)
+		m_SpriteCount(0), m_TextureCount(0), m_View(1), m_Proj(1)
 	{
 		m_VBOLayout.Push<float>(3);
 		m_VBOLayout.Push<float>(2);
@@ -41,7 +41,7 @@ namespace mb { namespace graphics {
 
 		delete indices;
 
-		m_Proj = maths::Mat4::ortho(-window.GetSize().x / 2, window.GetSize().x / 2, -window.GetSize().y / 2, window.GetSize().y / 2, -5, 5);
+		m_Proj = maths::Mat4::ortho(-windowSize.x / 2, windowSize.x / 2, -windowSize.y / 2, windowSize.y / 2, -5, 5);
 
 		m_Shader.Bind();
 		m_Shader.SetUniformMat4("u_View", m_View);

@@ -76,6 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.lib</TargetExt>
+    <OutDir>$(SolutionDir)lib\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)lib\int\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
@@ -124,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)GLFW\include;$(SolutionDir)GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -134,6 +136,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)GLFW\lib-vc2015;$(SolutionDir)GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor\GLFW\lib-vc2015;$(ProjectDir)vendor\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -155,7 +161,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\Light.cpp" />
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Buffer.cpp" />
     <ClCompile Include="src\graphics\BufferLayout.cpp" />
@@ -178,6 +183,7 @@
     <ClCompile Include="src\platform\CoreSystems.cpp" />
     <ClCompile Include="src\platform\Entity.cpp" />
     <ClCompile Include="src\platform\EntityManager.cpp" />
+    <ClCompile Include="src\platform\Game.cpp" />
     <ClCompile Include="src\platform\ResourceManager.cpp" />
     <ClCompile Include="src\platform\SystemManager.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
@@ -186,7 +192,6 @@
     <ClCompile Include="src\platform\System.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\physics\CollisionDetection.h" />
     <ClInclude Include="src\physics\physics.h" />
     <ClInclude Include="src\platform\Component.h" />
@@ -212,6 +217,7 @@
     <ClInclude Include="src\platform\CoreSystems.h" />
     <ClInclude Include="src\platform\Entity.h" />
     <ClInclude Include="src\platform\EntityManager.h" />
+    <ClInclude Include="src\platform\Game.h" />
     <ClInclude Include="src\platform\platform.h" />
     <ClInclude Include="src\platform\ResourceManager.h" />
     <ClInclude Include="src\platform\SystemManager.h" />

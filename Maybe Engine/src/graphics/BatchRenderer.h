@@ -33,7 +33,7 @@ namespace mb { namespace graphics {
 	class BatchRenderer
 	{
 	public:
-		BatchRenderer(const Window& window);
+		BatchRenderer(const maths::Vec2& windowSize);
 		~BatchRenderer();
 
 		void Begin();
@@ -60,7 +60,6 @@ namespace mb { namespace graphics {
 		unsigned int m_SpriteCount;
 
 		utils::Timer m_Timer;
-		const Window& window;
 
 		maths::Vec2 defaultUV[4];
 

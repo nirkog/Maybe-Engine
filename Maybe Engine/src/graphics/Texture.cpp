@@ -38,7 +38,7 @@ namespace mb { namespace graphics {
 
 	Texture::~Texture()
 	{
-		glDeleteTextures(1, &m_ID);
+		GLCall(glDeleteTextures(1, &m_ID));
 	}
 
 	void Texture::Bind(unsigned int slot) const

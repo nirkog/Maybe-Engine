@@ -97,7 +97,7 @@ namespace mb { namespace graphics {
 
 	Shader::~Shader()
 	{
-		//GLCall(glDeleteProgram(m_ID));
+		GLCall(glDeleteProgram(m_ID));
 	}
 
 	void Shader::Bind() const

@@ -17,7 +17,7 @@ namespace mb { namespace utils {
 		glfwTerminate();
 	}
 
-	void Update(const graphics::Window& window)
+	void Update(const graphics::Window* window)
 	{
 		Time::Update();
 		input::Input::Update(window);

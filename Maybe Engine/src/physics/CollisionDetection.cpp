@@ -1,10 +1,15 @@
 #include "CollisionDetection.h"
-#include "..\maths\maths.h"
 
 namespace mb { namespace physics {
 
 	bool CollisionDetection::Intersect(unsigned int ID1, unsigned ID2)
 	{
+		/*
+		
+			VERY VERY INEFFICIENT!
+		
+		*/
+
 		maths::Vec2 position1 = platform::ComponentManager::GetComponent<platform::TransformComponent>(ID1)->position;
 		maths::Vec2 position2 = platform::ComponentManager::GetComponent<platform::TransformComponent>(ID2)->position;
 		maths::Vec2 size1 = platform::ComponentManager::GetComponent<platform::RenderComponent>(ID1)->sprite.GetSize();
@@ -14,6 +19,14 @@ namespace mb { namespace physics {
 			if (position1.y + size1.y / 2 > position2.y - size2.y / 2 && position1.y - size1.y / 2 < position2.y + size2.y / 2)
 				return true;
 
+		return false;
+	}
+
+	bool CollisionDetection::Intersect(const maths::Vec2& size1, const maths::Vec2& position1, const maths::Vec2& size2, const maths::Vec2& position2)
+	{
+		if (position1.x + size1.x / 2 > position2.x - size2.x / 2 && position1.x - size1.x / 2 < position2.x + size2.x / 2)
+			if (position1.y + size1.y / 2 > position2.y - size2.y / 2 && position1.y - size1.y / 2 < position2.y + size2.y / 2)
+				return true;
 		return false;
 	}
 

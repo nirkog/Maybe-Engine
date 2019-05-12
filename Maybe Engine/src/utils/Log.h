@@ -79,7 +79,7 @@ namespace mb { namespace utils {
 		template<typename ...Param>
 		static void Debug(const char* message, const Param& ...params)
 		{
-#ifdef _DEBUG
+#if _DEBUG
 			LogMessageWithTime(GetFullMessage(message, params...).c_str(), debugColors);
 #endif
 		}

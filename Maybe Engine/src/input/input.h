@@ -47,7 +47,7 @@ namespace mb { namespace input {
 	{
 	public:
 		static void Init();
-		static void Update(const graphics::Window& window);
+		static void Update(const graphics::Window* window);
 
 		static bool IsKeyPressed(Key key);
 		static bool IsKeyDown(Key key);

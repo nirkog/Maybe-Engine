@@ -7,12 +7,12 @@ namespace mb { namespace platform { namespace coreSystems {
 	class RenderingSystem : public System
 	{
 	public:
-		RenderingSystem(const mb::graphics::Window& window)
+		RenderingSystem(const maths::Vec2& windowSize)
 		{
 			m_ComponentIds.push_back(RenderComponent::ID);
 			m_ComponentIds.push_back(TransformComponent::ID);
 
-			renderer = new graphics::BatchRenderer(window);
+			renderer = new graphics::BatchRenderer(windowSize);
 		}
 
 		~RenderingSystem()

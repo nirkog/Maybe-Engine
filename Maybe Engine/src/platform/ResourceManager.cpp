@@ -35,7 +35,7 @@ namespace mb { namespace platform {
 	{
 		if (m_TextureIndexTagMap.find(tag) != m_TextureIndexTagMap.end())
 		{
-			utils::Log::Warn("Trying to add a texture with an existing tag, ignoring the request!");
+			utils::Log::Warn("Trying to add a texture with an existing tag, ignoring the request! (tag {})", tag);
 			return;
 		}
 
@@ -66,7 +66,7 @@ namespace mb { namespace platform {
 		it = m_TextureIndexTagMap.find(tag);
 		if (it == m_TextureIndexTagMap.end())
 		{
-			utils::Log::Warn("Trying to fetch a texture with a non-existing tag, ignoring the request!");
+			utils::Log::Warn("Trying to fetch a texture with a non-existing tag, ignoring the request! (tag {})", tag);
 			return nullptr;
 		}
 
@@ -105,7 +105,7 @@ namespace mb { namespace platform {
 		it = m_TextureIndexTagMap.find(tag);
 		if (it == m_TextureIndexTagMap.end())
 		{
-			utils::Log::Warn("Trying to delete a texture with a non-existing tag, ignoring the request!");
+			utils::Log::Warn("Trying to delete a texture with a non-existing tag, ignoring the request! (tag {})", tag);
 			return;
 		}
 

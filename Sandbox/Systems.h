@@ -8,6 +8,7 @@
 #include "graphics\window.h"
 #include "input\input.h"
 #include "maths\maths.h"
+#include "physics\physics.h"
 
 using namespace mb::platform;
 using namespace mb::input;
@@ -17,6 +18,7 @@ class MovementSystem : public System
 {
 public:
 	MovementSystem(Window& window) 
+		: paddleSize(0, 0), ballSize(0, 0)
 	{
 		m_ComponentIds.push_back(TransformComponent::ID);
 
@@ -26,17 +28,28 @@ public:
 
 	~MovementSystem()
 	{
-
+		std::cout << "Dead";
 	}
 
 	void OnInitEntity(unsigned int entityID)
 	{
 		auto* transform = ComponentManager::GetComponent<TransformComponent>(entityID);
 
+		if (EntityManager::GetTag(entityID) == "PADDLE1" || EntityManager::GetTag(entityID) == "PADDLE2" || paddleSize.x == 0)
+			paddleSize = ComponentManager::GetComponent<RenderComponent>(entityID)->sprite.GetSize();
+		else if (EntityManager::GetTag(entityID) == "BALL")
+			ballSize = ComponentManager::GetComponent<RenderComponent>(entityID)->sprite.GetSize();
+
 		if (EntityManager::GetTag(entityID) == "PADDLE1")
+		{
 			paddle1ID = entityID;
+			paddle1Index = transforms.size();
+		}
 		else if (EntityManager::GetTag(entityID) == "PADDLE2")
+		{
 			paddle2ID = entityID;
+			paddle2Index = transforms.size();
+		}
 
 		transform->accleration = {0, 0};
 		transform->velocity = {0, 0};
@@ -54,23 +67,20 @@ public:
 			if (EntityManager::GetTag(id) == "BALL")
 			{
 				//transform->rotationAngle += 125 * deltaTime;
-				transform->scale.x = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
-				transform->scale.y = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
+				//transform->scale.x = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
+				//transform->scale.y = mb::maths::abs(mb::maths::sin(mb::utils::Time::GetElapsedTime())) / 2.5f + 1;
 
-				const Sprite2D sprite = ComponentManager::GetComponent<RenderComponent>(id)->sprite;
-				const mb::maths::Vec2 size = sprite.GetSize();
-
-				if (transform->position.y + size.y / 2 >= windowSize.y / 2)
+				if (transform->position.y + ballSize.y / 2 >= windowSize.y / 2)
 				{
-					transform->position.y = windowSize.y / 2 - size.y / 2;
+					transform->position.y = windowSize.y / 2 - ballSize.y / 2;
 					transform->velocity.y *= -1;
 				}
-				else if (transform->position.y - size.y / 2 <= -windowSize.y / 2)
+				else if (transform->position.y - ballSize.y / 2 <= -windowSize.y / 2)
 				{
-					transform->position.y = -windowSize.y / 2 + size.y / 2;
+					transform->position.y = -windowSize.y / 2 + ballSize.y / 2;
 					transform->velocity.y *= -1;
 				}
-				else if (transform->position.x + size.x / 2 >= windowSize.x / 2 || transform->position.x - size.x / 2 <= -windowSize.x / 2)
+				else if (transform->position.x + ballSize.x / 2 >= windowSize.x / 2 || transform->position.x - ballSize.x / 2 <= -windowSize.x / 2)
 				{
 					if (transform->position.x > 0) ComponentManager::GetComponent<ScoreComponent>(paddle1ID)->score++;
 					else ComponentManager::GetComponent<ScoreComponent>(paddle2ID)->score++;
@@ -80,7 +90,7 @@ public:
 
 					std::stringstream stream;
 					stream << paddle1Score << " - " << paddle2Score;
-					m_Window->SetTitle(stream.str().c_str());
+					//m_Window->SetTitle(stream.str().c_str());
 
 					mb::utils::Log::Error("You suck! the score is {} - {}!", paddle1Score, paddle2Score);
 
@@ -89,12 +99,12 @@ public:
 				}
 				else if (transform->velocity.x > 0)
 				{
-					if (mb::physics::CollisionDetection::Intersect(id, paddle2ID))
+					if (mb::physics::CollisionDetection::Intersect(ballSize, transform->position, paddleSize, transforms[paddle2Index]->position))
 						transform->velocity.x *= -1;
 				}
 				else if (transform->velocity.x < 0)
 				{
-					if (mb::physics::CollisionDetection::Intersect(id, paddle1ID))
+					if (mb::physics::CollisionDetection::Intersect(ballSize, transform->position, paddleSize, transforms[paddle1Index]->position))
 						transform->velocity.x *= -1;
 				}
 			}
@@ -104,16 +114,13 @@ public:
 
 			if (id == paddle1ID || id == paddle2ID)
 			{
-				const Sprite2D sprite = ComponentManager::GetComponent<RenderComponent>(id)->sprite;
-				const mb::maths::Vec2 size = sprite.GetSize();
-
-				if (transform->position.y + size.y / 2 > windowSize.y / 2)
+				if (transform->position.y + paddleSize.y / 2 > windowSize.y / 2)
 				{
-					transform->position.y = windowSize.y / 2 - size.y / 2;
+					transform->position.y = windowSize.y / 2 - paddleSize.y / 2;
 				}
-				else if (transform->position.y - size.y / 2 < -windowSize.y / 2)
+				else if (transform->position.y - paddleSize.y / 2 < -windowSize.y / 2)
 				{
-					transform->position.y = -windowSize.y / 2 + size.y / 2;
+					transform->position.y = -windowSize.y / 2 + paddleSize.y / 2;
 				}
 			}
 		}
@@ -124,6 +131,8 @@ private:
 	mb::maths::Vec2 windowSize;
 	mb::graphics::Window* m_Window;
 	unsigned int paddle1ID, paddle2ID;
+	unsigned int paddle1Index, paddle2Index;
+	mb::maths::Vec2 paddleSize, ballSize;
 };
 
 class InputSystem : public System
@@ -138,7 +147,7 @@ public:
 
 	~InputSystem()
 	{
-
+		std::cout << "Dead";
 	}
 
 	void OnInitEntity(unsigned int entityID)

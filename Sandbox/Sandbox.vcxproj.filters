@@ -9,11 +9,13 @@
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Sandbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="Sandbox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\batcher.frag" />

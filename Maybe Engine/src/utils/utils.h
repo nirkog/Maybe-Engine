@@ -12,7 +12,7 @@ namespace mb { namespace utils {
 	extern void Init();
 	extern void Terminate();
 
-	extern void Update(const graphics::Window& window);
+	extern void Update(const graphics::Window* window);
 
 	extern void LogOpenGLDetails();
 
