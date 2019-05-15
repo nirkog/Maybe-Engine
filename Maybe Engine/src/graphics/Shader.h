@@ -7,7 +7,7 @@
 
 #include "GL.h"
 #include "../maths/maths.h"
-#include "../utils/Log.h"
+#include "../utils/File.h"
 
 namespace mb { namespace graphics {
 	class Shader 
@@ -30,7 +30,7 @@ namespace mb { namespace graphics {
 		int GetUniformLocation(const std::string& name);
 	private:
 		std::unordered_map<std::string, int> m_UniformLocationsCache;
-		std::string m_VertexSource, m_FragmentSource;
+		utils::InFile m_VertexSource, m_FragmentSource;
 		unsigned int m_ID;
 		static unsigned int m_ActiveShader;
 	};

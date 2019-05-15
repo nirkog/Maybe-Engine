@@ -14,7 +14,7 @@ namespace mb { namespace utils {
 
 	void Terminate()
 	{
-		glfwTerminate();
+		//glfwTerminate();
 	}
 
 	void Update(const graphics::Window* window)

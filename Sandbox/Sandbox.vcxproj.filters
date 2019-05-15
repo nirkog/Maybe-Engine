@@ -12,9 +12,6 @@
     <ClCompile Include="Sandbox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Systems.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="Sandbox.h" />
   </ItemGroup>
   <ItemGroup>
@@ -25,5 +22,8 @@
     <Image Include="res\alien.png" />
     <Image Include="res\spaceship.png" />
     <Image Include="res\smiley.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\sound.wav" />
   </ItemGroup>
 </Project>

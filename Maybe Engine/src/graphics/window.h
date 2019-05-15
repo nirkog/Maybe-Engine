@@ -4,6 +4,7 @@
 #include "Color.h"
 
 #include "..\maths\maths.h"
+#include "..\audio\AL.h"
 
 namespace mb { namespace graphics {
 	class Window
@@ -34,8 +35,6 @@ namespace mb { namespace graphics {
 
 		inline void Destroy() { glfwDestroyWindow(m_Window);}
 	private:
-		//void OnResize(GLFWwindow* window, int width, int height);
-	private:
 		char* m_Title;
 		maths::Vec2 m_Size;
 		GLFWwindow* m_Window;
@@ -46,5 +45,8 @@ namespace mb { namespace graphics {
 		unsigned int m_QuitKey;
 
 		static unsigned int m_OpenWindows;
+
+		ALCdevice* m_AlDevice;
+		ALCcontext* m_AlContext;
 	};
 } }

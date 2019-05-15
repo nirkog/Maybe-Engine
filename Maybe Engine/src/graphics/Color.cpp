@@ -2,6 +2,17 @@
 
 namespace mb { namespace graphics {
 
+	Color Color::WHITE("#ffffff");
+	Color Color::BLACK("#000000");
+	Color Color::GRAY("#808080");
+	Color Color::BLUE("#0000ff");
+	Color Color::GREEN("#00ff00");
+	Color Color::RED("#ff0000");
+	Color Color::YELLOW("#ffd300");
+	Color Color::CLEAR("#00000000");
+	Color Color::CYAN("#00ffff");
+	Color Color::MAGENTA("#ff00ff");
+
 	Color::Color()
 		: r(0), g(0), b(0), a(0)
 	{

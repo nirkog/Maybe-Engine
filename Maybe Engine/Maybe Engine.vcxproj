@@ -92,7 +92,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)vendor\OpenAl\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
@@ -101,10 +101,10 @@
       <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor\GLFW\lib-vc2015;$(ProjectDir)vendor\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor\OpenAl\libs\Win32;$(ProjectDir)vendor\GLFW\lib-vc2015;$(ProjectDir)vendor\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)vendor\OpenAl\include;$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -137,8 +137,8 @@
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor\GLFW\lib-vc2015;$(ProjectDir)vendor\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor\OpenAl\libs\Win32;$(ProjectDir)vendor\GLFW\lib-vc2015;$(ProjectDir)vendor\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,6 +161,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\AlBuffer.cpp" />
+    <ClCompile Include="src\audio\AlSource.cpp" />
+    <ClCompile Include="src\audio\AudioListener.cpp" />
+    <ClCompile Include="src\audio\AudioPlayer.cpp" />
+    <ClCompile Include="src\audio\Sound.cpp" />
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Buffer.cpp" />
     <ClCompile Include="src\graphics\BufferLayout.cpp" />
@@ -187,12 +192,22 @@
     <ClCompile Include="src\platform\Game.cpp" />
     <ClCompile Include="src\platform\ResourceManager.cpp" />
     <ClCompile Include="src\platform\SystemManager.cpp" />
+    <ClCompile Include="src\utils\File.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="src\utils\Time.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
     <ClCompile Include="src\platform\System.cpp" />
+    <ClCompile Include="src\audio\WavFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\audio\AL.h" />
+    <ClInclude Include="src\audio\AlBuffer.h" />
+    <ClInclude Include="src\audio\AlSource.h" />
+    <ClInclude Include="src\audio\audio.h" />
+    <ClInclude Include="src\audio\AudioListener.h" />
+    <ClInclude Include="src\audio\MetaData.h" />
+    <ClInclude Include="src\audio\AudioPlayer.h" />
+    <ClInclude Include="src\audio\Sound.h" />
     <ClInclude Include="src\graphics\Color.h" />
     <ClInclude Include="src\physics\CollisionDetection.h" />
     <ClInclude Include="src\physics\physics.h" />
@@ -223,12 +238,14 @@
     <ClInclude Include="src\platform\platform.h" />
     <ClInclude Include="src\platform\ResourceManager.h" />
     <ClInclude Include="src\platform\SystemManager.h" />
+    <ClInclude Include="src\utils\File.h" />
     <ClInclude Include="src\utils\Log.h" />
     <ClInclude Include="src\utils\rang.hpp" />
     <ClInclude Include="src\utils\Time.h" />
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\utils.h" />
     <ClInclude Include="src\platform\System.h" />
+    <ClInclude Include="src\audio\WavFile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basic.frag" />

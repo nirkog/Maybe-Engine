@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Maybe Engine\src;$(SolutionDIr)Maybe Engine\vendor\GLFW\include;$(SolutionDIr)Maybe Engine\vendor\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Maybe Engine\src;$(SolutionDIr)Maybe Engine\vendor\GLEW\include;$(SolutionDIr)Maybe Engine\vendor\GLFW\include;$(SolutionDIr)Maybe Engine\vendor\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,7 +108,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDIr)Maybe Engine\vendor\GLEW\include;$(SolutionDIr)Maybe Engine\vendor\GLFW\include;$(SolutionDIr)Maybe Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDIr)Maybe Engine\vendor\GLEW\include;$(SolutionDIr)Maybe Engine\vendor\OpenAL\include;$(SolutionDIr)Maybe Engine\vendor\GLFW\include;$(SolutionDIr)Maybe Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
@@ -140,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sandbox.h" />
-    <ClInclude Include="Systems.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maybe Engine\Maybe Engine.vcxproj">
@@ -155,6 +154,9 @@
     <Image Include="res\alien.png" />
     <Image Include="res\smiley.png" />
     <Image Include="res\spaceship.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\sound.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

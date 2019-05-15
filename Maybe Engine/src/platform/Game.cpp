@@ -5,6 +5,7 @@ namespace mb { namespace platform {
 	Game::Game()
 	{
 		utils::Init();
+		InitAL();
 	}
 
 	Game::~Game()
@@ -12,6 +13,10 @@ namespace mb { namespace platform {
 		SystemManager::Destroy();
 
 		m_Window->Destroy();
+
+		utils::Terminate();
+
+		TerminateAL();
 	}
 
 	void Game::Run()
@@ -25,6 +30,22 @@ namespace mb { namespace platform {
 
 			m_Window->Update();
 		}
+	}
+
+	void Game::InitAL()
+	{
+		m_AlDevice = alcOpenDevice(NULL);
+		if (!m_AlDevice) std::cout << "NOT OK";
+		m_AlContext = alcCreateContext(m_AlDevice, NULL);
+		alcMakeContextCurrent(m_AlContext);
+		if (!m_AlContext) std::cout << "NOT OK";
+	}
+
+	void Game::TerminateAL()
+	{
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(m_AlContext);
+		alcCloseDevice(m_AlDevice);
 	}
 
 } }

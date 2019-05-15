@@ -4,24 +4,6 @@ namespace mb { namespace graphics {
 
 	unsigned int Shader::m_ActiveShader = 0;
 
-	std::string ReadFile(const char* fileName)
-	{
-		std::stringstream stream;
-		std::ifstream file(fileName);
-		std::string line;
-
-		if (file.is_open())
-		{
-			while (getline(file, line))
-			{
-				stream << line << "\n";
-			}
-			file.close();
-		}
-
-		return stream.str();
-	}
-
 	unsigned int CompileShader(std::string source, unsigned int type)
 	{
 		const char* shaderSource = source.c_str();
@@ -84,13 +66,10 @@ namespace mb { namespace graphics {
 	}
 
 	Shader::Shader(const char* vertexFile, const char* fragmentFile)
-		: m_ID(0)
+		: m_ID(0), m_VertexSource(vertexFile), m_FragmentSource(fragmentFile)
 	{
-		m_VertexSource = ReadFile(vertexFile);
-		m_FragmentSource = ReadFile(fragmentFile);
-
-		unsigned int vertexID = CompileShader(m_VertexSource, GL_VERTEX_SHADER);
-		unsigned int fragmentID = CompileShader(m_FragmentSource, GL_FRAGMENT_SHADER);
+		unsigned int vertexID = CompileShader(m_VertexSource.Read(), GL_VERTEX_SHADER);
+		unsigned int fragmentID = CompileShader(m_FragmentSource.Read(), GL_FRAGMENT_SHADER);
 
 		m_ID = CreateProgram(vertexID, fragmentID);
 	}
@@ -106,7 +85,6 @@ namespace mb { namespace graphics {
 		{
 			GLCall(glUseProgram(m_ID));
 			m_ActiveShader = m_ID;
-			//std::cout << "Binding shader" << std::endl;
 		}
 	}
 

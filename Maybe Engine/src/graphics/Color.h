@@ -18,6 +18,8 @@ namespace mb { namespace graphics {
 		friend std::ostream& operator<<(std::ostream& stream, const Color& color);
 	public:
 		float r, g, b, a;
+
+		static Color WHITE, BLACK, GRAY, GREEN, BLUE, RED, YELLOW, CLEAR, CYAN, MAGENTA;
 	};
 
 } }
