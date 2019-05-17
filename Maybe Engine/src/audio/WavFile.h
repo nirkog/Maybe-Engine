@@ -40,6 +40,8 @@ namespace mb { namespace audio {
 		void PrintMetaData() const;
 
 		void Close();
+
+		static bool IsWav(const char* path);
 	private:
 		const char* m_Path;
 		std::ifstream m_File;

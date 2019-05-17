@@ -15,9 +15,16 @@ namespace mb { namespace audio {
 
 	void Sound::Load()
 	{
-		WavFile file(m_Path);
-		file.Read();
-		m_Buffer.SetData(file.GetData(), file.GetMetaData());
+		if (WavFile::IsWav(m_Path))
+		{
+			WavFile file(m_Path);
+			file.Read();
+			m_Buffer.SetData(file.GetData(), file.GetMetaData());
+		}
+		else
+		{
+			utils::Log::Warn("File type of file '{}' is not supported", m_Path);
+		}
 	}
 
 } }

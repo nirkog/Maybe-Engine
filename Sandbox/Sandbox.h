@@ -16,5 +16,6 @@ public:
 	Sandbox();
 	~Sandbox();
 private:
+	Entity alien;
 	ResourceManager rm;
 };

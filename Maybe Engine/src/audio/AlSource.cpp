@@ -8,7 +8,6 @@ namespace mb { namespace audio {
 		ALCall(alSourcef(m_ID, AL_GAIN, 1));
 		ALCall(alSourcef(m_ID, AL_PITCH, 1));
 		ALCall(alSource3f(m_ID, AL_POSITION, 0, 0, 0));
-		std::cout << "Intitializing source";
 	}
 
 	AlSource::~AlSource()
@@ -18,7 +17,6 @@ namespace mb { namespace audio {
 
 	void AlSource::Play(unsigned int buffer) const
 	{
-		std::cout << m_ID;
 		ALCall(alSourcei(m_ID, AL_BUFFER, buffer));
 		ALCall(alSourcePlay(m_ID));
 	}

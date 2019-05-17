@@ -11,9 +11,16 @@ namespace mb { namespace audio {
 		}
 		else
 		{
-			m_File.seekg(0, m_File.end);
-			m_Length = m_File.tellg();
-			m_File.seekg(0, m_File.beg);
+			if (IsWav(path))
+			{
+				m_File.seekg(0, m_File.end);
+				m_Length = m_File.tellg();
+				m_File.seekg(0, m_File.beg);
+			}
+			else
+			{
+				utils::Log::Error("File {} is not a wav file!", path);
+			}
 		}
 
 	}
@@ -109,6 +116,68 @@ namespace mb { namespace audio {
 	{
 		if (m_Read)
 			m_File.close();
+	}
+
+	bool WavFile::IsWav(const char* path)
+	{
+		std::ifstream file(path);
+
+		if (!file.is_open())
+		{
+			utils::Log::Warn("Could not open file!");
+			file.close();
+			return false;
+		}
+
+		int intBuffer;
+		short shortBuffer;
+		char* buffer = (char*) malloc(5);
+		buffer[4] = NULL;
+
+		file.read(buffer, 4);
+
+		if (strcmp(buffer, "RIFF") != 0)
+			return false;
+
+		file.seekg(8, file.beg);
+		file.read(buffer, 4);
+
+		if (strcmp(buffer, "WAVE") != 0)
+			return false;
+
+		file.read(buffer, 4);
+
+		if (strcmp(buffer, "fmt ") != 0)
+			return false;
+
+		file.read(buffer, 4);
+		memcpy(&intBuffer, buffer, 4);
+
+		if (intBuffer != 16)
+			return false;
+
+		file.read(buffer, 2);
+		memcpy(&shortBuffer, buffer, 2);
+
+		if (shortBuffer != 1)
+			return false;
+
+		file.read(buffer, 2);
+		memcpy(&shortBuffer, buffer, 2);
+
+		if (shortBuffer != 1 && shortBuffer != 2)
+			return false;
+
+		file.seekg(36, file.beg);
+		file.read(buffer, 4);
+
+		if (strcmp(buffer, "data") != 0)
+			return false;
+
+		delete buffer;
+		file.close();
+		
+		return true;
 	}
 
 } }
