@@ -21,7 +21,6 @@ namespace mb { namespace graphics {
 	{
 		if (m_ActiveArray != m_ID)
 		{
-			//std::cout << "Binding " << m_ID << std::endl;
 			GLCall(glBindVertexArray(m_ID));
 			m_ActiveArray = m_ID;
 		}

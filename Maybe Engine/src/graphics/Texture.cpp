@@ -45,8 +45,6 @@ namespace mb { namespace graphics {
 	{
 		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
-
-		//std::cout << m_ID << std::endl;
 	}
 
 	void Texture::Unbind() const

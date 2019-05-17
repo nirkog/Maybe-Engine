@@ -18,4 +18,5 @@ public:
 private:
 	Entity alien;
 	ResourceManager rm;
+	AudioPlayer player;
 };

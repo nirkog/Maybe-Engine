@@ -20,15 +20,10 @@ namespace mb { namespace platform {
 
 	void SystemManager::Destroy()
 	{
-		std::cout << systems.size() << std::endl;
 		for (unsigned int i = 0; i < systems.size(); i++)
 		{
-			std::cout << i << std::endl;
 			delete systems[i];
-			std::cout << i << std::endl;
 		}
-
-		std::cout << "Destroyed systems!" << std::endl;
 	}
 
 	void SystemManager::AddEntity(std::vector<unsigned int> ids, unsigned int entityID)
