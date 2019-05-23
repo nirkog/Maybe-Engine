@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "../maths/vec3.h"
-#include "../graphics/Sprite2D.h"
+#include "../graphics/Animation.h"
 #include "../input/input.h"
 
 namespace mb { namespace platform {
@@ -33,6 +33,7 @@ namespace mb { namespace platform {
 	struct RenderComponent : public Component<RenderComponent>
 	{
 		graphics::Sprite2D sprite;
+		graphics::Animation animation;
 	};
 
 	struct InputComponent : public Component<InputComponent>

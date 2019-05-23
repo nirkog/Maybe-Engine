@@ -22,6 +22,7 @@
     <Image Include="res\alien.png" />
     <Image Include="res\spaceship.png" />
     <Image Include="res\smiley.png" />
+    <Image Include="res\trump_run.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="res\sound.wav" />

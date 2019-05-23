@@ -16,7 +16,6 @@ namespace mb { namespace graphics {
 	private:
 		unsigned int m_ID;
 		char* m_Path;
-		unsigned char* m_Data;
 		int m_Width, m_Height, m_BPP;
 	};
 

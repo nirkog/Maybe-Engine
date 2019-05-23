@@ -44,7 +44,13 @@ namespace mb { namespace utils {
 
 	void Time::RemoveTimer(Timer* timer)
 	{
-		timers.erase(timers.begin() + timer->GetID());
+		unsigned int id = timer->GetID();
+		timers.erase(timers.begin() + id);
+
+		for (unsigned int i = id; i < timers.size(); i++)
+		{
+			timers[i]->SetID(timers[i]->GetID() - 1);
+		}
 	}
 
 	unsigned int AddToList(Timer* timer)

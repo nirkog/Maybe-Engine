@@ -40,12 +40,10 @@ namespace mb { namespace graphics {
 		void Submit(const Sprite2D* sprite);
 		void Submit(platform::Entity& entity);
 		void Submit(platform::TransformComponent* transform, platform::RenderComponent* render);
-		//void Submit(const Light& light);
 		void End();
 	private:
 		void Flush();
 		void Submit(const Sprite2D* sprite, const maths::Vec2& position, const maths::Vec2& scale, const RotationData& rotation);
-		void SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec4& color, const maths::Vec2& position);
 	private:
 		VertexArray m_VAO;
 		BufferLayout m_VBOLayout;
@@ -61,7 +59,7 @@ namespace mb { namespace graphics {
 
 		utils::Timer m_Timer;
 
-		maths::Vec2 defaultUV[4];
+		maths::Vec2 m_DefaultUV[4];
 
 		Texture* m_BoundTextures[MAX_TEXTURES];
 		unsigned int m_TextureCount;

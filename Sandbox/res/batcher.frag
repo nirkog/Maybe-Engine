@@ -15,17 +15,8 @@ uniform vec3 u_LightColor;
 
 void main()
 {
-	//vec3 lightPos = vec3(Proj * View * vec4(u_LightPos, 1));
-//	float ambient = 1.0f;
-//	vec3 normal = vec3(0, 0, 1);
-//	vec3 lightDir = normalize(u_LightPos - FragPos);
-//	float diff = max(dot(normal, lightDir), 0.0);
-//	vec3 diffuse = diff * u_LightColor;
-
 	if(tid > -1)
 		FragColor = texture(u_Textures[tid], uvCoords);
 	else
 		FragColor = Color;
-
-	//FragColor = vec4(FragColor.rgb * (ambient + diffuse), FragColor.a);
 }

@@ -48,7 +48,6 @@ namespace mb { namespace maths {
 		const Vec4 Normalize() const;
 
 		friend std::ostream& operator<<(std::ostream& stream, const Vec4& vec);
-	
 	public:
 		float x, y, z, w;
 	};

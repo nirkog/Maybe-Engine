@@ -7,21 +7,16 @@
 
 namespace mb { namespace graphics {
 
-	enum DrawingMode
-	{
-		TEXTURED = 0, PRIMITIVE = 1
-	};
-	
-	enum Shape
-	{
-		RECTANGLE = 0, TRIANGLE = 1, CIRCLE = 2, POLYGON = 3
-	};
-
 	struct Transform
 	{
 		maths::Vec2 position, scale;
 		maths::Vec3 rotationAxis;
 		float rotationAngle;
+	};
+
+	struct SpriteSheet
+	{
+		unsigned int columns, rows;
 	};
 
 	class Sprite2D
@@ -35,18 +30,16 @@ namespace mb { namespace graphics {
 		inline void SetColor(const Color color) { m_Color = color; }
 		inline void SetColor(const char* hex) { m_Color = { hex }; }
 		inline void SetColor(const float r, const float g, const float b, const float a) { m_Color = { r, g, b, a }; }
-		inline void SetDrawingMode(DrawingMode mode) { m_DrawingMode = mode; };
-		inline void SetShape(Shape shape) { m_Shape = shape; }
-		void SetCirclePrecision(unsigned int p);
-		void SetRadius(float radius);
 		void SetTexture(const Texture* texture);
+
+		inline void SetSpriteSheet(SpriteSheet sheet) { m_SpriteSheet = sheet; };
+		inline void EnableSpriteSheet() { m_IsSpriteSheet = true; } 
+		inline void DisableSpriteSheet() { m_IsSpriteSheet = false; }
+
+		inline void SetSpriteSheetPosition(const unsigned int x, unsigned int y) { m_SpriteSheetPosition = { float(x), float(y) }; }
 
 		inline const maths::Vec2& GetSize() const { return m_Size; }
 		inline const Color& GetColor() const { return m_Color; }
-		inline const DrawingMode GetDrawingMode() const { return m_DrawingMode; }
-		inline const Shape GetShape() const { return m_Shape; }
-		inline const float GetRadius() const { return m_Radius; }
-		inline const std::vector<maths::Vec4> getVertices() const { return m_Vertices; }
 
 		inline const char* GetTexturePath() const { return m_TexturePath; }
 
@@ -54,11 +47,14 @@ namespace mb { namespace graphics {
 
 		inline Texture* GetTexture() const { return m_Texture; }
 
+		inline bool IsSpriteSheet() const { return m_IsSpriteSheet; }
+		inline const SpriteSheet& GetSpriteSheet() const { return m_SpriteSheet; }
+		inline const maths::Vec2& GetSpriteSheetPosition() const { return m_SpriteSheetPosition; }
+
 		void Bind() const;
 		void Unbind() const;
 	private:
 		void InitializeTransform(const maths::Vec2& position);
-		void GenerateVertices();
 	public:
 		Transform transform;
 	private:
@@ -69,12 +65,9 @@ namespace mb { namespace graphics {
 
 		char* m_TexturePath;
 
-		DrawingMode m_DrawingMode;
-		Shape m_Shape;
-
-		std::vector<maths::Vec4> m_Vertices;
-		float m_Radius;
-		unsigned int m_CirclePrecision;
+		SpriteSheet m_SpriteSheet;
+		bool m_IsSpriteSheet;
+		maths::Vec2 m_SpriteSheetPosition;
 	};
 
 } }

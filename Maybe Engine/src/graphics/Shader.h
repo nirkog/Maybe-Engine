@@ -30,7 +30,7 @@ namespace mb { namespace graphics {
 		int GetUniformLocation(const std::string& name);
 	private:
 		std::unordered_map<std::string, int> m_UniformLocationsCache;
-		utils::InFile m_VertexSource, m_FragmentSource;
+		utils::File m_VertexSource, m_FragmentSource;
 		unsigned int m_ID;
 		static unsigned int m_ActiveShader;
 	};

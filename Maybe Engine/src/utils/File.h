@@ -8,7 +8,7 @@
 
 namespace mb { namespace utils {
 
-	class InFile
+	/*class InFile
 	{
 	public:
 		InFile(const char* path);
@@ -42,6 +42,39 @@ namespace mb { namespace utils {
 	private:
 		const char* m_Path;
 		std::ofstream m_File;
+	};*/
+
+	class File
+	{
+	public:
+		File(const char* path);
+		~File();
+
+		std::string Read();
+		void Write(std::string& str);
+		void Write(const char* str);
+
+		const unsigned int GetLength() const { return m_Length; };
+
+		template<typename T>
+		void operator<<(const T& t)
+		{
+			m_File << t;
+			UpdateLength();
+		}
+
+		template<typename T>
+		T& operator>>(T& t)
+		{
+			m_File >> t;
+			return t;
+		}
+	private:
+		void UpdateLength();
+	private:
+		const char* m_Path;
+		std::fstream m_File;
+		unsigned int m_Length;
 	};
 
 } }

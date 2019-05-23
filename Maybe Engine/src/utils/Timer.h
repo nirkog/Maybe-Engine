@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace mb { namespace utils {
 
 	enum TimeUnits
@@ -78,6 +80,8 @@ namespace mb { namespace utils {
 		inline unsigned int GetIntervalCount() const { return m_IntervalCount; }
 
 		inline unsigned int GetID() const { return m_ID; }
+
+		inline void SetID(unsigned int id) { m_ID = id; }
 
 		friend unsigned int AddToList(Timer* timer);
 		friend void RemoveFromList(Timer* timer);

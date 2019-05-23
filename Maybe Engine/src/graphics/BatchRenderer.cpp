@@ -47,10 +47,10 @@ namespace mb { namespace graphics {
 		m_Shader.SetUniformMat4("u_View", m_View);
 		m_Shader.SetUniformMat4("u_Proj", m_Proj);
 
-		defaultUV[0] = {0, 0};
-		defaultUV[1] = {0, 1};
-		defaultUV[2] = {1, 1};
-		defaultUV[3] = {1, 0};
+		m_DefaultUV[0] = {0, 0};
+		m_DefaultUV[1] = {0, 1};
+		m_DefaultUV[2] = {1, 1};
+		m_DefaultUV[3] = {1, 0};
 
 		for (unsigned int i = 0; i < 32; i++)
 		{
@@ -65,49 +65,6 @@ namespace mb { namespace graphics {
 		GLCall(m_Buffer = (VertexData*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	}
 
-	void BatchRenderer::SubmitCircle(const maths::Mat4 &model, const std::vector<maths::Vec4> vertices, const maths::Vec4& color, const maths::Vec2& position)
-	{
-		std::vector<maths::Vec4> transformedVertices;
-
-		for (unsigned int i = 0; i < vertices.size(); i++)
-			transformedVertices.push_back(vertices[i] * model);
-
-		maths::Vec4 origin = {position.x, position.y, 0, 1};
-
-		for (unsigned int i = 0; i < vertices.size() - 1; i++)
-		{
-			m_Buffer->positionX = transformedVertices[i].x;
-			m_Buffer->positionY = transformedVertices[i].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[0];
-			m_Buffer->tid = -0.5f;
-			m_Buffer++;
-
-			m_Buffer->positionX = origin.x;
-			m_Buffer->positionY = origin.y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[1];
-			m_Buffer->tid = -0.5f;
-			m_Buffer++;
-
-			m_Buffer->positionX = origin.x;
-			m_Buffer->positionY = origin.y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[2];
-			m_Buffer->tid = -0.5f;
-			m_Buffer++;
-
-			m_Buffer->positionX = transformedVertices[i + 1].x;
-			m_Buffer->positionY = transformedVertices[i + 1].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[3];
-			m_Buffer->tid = -0.5f;
-			m_Buffer++;
-
-			m_SpriteCount++;
-		}
-	}
-
 	void BatchRenderer::Submit(const Sprite2D* sprite, const maths::Vec2& position, const maths::Vec2& scale, const RotationData& rotation)
 	{
 		const maths::Vec2& size = sprite->GetSize();
@@ -116,7 +73,7 @@ namespace mb { namespace graphics {
 		int tid = 0;
 		bool existingTexture = false;
 
-		if (sprite->HasTexture() && sprite->GetDrawingMode() != DrawingMode::PRIMITIVE)
+		if (sprite->HasTexture())
 		{
 			for (unsigned int i = 0; i < m_TextureCount; i++)
 			{
@@ -153,58 +110,64 @@ namespace mb { namespace graphics {
 		if(scale.x != 1 || scale.y != 1) modelMat = maths::Mat4::scale(modelMat, maths::Vec3(scale, 0));
 		if(rotation.angle != 0) modelMat = maths::Mat4::rotate(modelMat, maths::radians(rotation.angle), rotation.axis);
 
-		if (sprite->GetDrawingMode() != DrawingMode::PRIMITIVE || sprite->GetShape() != Shape::CIRCLE)
+		maths::Vec4 vertices[4] = {
+			{ -size.x / 2, -size.y / 2, 0, 1 },
+			{ -size.x / 2, size.y / 2, 0, 1 },
+			{ size.x / 2, size.y / 2, 0, 1 },
+			{ size.x / 2, -size.y / 2, 0, 1 }
+		};
+
+		maths::Vec2 uv[4];
+
+		if (sprite->IsSpriteSheet())
 		{
-			maths::Vec4 vertices[4] = {
-				{ -size.x / 2, -size.y / 2, 0, 1 },
-				{ -size.x / 2, size.y / 2, 0, 1 },
-				{ size.x / 2, size.y / 2, 0, 1 },
-				{ size.x / 2, -size.y / 2, 0, 1 }
-			};
+			SpriteSheet sheet = sprite->GetSpriteSheet();
+			float columnWidth = 1 / float(sheet.columns);
+			float rowHeight = 1 / float(sheet.rows);
+			maths::Vec2 pos = sprite->GetSpriteSheetPosition();
 
-			if (sprite->GetDrawingMode() == DrawingMode::PRIMITIVE && sprite->GetShape() == Shape::TRIANGLE)
-			{
-				vertices[1].x = 0;
-				vertices[2].x = 0;
-			}
-
-			for (unsigned int i = 0; i < 4; i++)
-				vertices[i] *= modelMat;
-
-			m_Buffer->positionX = vertices[0].x;
-			m_Buffer->positionY = vertices[0].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[0];
-			m_Buffer->tid = realTID;
-			m_Buffer++;
-
-			m_Buffer->positionX = vertices[1].x;
-			m_Buffer->positionY = vertices[1].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[1];
-			m_Buffer->tid = realTID;
-			m_Buffer++;
-
-			m_Buffer->positionX = vertices[2].x;
-			m_Buffer->positionY = vertices[2].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[2];
-			m_Buffer->tid = realTID;
-			m_Buffer++;
-
-			m_Buffer->positionX = vertices[3].x;
-			m_Buffer->positionY = vertices[3].y;
-			m_Buffer->color = color;
-			m_Buffer->uv = defaultUV[3];
-			m_Buffer->tid = realTID;
-			m_Buffer++;
-
-			m_SpriteCount++;
+			uv[0] = { columnWidth * pos.x, rowHeight * pos.y };
+			uv[1] = { columnWidth * pos.x, rowHeight * (pos.y + 1) };
+			uv[2] = { columnWidth * (pos.x + 1), rowHeight * (pos.y + 1) };
+			uv[3] = { columnWidth * (pos.x + 1), rowHeight * pos.y };
 		}
 		else
 		{
-			SubmitCircle(modelMat, sprite->getVertices(), color, position);
+			memcpy(uv, m_DefaultUV, 4 * sizeof(maths::Vec2));
 		}
+
+		for (unsigned int i = 0; i < 4; i++)
+			vertices[i] *= modelMat;
+
+		m_Buffer->positionX = vertices[0].x;
+		m_Buffer->positionY = vertices[0].y;
+		m_Buffer->color = color;
+		m_Buffer->uv = uv[0];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		m_Buffer->positionX = vertices[1].x;
+		m_Buffer->positionY = vertices[1].y;
+		m_Buffer->color = color;
+		m_Buffer->uv = uv[1];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		m_Buffer->positionX = vertices[2].x;
+		m_Buffer->positionY = vertices[2].y;
+		m_Buffer->color = color;
+		m_Buffer->uv = uv[2];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		m_Buffer->positionX = vertices[3].x;
+		m_Buffer->positionY = vertices[3].y;
+		m_Buffer->color = color;
+		m_Buffer->uv = uv[3];
+		m_Buffer->tid = realTID;
+		m_Buffer++;
+
+		m_SpriteCount++;
 	}
 
 	void BatchRenderer::Submit(const Sprite2D* sprite)
