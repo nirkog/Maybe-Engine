@@ -9,8 +9,8 @@ namespace mb { namespace platform { namespace coreSystems {
 	public:
 		RenderingSystem(const maths::Vec2& windowSize)
 		{
-			m_ComponentIds.push_back(RenderComponent::ID);
-			m_ComponentIds.push_back(TransformComponent::ID);
+			AddComponentType<TransformComponent>();
+			AddComponentType<RenderComponent>();
 
 			renderer = new graphics::BatchRenderer(windowSize);
 		}
@@ -20,11 +20,11 @@ namespace mb { namespace platform { namespace coreSystems {
 			delete renderer;
 		}
 
-		void OnInitEntity(unsigned int entityID);
-		void OnUpdate(float deltaTime);
+		void OnInitEntity(unsigned int ID);
+		void OnUpdateEntity(float deltaTime, unsigned int ID, std::vector<void*> comps);
+		void OnUpdateStart(float deltaTime);
+		void OnUpdateEnd(float deltaTime);
 	private:
-		std::vector<RenderComponent*> m_RenderComponents;
-		std::vector<TransformComponent*> m_TransformComponents;
 		graphics::BatchRenderer* renderer;
 	};
 } } }

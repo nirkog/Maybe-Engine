@@ -2,26 +2,34 @@
 
 namespace mb { namespace platform { namespace coreSystems {
 
-	void RenderingSystem::OnInitEntity(unsigned int entityID)
+	void RenderingSystem::OnInitEntity(unsigned int ID)
 	{
-		m_RenderComponents.push_back(ComponentManager::GetComponent<RenderComponent>(entityID));
-		m_TransformComponents.push_back(ComponentManager::GetComponent<TransformComponent>(entityID));
+		AddComponent<TransformComponent>(ID);
+		AddComponent<RenderComponent>(ID);
 	}
 
-	void RenderingSystem::OnUpdate(float deltaTime)
+	void RenderingSystem::OnUpdateEntity(float deltaTime, unsigned int ID, std::vector<void*> comps)
+	{
+		auto* transform = (TransformComponent*) comps[0];
+		auto* render = (RenderComponent*) comps[1];
+
+		if (render->animation.Enabled())
+		{
+			render->animation.Update();
+			render->sprite.SetSpriteSheetPosition(render->animation.GetPosition().x, render->animation.GetPosition().y);
+		}
+
+		renderer->Submit(transform, render);
+	}
+
+	void RenderingSystem::OnUpdateStart(float deltaTime)
 	{
 		renderer->Begin();
-		for (unsigned int i = 0; i < m_EntityCount; i++)
-		{
-			if (m_RenderComponents[i]->animation.Enabled())
-			{
-				m_RenderComponents[i]->animation.Update();
-				m_RenderComponents[i]->sprite.SetSpriteSheetPosition(m_RenderComponents[i]->animation.GetPosition().x, m_RenderComponents[i]->animation.GetPosition().y);
-			}
-
-			renderer->Submit(m_TransformComponents[i], m_RenderComponents[i]);
-		}
-		renderer->End();
 	}
 
+	void RenderingSystem::OnUpdateEnd(float deltaTime)
+	{
+		renderer->End();
+	}
+	 
 } } }

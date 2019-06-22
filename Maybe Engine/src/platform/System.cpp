@@ -7,14 +7,16 @@ namespace mb { namespace platform {
 		for (unsigned int i = 0; i < m_EntityIds.size(); i++)
 			if (entityID == m_EntityIds[i]) return;
 
-		if (ids.size() >= m_ComponentIds.size())
+		std::vector<unsigned int> componentIds = m_Components.GetComponentIds();
+
+		if (ids.size() >= componentIds.size())
 		{
-			for (unsigned int i = 0; i < m_ComponentIds.size(); i++)
+			for (unsigned int i = 0; i < componentIds.size(); i++)
 			{
 				bool found = true;
 				for (unsigned int j = 0; j < ids.size(); j++)
 				{
-					if (m_ComponentIds[i] == ids[j]) break;
+					if (componentIds[i] == ids[j]) break;
 					else if (j == ids.size() - 1) found = false;
 				}
 
@@ -23,8 +25,6 @@ namespace mb { namespace platform {
 
 			m_EntityIds.push_back(entityID);
 			OnInitEntity(entityID);
-
-			m_EntityCount++;
 		}
 	}
 

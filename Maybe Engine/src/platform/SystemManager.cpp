@@ -12,9 +12,15 @@ namespace mb { namespace platform {
 
 	void SystemManager::Update()
 	{
+		float deltaTime = utils::Time::GetDeltaTime();
 		for (unsigned int i = 0; i < systems.size(); i++)
 		{
-			systems[i]->OnUpdate(utils::Time::GetDeltaTime());
+			systems[i]->OnUpdateStart(deltaTime);
+
+			for(unsigned int j = 0; j < systems[i]->GetEntityCount(); j++)
+				systems[i]->OnUpdateEntity(deltaTime, systems[i]->GetEntityIdAt(j), systems[i]->GetComponentsAtIndex(j));
+
+			systems[i]->OnUpdateEnd(deltaTime);
 		}
 	}
 

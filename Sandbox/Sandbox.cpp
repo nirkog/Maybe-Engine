@@ -6,8 +6,8 @@ public:
 	InputSystem(Vec2 windowSize)
 		: speed(350)
 	{
-		m_ComponentIds.push_back(TransformComponent::ID);
-		m_ComponentIds.push_back(RenderComponent::ID);
+		AddComponentType<TransformComponent>();
+		AddComponentType<RenderComponent>();
 
 		this->windowSize = windowSize;
 	}
@@ -19,55 +19,52 @@ public:
 
 	void OnInitEntity(unsigned int ID)
 	{
-		transform.push_back(ComponentManager::GetComponent<TransformComponent>(ID));
-		render.push_back(ComponentManager::GetComponent<RenderComponent>(ID));
+		AddComponent<TransformComponent>(ID);
+		AddComponent<RenderComponent>(ID);
 	}
 
-	void OnUpdate(float deltaTime)
+	void OnUpdateEntity(float deltaTime, unsigned int ID, std::vector<void*> comps)
 	{
-		for (unsigned int i = 0; i < m_EntityCount; i++)
+		auto* transform = (TransformComponent*) comps[0];
+		auto* render = (RenderComponent*) comps[1];
+
+		if (transform->position.x >= this->windowSize.x * 1.1f / 2)
+			transform->position.x = -this->windowSize.x * 1.1f / 2;
+		else if (transform->position.x <= -this->windowSize.x * 1.1f / 2)
+			transform->position.x = this->windowSize.x * 1.1f / 2;
+		else if (transform->position.y >= this->windowSize.y * 1.1f / 2)
+			transform->position.y = -this->windowSize.y * 1.1f / 2;
+		else if (transform->position.y <= -this->windowSize.y * 1.1f / 2)
+			transform->position.y = this->windowSize.y * 1.1f / 2;
+
+		if (Input::IsKeyDown(Key::D_KEY))
 		{
-			if (transform[i]->position.x >= this->windowSize.x * 1.1f / 2)
-				transform[i]->position.x = -this->windowSize.x * 1.1f / 2;
-			else if (transform[i]->position.x <= -this->windowSize.x * 1.1f / 2)
-				transform[i]->position.x = this->windowSize.x * 1.1f / 2;
-			else if (transform[i]->position.y >= this->windowSize.y * 1.1f / 2)
-				transform[i]->position.y = -this->windowSize.y * 1.1f / 2;
-			else if (transform[i]->position.y <= -this->windowSize.y * 1.1f / 2)
-				transform[i]->position.y = this->windowSize.y * 1.1f / 2;
-
-			if (Input::IsKeyDown(Key::D_KEY))
-			{
-				transform[i]->velocity = { speed, 0 };
-				render[i]->animation.SetStartingPosition(0, 2);
-				render[i]->animation.SetEndingPosition(5, 2);
-			}
-			else if (Input::IsKeyDown(Key::A_KEY))
-			{
-				transform[i]->velocity = { -speed, 0 };
-				render[i]->animation.SetStartingPosition(0, 0);
-				render[i]->animation.SetEndingPosition(5, 0);
-			}
-			else if (Input::IsKeyDown(Key::W_KEY))
-			{
-				transform[i]->velocity = { 0, speed };
-				render[i]->animation.SetStartingPosition(0, 1);
-				render[i]->animation.SetEndingPosition(5, 1);
-			}
-			else if (Input::IsKeyDown(Key::S_KEY))
-			{
-				transform[i]->velocity = { 0, -speed };
-				render[i]->animation.SetStartingPosition(0, 3);
-				render[i]->animation.SetEndingPosition(5, 3);
-			}
-
-			transform[i]->position += transform[i]->velocity * deltaTime;
+			transform->velocity = { speed, 0 };
+			render->animation.SetStartingPosition(0, 2);
+			render->animation.SetEndingPosition(5, 2);
 		}
+		else if (Input::IsKeyDown(Key::A_KEY))
+		{
+			transform->velocity = { -speed, 0 };
+			render->animation.SetStartingPosition(0, 0);
+			render->animation.SetEndingPosition(5, 0);
+		}
+		else if (Input::IsKeyDown(Key::W_KEY))
+		{
+			transform->velocity = { 0, speed };
+			render->animation.SetStartingPosition(0, 1);
+			render->animation.SetEndingPosition(5, 1);
+		}
+		else if (Input::IsKeyDown(Key::S_KEY))
+		{
+			transform->velocity = { 0, -speed };
+			render->animation.SetStartingPosition(0, 3);
+			render->animation.SetEndingPosition(5, 3);
+		}
+
+		transform->position += transform->velocity * deltaTime;
 	}
 private:
-	std::vector<TransformComponent*> transform;
-	std::vector<RenderComponent*> render;
-
 	Vec2 windowSize;
 	float speed;
 };
@@ -94,7 +91,7 @@ Sandbox::Sandbox()
 	alien.GetComponent<RenderComponent>()->sprite.EnableSpriteSheet();
 	alien.GetComponent<RenderComponent>()->sprite.SetSpriteSheet({ 6, 4 });
 	alien.GetComponent<RenderComponent>()->animation.Enable();
-	alien.GetComponent<RenderComponent>()->animation.SetFPS(30);
+	alien.GetComponent<RenderComponent>()->animation.SetFPS(15);
 	alien.GetComponent<RenderComponent>()->animation.SetSpriteSheet(alien.GetComponent<RenderComponent>()->sprite.GetSpriteSheet());
 	alien.AddComponent<TransformComponent>();
 }
