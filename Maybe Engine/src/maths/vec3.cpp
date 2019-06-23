@@ -147,7 +147,7 @@ namespace mb { namespace maths {
 
 	std::ostream& operator<<(std::ostream& stream, const Vec3& vec)
 	{
-		stream << vec.x << ", " << vec.y << ", " << vec.z;
+		stream << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
 		return stream;
 	}
 

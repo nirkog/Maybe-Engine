@@ -15,6 +15,8 @@
 #define REGULAR_COLOR_MODE 0
 #define BRIGHT_COLOR_MODE 1
 
+#define PREFIX_LENGTH 11
+
 namespace mb { namespace utils {
 
 	struct TimeFormat
@@ -80,7 +82,49 @@ namespace mb { namespace utils {
 		static void Debug(const char* message, const Param& ...params)
 		{
 #if _DEBUG
-			LogMessageWithTime(GetFullMessage(message, params...).c_str(), debugColors);
+			if (GetParts(message).size() == 1 && sizeof...(params) > 0)
+			{
+				char* str = GetPlaceholderString(message, params...);
+
+				LogMessageWithTime(GetFullMessage(str, message, params...).c_str(), debugColors);
+
+				delete str;
+			}
+			else
+			{
+				LogMessageWithTime(GetFullMessage(message, params...).c_str(), debugColors);
+			}
+#endif
+		}
+
+		template<typename T>
+		static void Debug(const std::vector<T> vec)
+		{
+#if _DEBUG
+			std::stringstream stream;
+
+			stream << "[";
+			for (unsigned int i = 0; i < vec.size(); i++)
+			{
+				if (i < vec.size() - 1)
+					stream << vec[i] << ", ";
+				else
+					stream << vec[i] << "]";
+			}
+
+			LogMessageWithTime(stream.str().c_str(), debugColors);
+#endif
+		}
+
+		template<typename ...Param>
+		static void Debug(const Param& ...params)
+		{
+#if _DEBUG
+			char* str = GetPlaceholderString(params...);
+
+			LogMessageWithTime(GetFullMessage(str, params...).c_str(), debugColors);
+
+			delete str;
 #endif
 		}
 
@@ -98,13 +142,78 @@ namespace mb { namespace utils {
 
 		static void SetColor(int mode, ConsoleColor color);
 	private:
+		template<typename Param>
+		static std::string WrapNewLines(const Param& param)
+		{
+			std::stringstream testStream;
+			testStream << param;
+
+			std::string str = testStream.str();
+			std::stringstream temp;
+			std::vector<std::string> strParts;
+			std::stringstream result;
+
+			char spaces[PREFIX_LENGTH + 1];
+			spaces[PREFIX_LENGTH] = '\0';
+
+			for (unsigned int i = 0; i < PREFIX_LENGTH; i++) spaces[i] = ' ';
+
+			for (unsigned int i = 0; i < str.size(); i++)
+			{
+				if (str[i] == '\n')
+				{
+					strParts.push_back(temp.str());
+					temp.str(std::string());
+				}
+				else
+				{
+					temp << str[i];
+				}
+			}
+
+			for (unsigned i = 0; i < strParts.size(); i++)
+			{
+				if (i < strParts.size() - 1)
+					result << strParts[i] << std::endl << spaces;
+				else
+					result << strParts[i] << std::endl;
+			}
+
+			if (strParts.size() == 0) return str;
+			else return result.str();
+		}
+
+		template<typename ...Param>
+		static char* GetPlaceholderString(const Param& ...params)
+		{
+			const unsigned int count = (const unsigned int) sizeof...(params);
+			const unsigned int strSize = count * 2 + (count - 1);
+			char* str = (char*)malloc(strSize + 1);
+			str[strSize] = '\0';
+			unsigned int offset = 0;
+
+			for (unsigned int i = 0; i < count; i++)
+			{
+				str[offset] = '{';
+				str[offset + 1] = '}';
+
+				if (i < count - 1)
+				{
+					str[offset + 2] = ' ';
+
+					offset += 3;
+				}
+			}
+
+			return str;
+		}
+
 		template<typename First, typename ...Param>
 		static std::string FillIn(std::vector<std::string> parts, std::string& str, const First& first)
 		{
-			//std::cout << first << std::endl;
 			std::stringstream stream;
 			str.append(parts[0]);
-			stream << str << first;
+			stream << str << WrapNewLines(first);
 			parts.erase(parts.begin());
 			stream << parts[0];
 			return stream.str();
@@ -113,8 +222,9 @@ namespace mb { namespace utils {
 		template<typename First, typename ...Param>
 		static std::string FillIn(std::vector<std::string> parts, std::string& str, const First& first, const Param& ...params)
 		{
-			str.append(parts[0]);
-			str.append(std::to_string(first));
+			std::stringstream stream;
+			stream << str << parts[0] << WrapNewLines(first);
+			str = stream.str();
 			parts.erase(parts.begin());
 
 			return FillIn(parts, str, params...);

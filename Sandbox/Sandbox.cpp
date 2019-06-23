@@ -76,7 +76,7 @@ Sandbox::Sandbox()
 	m_Window->SetClearColor(Color::MAGENTA);
 	m_Window->SetVsync(false);
 
-	Time::EnableFpsLog();
+	Time::DisableFpsLog();
 
 	LogOpenGLDetails();
 
@@ -94,6 +94,7 @@ Sandbox::Sandbox()
 	alien.GetComponent<RenderComponent>()->animation.SetFPS(15);
 	alien.GetComponent<RenderComponent>()->animation.SetSpriteSheet(alien.GetComponent<RenderComponent>()->sprite.GetSpriteSheet());
 	alien.AddComponent<TransformComponent>();
+
 }
 
 Sandbox::~Sandbox()
