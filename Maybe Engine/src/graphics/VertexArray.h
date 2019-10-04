@@ -1,10 +1,9 @@
 #pragma once
 
-#include <vector>
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
-#include "Buffer.h"
-
-namespace mb { namespace graphics {
+namespace mb {
 
 	class VertexArray
 	{
@@ -15,14 +14,12 @@ namespace mb { namespace graphics {
 		void Bind() const;
 		void Unbind() const;
 
-		void AddBuffer(const Buffer& buffer);
-		void AddBuffer(const Buffer* buffer);
+		void AddBuffer(const VertexBuffer& buffer);
+		void AddBuffer(const IndexBuffer& buffer);
 
 		inline const unsigned int GetID() const { return m_ID; }
 	private:
 		unsigned int m_ID;
-		static unsigned int m_ActiveArray;
-		std::vector<Buffer> m_Buffers;
 	};
 
-} }
+}

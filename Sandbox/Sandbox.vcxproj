@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Maybe Engine\src;$(SolutionDIr)Maybe Engine\vendor\GLEW\include;$(SolutionDIr)Maybe Engine\vendor\GLFW\include;$(SolutionDIr)Maybe Engine\vendor\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,15 +151,23 @@
   <ItemGroup>
     <None Include="res\batcher.frag" />
     <None Include="res\batcher.vert" />
+    <None Include="res\new.frag" />
+    <None Include="res\new.vert" />
+    <None Include="res\simple.frag" />
+    <None Include="res\simple.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\alien.png" />
+    <Image Include="res\face.png" />
     <Image Include="res\smiley.png" />
     <Image Include="res\spaceship.png" />
     <Image Include="res\trump_run.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="res\sound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

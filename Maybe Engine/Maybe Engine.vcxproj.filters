@@ -15,19 +15,49 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\maths\vec2.cpp">
+    <ClCompile Include="src\core\StackAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\Window.cpp">
+    <ClCompile Include="src\core\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\math\mat4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\math\vec2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\math\vec3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\math\vec4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LayerStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\EventQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\RenderCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\maths\vec3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Buffer.cpp">
+    <ClCompile Include="src\graphics\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\VertexArray.cpp">
@@ -36,132 +66,120 @@
     <ClCompile Include="src\graphics\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\Sprite2D.cpp">
+    <ClCompile Include="src\core\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\maths\mat4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\stb_image.cpp">
+    <ClCompile Include="src\core\math\math_funcs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\BatchRenderer.cpp">
+    <ClCompile Include="src\graphics\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\maths\vec4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\BufferLayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\maths\maths.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input\Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\System.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\ComponentManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\SystemManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\EntityManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\physics\CollisionDetection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\CoreSystems.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\platform\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\File.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\AlBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\AlSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\WavFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\AudioPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio\AudioListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Animtion.cpp">
+    <ClCompile Include="src\graphics\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\maths\vec2.h">
+    <ClInclude Include="src\core\StackAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\window.h">
+    <ClInclude Include="src\core\PoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\utils.h">
+    <ClInclude Include="src\core\DoubleBufferedStackAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Pair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\StdAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\math\mat4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\math\vec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\math\vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\math\vec4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\rang.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LayerStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\EventQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\WindowEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\KeyEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\MouseEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\GL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\RenderCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\maths\vec3.h">
+    <ClInclude Include="src\graphics\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\maths\maths.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\BufferLayout.h">
+    <ClInclude Include="src\graphics\VertexBufferLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\VertexArray.h">
@@ -170,109 +188,19 @@
     <ClInclude Include="src\graphics\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\Sprite2D.h">
+    <ClInclude Include="src\core\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\maths\mat4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\stb_image.h">
+    <ClInclude Include="src\core\math\math_funcs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\BatchRenderer.h">
+    <ClInclude Include="src\graphics\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\maths\vec4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\GL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\ComponentManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\SystemManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\EntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\physics\CollisionDetection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\physics\physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\rang.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\CoreSystems.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\File.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\AlBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\AL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\AlSource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\MetaData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\WavFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\AudioPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio\AudioListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\platform\pch.h">
+    <ClInclude Include="src\graphics\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

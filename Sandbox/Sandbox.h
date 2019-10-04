@@ -1,22 +1,57 @@
 #pragma once
 
-#include "platform/platform.h"
-#include "audio/audio.h"
+#include "core/Log.h"
+#include "core/Color.h"
+#include "core/math/math_funcs.h"
+#include "graphics/RenderCommand.h"
+#include "graphics/Shader.h"
+#include "graphics/VertexArray.h"
+#include "graphics/Texture.h"
+#include "graphics/Renderer.h"
+#include "Application.h"
 
-using namespace mb::graphics;
-using namespace mb::utils;
-using namespace mb::platform;
-using namespace mb::maths;
-using namespace mb::input;
-using namespace mb::audio;
+#include "Input.h"
 
-class Sandbox : public Game
+class ExampleLayer : public mb::Layer
 {
 public:
-	Sandbox();
-	~Sandbox();
+	ExampleLayer();
+	~ExampleLayer();
+
+	void OnAttach();
+	void OnDetach();
+
+	void OnUpdate(float deltaTime);
+
+	void OnEvent(mb::Event& event);
 private:
-	Entity alien;
-	ResourceManager rm;
-	AudioPlayer player;
+	mb::Renderer renderer;
+
+	mb::Color color;
+	mb::Vec3 clearColor;
+
+	mb::Vec2 size;
+	mb::Array<mb::Vec3> positions;
+	mb::Array<mb::Color> colors;
+
+	float timer;
+	unsigned int frames;
+
+	unsigned int quadCount;
+};
+
+class SandboxApplication : public mb::Application
+{
+public:
+	SandboxApplication()
+	{
+		SetCloseOnEscape(true);
+
+		m_LayerStack.PushLayer(new ExampleLayer());
+	}
+
+	~SandboxApplication()
+	{
+
+	}
 };

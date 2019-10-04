@@ -17,14 +17,22 @@
   <ItemGroup>
     <None Include="res\batcher.frag" />
     <None Include="res\batcher.vert" />
+    <None Include="res\simple.vert" />
+    <None Include="res\simple.frag" />
+    <None Include="res\new.vert" />
+    <None Include="res\new.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\alien.png" />
     <Image Include="res\spaceship.png" />
     <Image Include="res\smiley.png" />
     <Image Include="res\trump_run.png" />
+    <Image Include="res\face.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="res\sound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\test.txt" />
   </ItemGroup>
 </Project>

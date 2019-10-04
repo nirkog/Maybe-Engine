@@ -1,15 +1,38 @@
 #include "VertexArray.h"
 
-#include <GL\glew.h>
+namespace mb {
 
-namespace mb { namespace graphics {
-
-	unsigned int VertexArray::m_ActiveArray = 0;
+	unsigned int GetTypeSize(unsigned int type)
+	{
+		switch (type)
+		{
+		case GL_INT:
+			return sizeof(int);
+			break;
+		case GL_UNSIGNED_INT:
+			return sizeof(unsigned int);
+			break;
+		case GL_FLOAT:
+			return sizeof(float);
+			break;
+		case GL_BYTE:
+			return sizeof(char);
+			break;
+		case GL_UNSIGNED_BYTE:
+			return sizeof(unsigned char);
+			break;
+		case GL_DOUBLE:
+			return sizeof(double);
+			break;
+		case GL_SHORT:
+			return sizeof(short);
+			break;
+		}
+	}
 
 	VertexArray::VertexArray()
-		: m_ID(0)
 	{
-		GLCall(glGenVertexArrays(1, &m_ID));
+		GLCall(glCreateVertexArrays(1, &m_ID));
 	}
 	
 	VertexArray::~VertexArray()
@@ -19,31 +42,25 @@ namespace mb { namespace graphics {
 
 	void VertexArray::Bind() const
 	{
-		if (m_ActiveArray != m_ID)
-		{
-			GLCall(glBindVertexArray(m_ID));
-			m_ActiveArray = m_ID;
-		}
+		GLCall(glBindVertexArray(m_ID));
 	}
 
 	void VertexArray::Unbind() const
 	{
 		GLCall(glBindVertexArray(0));
-		m_ActiveArray = 0;
 	}
 
-	void VertexArray::AddBuffer(const Buffer& buffer)
+	void VertexArray::AddBuffer(const VertexBuffer& buffer)
 	{
 		Bind();
 		buffer.Bind();
-		const BufferLayout layout = buffer.GetLayout();
-		const std::vector<BufferLayoutItem> items = layout.GetItems();
+		const VertexBufferLayout& layout = buffer.GetLayout();
+		const Array<VertexBufferLayout::BufferLayoutItem>& items = layout.GetItems();
 		unsigned int offset = 0;
 
-		for (unsigned int i = 0; i < items.size(); i++)
+		for (auto it = items.Begin(), end = items.End(); it != end; it++)
 		{
-			BufferLayoutItem item = items[i];
-			//std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
+			VertexBufferLayout::BufferLayoutItem& item = (*it);
 
 			GLCall(glEnableVertexAttribArray(item.index));
 			GLCall(glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*) offset));
@@ -51,31 +68,13 @@ namespace mb { namespace graphics {
 		}
 
 		Unbind();
-
-		//m_Buffers.push_back(buffer);
 	}
 
-	void VertexArray::AddBuffer(const Buffer* buffer)
+	void VertexArray::AddBuffer(const IndexBuffer& buffer)
 	{
 		Bind();
-		buffer->Bind();
-		const BufferLayout layout = buffer->GetLayout();
-		const std::vector<BufferLayoutItem> items = layout.GetItems();
-		unsigned int offset = 0;
-
-		for (unsigned int i = 0; i < items.size(); i++)
-		{
-			BufferLayoutItem item = items[i];
-			//std::cout << "Index: " << item.index << ", Count: " << item.count << ", Offset: " << offset << std::endl;
-
-			GLCall(glEnableVertexAttribArray(item.index));
-			GLCall(glVertexAttribPointer(item.index, item.count, item.type, item.normalized, layout.GetStride(), (const void*)offset));
-			offset += item.count * GetTypeSize(item.type);
-		}
-
+		buffer.Bind();
 		Unbind();
-
-		//m_Buffers.push_back(buffer);
 	}
-
-} }
+	
+}

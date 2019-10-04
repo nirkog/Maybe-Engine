@@ -4,6 +4,8 @@
 #include <gl\glew.h>
 #include <glfw\glfw3.h>
 
+#include "../core/Core.h"
+
 static void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
@@ -41,10 +43,6 @@ static bool GLLogCall(const char* function, const char* file, int line)
 
 	return true;
 }
-
-#ifndef ASSERT
-#define ASSERT(x) if (!(x)) __debugbreak();
-#endif
 
 #ifndef GLCall
 #if _DEBUG

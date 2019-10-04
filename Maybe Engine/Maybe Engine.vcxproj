@@ -95,9 +95,11 @@
       <AdditionalIncludeDirectories>$(ProjectDir)vendor\OpenAl\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(ProjectDir)src\platform\pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(ProjectDir)src\platform\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)GLFW\lib-vc2015;$(SolutionDir)GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -166,94 +168,70 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\audio\AlBuffer.cpp" />
-    <ClCompile Include="src\audio\AlSource.cpp" />
-    <ClCompile Include="src\audio\AudioListener.cpp" />
-    <ClCompile Include="src\audio\AudioPlayer.cpp" />
-    <ClCompile Include="src\audio\Sound.cpp" />
-    <ClCompile Include="src\graphics\Animtion.cpp" />
-    <ClCompile Include="src\graphics\BatchRenderer.cpp" />
-    <ClCompile Include="src\graphics\Buffer.cpp" />
-    <ClCompile Include="src\graphics\BufferLayout.cpp" />
-    <ClCompile Include="src\graphics\Color.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\core\Color.cpp" />
+    <ClCompile Include="src\core\File.cpp" />
+    <ClCompile Include="src\core\Log.cpp" />
+    <ClCompile Include="src\core\math\mat4.cpp" />
+    <ClCompile Include="src\core\math\math_funcs.cpp" />
+    <ClCompile Include="src\core\math\vec2.cpp" />
+    <ClCompile Include="src\core\math\vec3.cpp" />
+    <ClCompile Include="src\core\math\vec4.cpp" />
+    <ClCompile Include="src\core\StackAllocator.cpp" />
+    <ClCompile Include="src\events\EventQueue.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphics\RenderCommand.cpp" />
+    <ClCompile Include="src\graphics\Renderer.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
-    <ClCompile Include="src\graphics\Sprite2D.cpp" />
     <ClCompile Include="src\graphics\stb_image.cpp" />
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\graphics\VertexArray.cpp" />
-    <ClCompile Include="src\graphics\Window.cpp" />
-    <ClCompile Include="src\input\Input.cpp" />
-    <ClCompile Include="src\maths\mat4.cpp" />
-    <ClCompile Include="src\maths\maths.cpp" />
-    <ClCompile Include="src\maths\vec2.cpp" />
-    <ClCompile Include="src\maths\vec3.cpp" />
-    <ClCompile Include="src\maths\vec4.cpp" />
-    <ClCompile Include="src\physics\CollisionDetection.cpp" />
-    <ClCompile Include="src\platform\Component.cpp" />
-    <ClCompile Include="src\platform\ComponentManager.cpp" />
-    <ClCompile Include="src\platform\CoreSystems.cpp" />
-    <ClCompile Include="src\platform\Entity.cpp" />
-    <ClCompile Include="src\platform\EntityManager.cpp" />
-    <ClCompile Include="src\platform\Game.cpp" />
-    <ClCompile Include="src\platform\ResourceManager.cpp" />
-    <ClCompile Include="src\platform\SystemManager.cpp" />
-    <ClCompile Include="src\utils\File.cpp" />
-    <ClCompile Include="src\utils\Log.cpp" />
-    <ClCompile Include="src\utils\Time.cpp" />
-    <ClCompile Include="src\utils\utils.cpp" />
-    <ClCompile Include="src\platform\System.cpp" />
-    <ClCompile Include="src\audio\WavFile.cpp" />
+    <ClCompile Include="src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\LayerStack.cpp" />
+    <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\audio\AL.h" />
-    <ClInclude Include="src\audio\AlBuffer.h" />
-    <ClInclude Include="src\audio\AlSource.h" />
-    <ClInclude Include="src\audio\audio.h" />
-    <ClInclude Include="src\audio\AudioListener.h" />
-    <ClInclude Include="src\audio\MetaData.h" />
-    <ClInclude Include="src\audio\AudioPlayer.h" />
-    <ClInclude Include="src\audio\Sound.h" />
-    <ClInclude Include="src\graphics\Animation.h" />
-    <ClInclude Include="src\graphics\Color.h" />
-    <ClInclude Include="src\physics\CollisionDetection.h" />
-    <ClInclude Include="src\physics\physics.h" />
-    <ClInclude Include="src\platform\Component.h" />
-    <ClInclude Include="src\graphics\BatchRenderer.h" />
-    <ClInclude Include="src\graphics\Buffer.h" />
-    <ClInclude Include="src\graphics\BufferLayout.h" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\core\Allocator.h" />
+    <ClInclude Include="src\core\Array.h" />
+    <ClInclude Include="src\core\Color.h" />
+    <ClInclude Include="src\core\Core.h" />
+    <ClInclude Include="src\core\DoubleBufferedStackAllocator.h" />
+    <ClInclude Include="src\core\File.h" />
+    <ClInclude Include="src\core\List.h" />
+    <ClInclude Include="src\core\Log.h" />
+    <ClInclude Include="src\core\math\mat4.h" />
+    <ClInclude Include="src\core\math\math_funcs.h" />
+    <ClInclude Include="src\core\math\vec2.h" />
+    <ClInclude Include="src\core\math\vec3.h" />
+    <ClInclude Include="src\core\math\vec4.h" />
+    <ClInclude Include="src\core\Pair.h" />
+    <ClInclude Include="src\core\PoolAllocator.h" />
+    <ClInclude Include="src\core\rang.hpp" />
+    <ClInclude Include="src\core\Sort.h" />
+    <ClInclude Include="src\core\StackAllocator.h" />
+    <ClInclude Include="src\core\StdAllocator.h" />
+    <ClInclude Include="src\core\Time.h" />
+    <ClInclude Include="src\events\Event.h" />
+    <ClInclude Include="src\events\EventQueue.h" />
+    <ClInclude Include="src\events\KeyEvents.h" />
+    <ClInclude Include="src\events\MouseEvents.h" />
+    <ClInclude Include="src\events\WindowEvents.h" />
     <ClInclude Include="src\graphics\GL.h" />
-    <ClInclude Include="src\graphics\graphics.h" />
     <ClInclude Include="src\graphics\IndexBuffer.h" />
+    <ClInclude Include="src\graphics\RenderCommand.h" />
+    <ClInclude Include="src\graphics\Renderer.h" />
     <ClInclude Include="src\graphics\Shader.h" />
-    <ClInclude Include="src\graphics\Sprite2D.h" />
     <ClInclude Include="src\graphics\stb_image.h" />
     <ClInclude Include="src\graphics\Texture.h" />
     <ClInclude Include="src\graphics\VertexArray.h" />
-    <ClInclude Include="src\graphics\window.h" />
-    <ClInclude Include="src\input\input.h" />
-    <ClInclude Include="src\maths\mat4.h" />
-    <ClInclude Include="src\maths\maths.h" />
-    <ClInclude Include="src\maths\vec2.h" />
-    <ClInclude Include="src\maths\vec3.h" />
-    <ClInclude Include="src\maths\vec4.h" />
-    <ClInclude Include="src\platform\ComponentManager.h" />
-    <ClInclude Include="src\platform\CoreSystems.h" />
-    <ClInclude Include="src\platform\Entity.h" />
-    <ClInclude Include="src\platform\EntityManager.h" />
-    <ClInclude Include="src\platform\Game.h" />
-    <ClInclude Include="src\platform\pch.h" />
-    <ClInclude Include="src\platform\platform.h" />
-    <ClInclude Include="src\platform\ResourceManager.h" />
-    <ClInclude Include="src\platform\SystemManager.h" />
-    <ClInclude Include="src\utils\File.h" />
-    <ClInclude Include="src\utils\Log.h" />
-    <ClInclude Include="src\utils\rang.hpp" />
-    <ClInclude Include="src\utils\Time.h" />
-    <ClInclude Include="src\utils\Timer.h" />
-    <ClInclude Include="src\utils\utils.h" />
-    <ClInclude Include="src\platform\System.h" />
-    <ClInclude Include="src\audio\WavFile.h" />
+    <ClInclude Include="src\graphics\VertexBuffer.h" />
+    <ClInclude Include="src\graphics\VertexBufferLayout.h" />
+    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\Layer.h" />
+    <ClInclude Include="src\LayerStack.h" />
+    <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basic.frag" />

@@ -2,8 +2,10 @@
 
 int main()
 {
-	Sandbox game;
-	game.Run();
+	SandboxApplication app;
+	app.Run();
+
+	//std::cin.get();
 
 	return 0;
 }

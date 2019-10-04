@@ -1,102 +1,138 @@
 #include "Sandbox.h"
 
-class InputSystem : public System
+ExampleLayer::ExampleLayer()
+	: timer(0), frames(0), clearColor(0.2f, 0.6f, 0.89f), color(1, 1, 1, 1)
 {
-public:
-	InputSystem(Vec2 windowSize)
-		: speed(350)
-	{
-		AddComponentType<TransformComponent>();
-		AddComponentType<RenderComponent>();
+	mb::RenderCommand::InitBlending();
 
-		this->windowSize = windowSize;
+	unsigned int fit = 50;
+
+	size.x = 2.0f / (float) fit;
+	size.y = 2.0f / (float) fit;
+
+	positions.Reserve(mb::Math::Pow(fit, 2));
+	colors.Reserve(mb::Math::Pow(fit, 2));
+
+	for (unsigned int i = 0; i < fit; i++)
+	{
+		for (unsigned int j = 0; j < fit; j++)
+		{
+			positions.PushBack({ (size.x / 2 + size.x * j) - 1, (size.y / 2 + size.y * i) - 1, 0});
+			colors.PushBack({ 
+				(float) mb::Math::Rand(), 
+				(float) mb::Math::Rand(),
+				(float) mb::Math::Rand(),
+				(float) mb::Math::Rand()
+			});
+		}
 	}
 
-	~InputSystem()
-	{
+	quadCount = positions.Count();
 
-	}
+	mb::Log::Debug("Rendering {} Quads!", mb::Math::Pow(fit, 2));
 
-	void OnInitEntity(unsigned int ID)
-	{
-		AddComponent<TransformComponent>(ID);
-		AddComponent<RenderComponent>(ID);
-	}
 
-	void OnUpdateEntity(float deltaTime, unsigned int ID, std::vector<void*> comps)
-	{
-		auto* transform = (TransformComponent*) comps[0];
-		auto* render = (RenderComponent*) comps[1];
+	mb::RenderCommand::SetClearColor(clearColor);
+}
 
-		if (transform->position.x >= this->windowSize.x * 1.1f / 2)
-			transform->position.x = -this->windowSize.x * 1.1f / 2;
-		else if (transform->position.x <= -this->windowSize.x * 1.1f / 2)
-			transform->position.x = this->windowSize.x * 1.1f / 2;
-		else if (transform->position.y >= this->windowSize.y * 1.1f / 2)
-			transform->position.y = -this->windowSize.y * 1.1f / 2;
-		else if (transform->position.y <= -this->windowSize.y * 1.1f / 2)
-			transform->position.y = this->windowSize.y * 1.1f / 2;
-
-		if (Input::IsKeyDown(Key::D_KEY))
-		{
-			transform->velocity = { speed, 0 };
-			render->animation.SetStartingPosition(0, 2);
-			render->animation.SetEndingPosition(5, 2);
-		}
-		else if (Input::IsKeyDown(Key::A_KEY))
-		{
-			transform->velocity = { -speed, 0 };
-			render->animation.SetStartingPosition(0, 0);
-			render->animation.SetEndingPosition(5, 0);
-		}
-		else if (Input::IsKeyDown(Key::W_KEY))
-		{
-			transform->velocity = { 0, speed };
-			render->animation.SetStartingPosition(0, 1);
-			render->animation.SetEndingPosition(5, 1);
-		}
-		else if (Input::IsKeyDown(Key::S_KEY))
-		{
-			transform->velocity = { 0, -speed };
-			render->animation.SetStartingPosition(0, 3);
-			render->animation.SetEndingPosition(5, 3);
-		}
-
-		transform->position += transform->velocity * deltaTime;
-	}
-private:
-	Vec2 windowSize;
-	float speed;
-};
-
-Sandbox::Sandbox()
+ExampleLayer::~ExampleLayer()
 {
-	m_Window = new Window(1200, 800, "Hi");
-	m_Window->QuitOnPress(Key::ESCAPE_KEY);
-	m_Window->SetClearColor(Color::MAGENTA);
-	m_Window->SetVsync(false);
-
-	Time::DisableFpsLog();
-
-	LogOpenGLDetails();
-
-	SystemManager::AddSystem(new coreSystems::RenderingSystem(m_Window->GetSize()));
-	SystemManager::AddSystem(new InputSystem(m_Window->GetSize()));
-
-	rm.AddTexture("./res/trump_run.png", 0);
-
-	alien.AddComponent<RenderComponent>();
-	alien.GetComponent<RenderComponent>()->sprite = Sprite2D({ 100, 100 });
-	alien.GetComponent<RenderComponent>()->sprite.SetTexture(rm.GetTexture(0));
-	alien.GetComponent<RenderComponent>()->sprite.EnableSpriteSheet();
-	alien.GetComponent<RenderComponent>()->sprite.SetSpriteSheet({ 6, 4 });
-	alien.GetComponent<RenderComponent>()->animation.Enable();
-	alien.GetComponent<RenderComponent>()->animation.SetFPS(15);
-	alien.GetComponent<RenderComponent>()->animation.SetSpriteSheet(alien.GetComponent<RenderComponent>()->sprite.GetSpriteSheet());
-	alien.AddComponent<TransformComponent>();
 
 }
 
-Sandbox::~Sandbox()
+void ExampleLayer::OnAttach()
 {
+
+}
+
+void ExampleLayer::OnDetach()
+{
+
+}
+
+void ExampleLayer::OnUpdate(float deltaTime)
+{
+	timer += deltaTime;
+	frames++;
+
+	if (timer >= 1.0f)
+	{
+		mb::Log::Debug("{} FPS", frames);
+
+		timer = 0;
+		frames = 0;
+	}
+
+	mb::RenderCommand::Clear();
+
+	renderer.Begin();
+
+	//renderer.Submit({ 1, 1 }, { 0, 0, 0 }, color);
+
+	for(unsigned int i = 0; i < quadCount; i++)
+	{
+		renderer.Submit(size, positions[i], colors[i]);
+	}
+
+	renderer.End();
+
+	/*shader.Bind();
+	vao.Bind();
+
+	mb::RenderCommand::DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);*/
+}
+
+void ExampleLayer::OnEvent(mb::Event& e)
+{
+	if (e.GetType() == mb::EventType::MouseMovedEvent)
+	{
+		mb::MouseMovedEvent& me = (mb::MouseMovedEvent&) e;
+		
+		mb::Vec2 windowSize = mb::Application::GetInstance()->GetWindow().GetSize();
+		mb::Vec2 xy = me.GetPosition() / windowSize;
+
+		color.r = xy.x;
+		color.g = xy.y;
+		color.b = clearColor.z;
+	}
+
+	/*if (e.GetType() == mb::EventType::WindowResizeEvent)
+	{
+		mb::WindowResizeEvent& re = (mb::WindowResizeEvent&) e;
+
+		mb::Log::Debug("Resizing to ({}, {})!", re.GetWidth(), re.GetHeight());
+	}
+	if (e.GetType() == mb::EventType::MouseButtonPressedEvent)
+	{
+		mb::Vec2 pos = mb::Input::GetMousePosition();
+
+		mb::Log::Debug("Clicked! mouse position is {}!", pos);
+	}
+	else if (e.GetType() == mb::EventType::MouseEnterEvent)
+	{
+		mb::Log::Debug("Hey! Welcome Back!");
+	}
+	else if (e.GetType() == mb::EventType::MouseLeaveEvent)
+	{
+		mb::Log::Debug("Oh No! Come Back Soon!");
+	}
+	else if (e.GetType() == mb::EventType::MouseScrolledEvent)
+	{
+		mb::MouseScrolledEvent& se = (mb::MouseScrolledEvent&) e;
+
+		mb::Log::Debug("Oh What a Scroll! The Offset is {}!", se.GetOffset());
+	}
+	else if (e.GetType() == mb::EventType::KeyPressedEvent)
+	{
+		mb::KeyPressedEvent& pe = (mb::KeyPressedEvent&) e;
+
+		if(pe.GetKeyCode() == mb::KeyCode::KEY_S && pe.HasMod(mb::KeyMod::CONTROL))
+			mb::Log::Debug("SAVE!!!!");
+	}
+	else if (e.GetType() == mb::EventType::KeyReleasedEvent)
+	{
+		mb::KeyReleasedEvent& re = (mb::KeyReleasedEvent&) e;
+
+		if (re.GetKeyCode() == mb::KeyCode::KEY_A) mb::Log::Debug("WOOHA! YOU RELEASED A!");
+	}*/
 }

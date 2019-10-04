@@ -1,39 +1,43 @@
 #include "Texture.h"
 
-#include <iostream>
-#include "GL.h"
-#include "stb_image.h"
-
-namespace mb { namespace graphics {
+namespace mb {
 
 	Texture::Texture(const char* path)
-		: m_ID(0), m_Width(0), m_Height(0), m_BPP(0)
+		: m_Width(0), m_Height(0), m_ID(0)
 	{
 		stbi_set_flip_vertically_on_load(1);
-		m_Path = (char*) path;
-		unsigned char* data = stbi_load(path, &m_Width, &m_Height, &m_BPP, 4);
+
+		int width, height, channels;
+		unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
+		m_Width = (unsigned int) width;
+		m_Height = (unsigned int) height;
+
+		ASSERT(data, "Unable to load texture!");
+
+		GLenum internalFormat = 0, dataFormat = 0;
+
+		if (channels == 3)
+		{
+			dataFormat = GL_RGB;
+			internalFormat = GL_RGB8;
+		}
+		else if (channels == 4)
+		{
+			dataFormat = GL_RGBA;
+			internalFormat = GL_RGBA8;
+		}
+
+		ASSERT(dataFormat & internalFormat, "Texture format is not supported!");
 
 		GLCall(glGenTextures(1, &m_ID));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
-		//glGenerateMipmap(GL_TEXTURE_2D);
-
-		if (data)
-			stbi_image_free(data);
-		else
-			std::cout << "Error" << std::endl;
-	}
-
-	Texture::Texture()
-		: m_ID(0), m_Width(0), m_Height(0), m_BPP(0)
-	{
-
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, dataFormat, GL_UNSIGNED_BYTE, data));
+	
+		stbi_image_free(data);
 	}
 
 	Texture::~Texture()
@@ -51,5 +55,4 @@ namespace mb { namespace graphics {
 	{
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
-
-} }
+}
